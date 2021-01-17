@@ -2,7 +2,7 @@ import {instance} from './instance'
 
 export const regist=(username,usermail,password)=>{
     return instance({
-        url:'/regist',
+        url:'/user/regist',
         method:'GET',
         params:{
             username,

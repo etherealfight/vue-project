@@ -1,15 +1,6 @@
 <template>
   <div class="nav_page">
-    <el-menu
-      :default-active="activeIndex"
-      class="el-menu-demo"
-      mode="horizontal"
-      @select="handleSelect"
-    >
-      <el-menu-item index="1" @click="login" class="navItem">登录</el-menu-item>
-      <el-menu-item index="2" class="navItem">注册</el-menu-item>
-      <el-menu-item index="3" class="navItem">主页</el-menu-item>
-    </el-menu>
+    <span>首页</span>
   </div>
 </template>
 
@@ -18,7 +9,7 @@ export default {
   data() {
     return {
       activeIndex: "1",
-      activeIndex2: "1",
+      keyword: "",
     };
   },
   methods: {
@@ -32,19 +23,23 @@ export default {
 };
 </script>
 
-<style>
-.el-menu-demo {
+<style scoped>
+.nav_page{
   display: flex;
-  justify-content: flex-end;
-  padding-right: 1rem;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0.5rem 0 0.5rem 0;
+  border-bottom: 1px solid lightgray;
+  background: l;
 }
-.el-menu--horizontal>.el-menu-item.is-active{
-  border-bottom:1px solid gray !important;
+span{
+  padding: 0.5rem 0 0 3rem;
+  height: 3rem;
+  font-size: 2rem;
+  font-family: 'Courier New', Courier, monospace;
 }
-.navItem:hover{
-   border-bottom:1px solid gray !important;
-}
-.navItem:active{
-   border-bottom:1px solid gray !important;
+.search{
+  width: 20rem;
+  height: 1.5rerm;
 }
 </style>

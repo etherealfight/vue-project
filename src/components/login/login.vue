@@ -46,7 +46,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(rgba(21, 11, 65, 0.39), #17283b);
+  background: linear-gradient(rgba(139, 157, 196, 0.767), #2c3c50);
 }
 .login {
   display: flex;
@@ -54,7 +54,7 @@ export default {
   align-items: center;
   width: 20rem;
   padding: 2rem;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(53, 52, 52, 0.2);
   box-shadow: 0 0.75rem 1.25rem rgba(0, 0, 0, 0.4);
 }
 h2 {

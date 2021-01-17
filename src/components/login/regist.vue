@@ -3,8 +3,14 @@
     <div class="login">
       <h2>用户注册</h2>
       <div class="login_box">
-        <input type="text" required="required" v-model="usermail" /><label
-          >邮箱</label
+        <input
+          type="text"
+          required="required"
+          v-model="usermail"
+          class="mail"
+        /><label>邮箱</label
+        ><label for="mail" class="mailJudge" v-show="!mailCorrect"
+          >邮箱格式有误</label
         >
       </div>
       <div class="login_box">
@@ -30,6 +36,7 @@ export default {
       username: "",
       usermail: "",
       password: "",
+      mailCorrect: true,
     };
   },
   methods: {
@@ -40,17 +47,27 @@ export default {
       this.$router.push({ path: "./login" });
     },
   },
+  watch: {
+    usermail: function () {
+      let re = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
+      if (re.test(this.usermail)) {
+        this.mailCorrect = true;
+      } else {
+        this.mailCorrect = false;
+      }
+    },
+  },
 };
 </script>
 
-<style  scoped>
+<style scoped>
 .login_page {
   height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(rgba(21, 11, 65, 0.39), #17283b);
+  background: linear-gradient(rgba(139, 157, 196, 0.767), #2c3c50);
 }
 .login {
   display: flex;
@@ -110,5 +127,9 @@ h2 {
 }
 .loginButton:first-child {
   margin-right: 0.5rem;
+}
+.login_box .mailJudge {
+  color: rgb(245, 77, 77);
+  left: 60%;
 }
 </style>

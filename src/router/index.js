@@ -4,6 +4,7 @@ import login from '../components/login/login'
 import regist from '../components/login/regist'
 import main from '../components/home/main'
 import my_navbar from '../components/home/my_navbar'
+import profile from '../components/profile/profile'
 Vue.use(VueRouter)
 
 const routes = [
@@ -29,6 +30,11 @@ const routes = [
     name: 'regist',
     component: regist
   },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: profile
+  },
 ]
 
 const router = new VueRouter({
@@ -37,4 +43,8 @@ const router = new VueRouter({
   routes
 })
 
+const VueRouterPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push (to) {
+  return VueRouterPush.call(this, to).catch(err => err)
+}
 export default router
