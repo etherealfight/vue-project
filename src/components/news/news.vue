@@ -1,5 +1,5 @@
 <template>
-  <div class="newsBox">
+  <div class="newsBox" @click="toDetail">
     <div class="newsText">{{ contentText }}</div>
     <div class="newsImg">
       <ul>
@@ -42,6 +42,11 @@ export default {
       default: "",
     },
   },
+  methods: {
+    toDetail(){
+      this.$router.push({path:"/newsdetail"})
+    }
+  }
 };
 </script>
 

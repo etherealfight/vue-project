@@ -5,6 +5,7 @@ import regist from '../components/login/regist'
 import main from '../components/home/main'
 import my_navbar from '../components/home/my_navbar'
 import profile from '../components/profile/profile'
+import newsdetail from '../components/news/newsDetail'
 Vue.use(VueRouter)
 
 const routes = [
@@ -34,6 +35,11 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: profile
+  },
+  {
+    path: '/newsdetail',
+    name: 'newsdetail',
+    component: newsdetail
   },
 ]
 

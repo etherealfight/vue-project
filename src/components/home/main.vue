@@ -60,5 +60,6 @@ export default {
 .tabbar {
   position: fixed;
   bottom: 0;
+ 
 }
 </style>

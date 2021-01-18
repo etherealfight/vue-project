@@ -153,8 +153,9 @@ export default {
 
 <style scoped>
 .profileMain {
+  box-sizing: border-box;
   width: 100vw;
-  height: 88vh;
+  height: 80vh;
   overflow: hidden;
 }
 .profileHeader {
