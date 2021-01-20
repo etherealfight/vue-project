@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:悬赏简介组件，用于展示悬赏简介信息
+-->
 <template>
   <div class="rewardBox">
     <div class="rewardHeader">

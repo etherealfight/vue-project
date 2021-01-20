@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:学习资源评论区评论列表组件
+-->
 <template>
   <div class="commentList">
     <comment

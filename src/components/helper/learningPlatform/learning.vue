@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:学习资源简介组件，用于展示学习资源简介信息
+-->
 <template>
   <div class="learnBox">
     <div class="learnHeader">

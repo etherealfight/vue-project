@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:学习资源简介列表组件
+-->
 <template>
   <div class="learningwrapper">
     <div class="learningList">

@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:学习资源视频播放页面
+-->
 <template>
   <div class="videoBox">
     <div class="video">

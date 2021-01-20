@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:悬赏简介列表组件
+-->
 <template>
   <div class="rerwardwrapper">
     <div class="rewardList">

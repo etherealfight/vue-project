@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:学习资源详情组件
+-->
 <template>
   <div class="bswrapper">
     <div class="content">

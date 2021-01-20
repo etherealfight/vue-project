@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:悬赏详情组件
+-->
 <template>
   <div class="rewardDetail">
     <div class="rewardDetailt"><span> 悬赏详情</span></div>
