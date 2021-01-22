@@ -21,11 +21,9 @@ import news from "./news";
 
 export default {
   components: {
-    "news": news,
+    news: news,
   },
-  methods: {
-
-  },
+  methods: {},
   /**
    *  接受从mainpage组件传来的文章参数
    */
@@ -36,29 +34,37 @@ export default {
         {
           id: 1,
           username: "quan",
-          contentText: "23333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
-          fileaddress:["http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg","http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg","http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",],
-          date:"2021-1-11",
-
+          contentText:
+            "23333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
+          fileaddress: [
+            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
+            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
+            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
+          ],
+          date: "2021-1-11",
         },
         {
           id: 2,
           username: "quan",
           contentText: "2333333333",
-          fileaddress:["http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg","http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg"],
-          date:"2021-1-16",
+          fileaddress: [
+            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
+            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
+          ],
+          date: "2021-1-16",
         },
         {
           id: 3,
           username: "quan",
           contentText: "2333333333",
-          fileaddress:["http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg"],
-          date:"2021-1-16",
+          fileaddress: [
+            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
+          ],
+          date: "2021-1-16",
         },
       ],
     },
   },
- 
 };
 </script>
 

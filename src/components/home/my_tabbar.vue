@@ -4,13 +4,12 @@
       :default-active="activeIndex"
       class="el-menu-demo"
       mode="horizontal"
-   
     >
       <div class="itembox" @click="move1">
         <img :src="homeUrl" />
         <el-menu-item index="1" class="tabItem">主页</el-menu-item>
       </div>
-      <div class="itembox">
+      <div class="itembox" @click="move2">
         <img :src="helperUrl" />
         <el-menu-item index="2" class="tabItem">小帮手</el-menu-item>
       </div>
@@ -64,6 +63,9 @@ export default {
     move1() {
       this.$router.push({ path: "/main" });
     },
+    move2() {
+      this.$router.push({ path: "/helper" });
+    },
     move3() {
       this.$router.push({ path: "/profile" });
     },
@@ -72,14 +74,14 @@ export default {
 </script>
 
 <style scoped>
-.el-menu-demo {
+.tab_page .el-menu-demo {
   display: flex;
   width: 100vw;
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid lightgrey;
 }
-.itembox {
+.tab_page .el-menu-demo .itembox {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -87,11 +89,11 @@ export default {
   padding-top: 0.25rem;
   outline: none;
 }
-img {
+.tab_page .el-menu-demo .itembox img {
   width: 2.75rem;
   height: 2.75rem;
 }
-.el-menu-item {
+.tab_page .el-menu-demo .itembox .el-menu-item {
   margin: 0;
   padding: 0 0.5rem 0 0.5rem;
   height: 2rem;

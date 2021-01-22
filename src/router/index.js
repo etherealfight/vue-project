@@ -6,13 +6,15 @@ import main from '../components/home/main'
 import my_navbar from '../components/home/my_navbar'
 import profile from '../components/profile/profile'
 import newsdetail from '../components/news/newsDetail'
+import helper from '../components/helper/helper'
+import rewardList from '../components/helper/rewardPlatform/rewardList'
+import learningList from '../components/helper/learningPlatform/learningList'
 Vue.use(VueRouter)
 
-const routes = [
-  {
+const routes = [{
     path: '/',
     redirect: '/login'
-  }, 
+  },
   {
     path: '/main',
     component: main
@@ -41,6 +43,21 @@ const routes = [
     name: 'newsdetail',
     component: newsdetail
   },
+  {
+    path: '/helper',
+    component: helper,
+    redirect: '/helper/rewardList',
+    children: [{
+        path: 'rewardList',
+        component: rewardList
+      },
+
+      {
+        path: 'learningList',
+        component: learningList
+      }
+    ]
+  }
 ]
 
 const router = new VueRouter({
@@ -50,7 +67,7 @@ const router = new VueRouter({
 })
 
 const VueRouterPush = VueRouter.prototype.push
-VueRouter.prototype.push = function push (to) {
+VueRouter.prototype.push = function push(to) {
   return VueRouterPush.call(this, to).catch(err => err)
 }
 export default router

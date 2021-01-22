@@ -1,0 +1,59 @@
+<template>
+  <div class="helperbar">
+    <el-menu
+      :default-active="activeIndex"
+      class="el-menu-demo"
+      mode="horizontal"
+    >
+      <div class="itembox" @click="move1">
+        <el-menu-item index="1" class="tabItem">悬赏平台</el-menu-item>
+      </div>
+      <div class="itembox" @click="move2">
+        <el-menu-item index="2" class="tabItem">学习资源</el-menu-item>
+      </div>
+    </el-menu>
+    <router-view></router-view>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    activeIndex: {
+      type: String,
+      default: "1",
+    },
+  },
+  methods: {
+      move1(){
+          this.$router.push({path:"/helper/rewardList"})
+      },
+      move2(){
+          this.$router.push({path:"/helper/learningList"})
+      }
+  }
+};
+</script>
+
+<style>
+.helperbar .el-menu-demo {
+  width: 100vw;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.helperbar
+  .el-menu-demo
+  .itembox
+  .tabItem:hover
+  .helperbar
+  .el-menu-demo
+  .itembox
+  .tabItem:active {
+  border-bottom: 2px solid #409eff;
+}
+.helperbar .el-menu-demo .itembox .el-menu-item.is-active {
+  border-bottom: 2px solid #409eff;
+  background: transparent;
+}
+</style>

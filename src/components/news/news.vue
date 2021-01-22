@@ -67,20 +67,20 @@ export default {
   overflow: hidden;
   word-wrap: break-word;
   text-overflow: ellipsis;
-}
+} 
 .newsImg {
   padding: 1rem 0 1rem 0;
 }
-ul{
+.newsImg ul{
     list-style: none;
     display: flex;
     flex-direction: row;
 }
-li{
+.newsImg ul li{
     padding-right: 1rem;
     
 }
-img{
+.newsImg ul li img{
     width: 10rem;
     height: 10rem;
     border-radius: 0.5rem;
