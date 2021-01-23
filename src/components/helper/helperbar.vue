@@ -12,7 +12,6 @@
         <el-menu-item index="2" class="tabItem">学习资源</el-menu-item>
       </div>
     </el-menu>
-    <router-view></router-view>
   </div>
 </template>
 
@@ -25,13 +24,13 @@ export default {
     },
   },
   methods: {
-      move1(){
-          this.$router.push({path:"/helper/rewardList"})
-      },
-      move2(){
-          this.$router.push({path:"/helper/learningList"})
-      }
-  }
+    move1() {
+      this.$router.push({ path: "/helper/rewardList" });
+    },
+    move2() {
+      this.$router.push({ path: "/helper/learningList" });
+    },
+  },
 };
 </script>
 
@@ -42,15 +41,16 @@ export default {
   justify-content: space-around;
   align-items: center;
 }
-.helperbar
-  .el-menu-demo
-  .itembox
-  .tabItem:hover
-  .helperbar
-  .el-menu-demo
-  .itembox
-  .tabItem:active {
-  border-bottom: 2px solid #409eff;
+.el-menu--horizontal .el-menu-item:not(.is-disabled):focus,
+.el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
+  color: #409eff !important;
+}
+
+.helperbar .el-menu-demo .itembox .el-menu-item{
+  display: flex;
+  align-items: center;
+  height: 5rem;
+  font-size: 1.5rem;
 }
 .helperbar .el-menu-demo .itembox .el-menu-item.is-active {
   border-bottom: 2px solid #409eff;

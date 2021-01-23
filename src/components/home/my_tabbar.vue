@@ -14,8 +14,12 @@
         <el-menu-item index="2" class="tabItem">小帮手</el-menu-item>
       </div>
       <div class="itembox" @click="move3">
+        <img :src="ltUrl" />
+        <el-menu-item index="3" class="tabItem">消息</el-menu-item>
+      </div>
+      <div class="itembox" @click="move4">
         <img :src="profileUrl" />
-        <el-menu-item index="3" class="tabItem">我的</el-menu-item>
+        <el-menu-item index="4" class="tabItem">我的</el-menu-item>
       </div>
     </el-menu>
   </div>
@@ -47,8 +51,15 @@ export default {
         return require("../../assets/zhushou_un.png");
       }
     },
-    profileUrl: function () {
+    ltUrl: function () {
       if (this.activeIndex === "3") {
+        return require("../../assets/lt.png");
+      } else {
+        return require("../../assets/lt_un.png");
+      }
+    },
+    profileUrl: function () {
+      if (this.activeIndex === "4") {
         return require("../../assets/wode.png");
       } else {
         return require("../../assets/wode_un.png");
@@ -67,6 +78,9 @@ export default {
       this.$router.push({ path: "/helper" });
     },
     move3() {
+      this.$router.push({ path: "/chat" });
+    },
+    move4() {
       this.$router.push({ path: "/profile" });
     },
   },

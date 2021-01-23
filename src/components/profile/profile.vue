@@ -84,7 +84,7 @@
         <el-button class="profileSubmit">提交</el-button>
       </div>
     </div>
-    <my-tabbar class="tabbar" activeIndex="3"></my-tabbar>
+    <my-tabbar class="tabbar" activeIndex="4"></my-tabbar>
   </div>
 </template>
 
@@ -255,6 +255,7 @@ export default {
 }
 #introduction {
   outline: none;
+  border: lightgray solid 1px;
 }
 .tabbar {
   position: fixed;

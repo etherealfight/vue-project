@@ -60,10 +60,10 @@ export default {
 }
 .newsText {
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   padding: 0 0 1rem 0;
-  height: 4rem;
+  height: 2rem;
   overflow: hidden;
   word-wrap: break-word;
   text-overflow: ellipsis;
@@ -78,7 +78,6 @@ export default {
 }
 .newsImg ul li{
     padding-right: 1rem;
-    
 }
 .newsImg ul li img{
     width: 10rem;
