@@ -1,20 +1,22 @@
 <template>
-  <div class="newsdetail">
-    <i class="el-icon-back" @click="back"></i>
-    <div class="newsdetailheader">
-      <h2 class="newsdetailtitle">{{ title }}</h2>
-    </div>
-    <div class="newsDetailMiddle">
-      <div class="newsdetailAuthor">{{ author }}</div>
-      <div class="newsdetailDate">{{ date }}</div>
-    </div>
-    <div class="newsDetailMain">
-      <img :src="imgUrl" class="detailImg"/>
-      <div class="newsContext">
-        {{ context }}
+  <v-touch @swiperight="swiperright" class="wrapper">
+    <div class="newsdetail">
+      <i class="el-icon-back" @click="back"></i>
+      <div class="newsdetailheader">
+        <h2 class="newsdetailtitle">{{ title }}</h2>
+      </div>
+      <div class="newsDetailMiddle">
+        <div class="newsdetailAuthor">{{ author }}</div>
+        <div class="newsdetailDate">{{ date }}</div>
+      </div>
+      <div class="newsDetailMain">
+        <img :src="imgUrl" class="detailImg" />
+        <div class="newsContext">
+          {{ context }}
+        </div>
       </div>
     </div>
-  </div>
+  </v-touch>
 </template>
 
 <script>
@@ -43,10 +45,13 @@ export default {
     },
   },
   methods: {
-      back(){
-          this.$router.back(-1);
-      }
-  }
+    back() {
+      this.$router.back(-1);
+    },
+    swiperright() {
+      this.$router.back(-1);
+    },
+  },
 };
 </script>
 

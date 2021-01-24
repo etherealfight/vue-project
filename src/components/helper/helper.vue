@@ -19,8 +19,8 @@ export default {
     };
   },
   mounted() {
-    window.addEventListener("touchstart", this.handletouchs);
-    window.addEventListener("touchend", this.handletouche);
+    window.addEventListener("touchstart", this.debounce(this.handletouchs,250));
+    window.addEventListener("touchend", this.debounce(this.handletouche,250));
   },
   components: { helperbar: helperbar, mytabbar: mytabbar },
   methods: {
@@ -28,7 +28,7 @@ export default {
       let angx = endx - startx;
       let angy = endy - starty;
       let result = 0;
-      if (Math.abs(angx) < 60 ) {
+      if (Math.abs(angx) < 60) {
         return result;
       }
       let angle = this.getAngle(angx, angy);
@@ -45,11 +45,13 @@ export default {
     handletouchs(e) {
       this.startx = e.touches[0].pageX;
       this.starty = e.touches[0].pageY;
+      console.log(this.startx);
     },
     handletouche(e) {
       let endx, endy;
       endx = e.changedTouches[0].pageX;
       endy = e.changedTouches[0].pageY;
+      console.log(endx);
       let direction = this.getDirection(this.startx, this.starty, endx, endy);
       switch (direction) {
         case 0:
@@ -69,6 +71,21 @@ export default {
         default:
       }
     },
+    debounce(func, wait, immediate) {
+      let timeout;
+      return function () {
+        let context = this,
+          args = arguments;
+        let later = function () {
+          timeout = null;
+          if (!immediate) func.apply(context, args);
+        };
+        let callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+      };
+    },
   },
   beforeRouteLeave(to, from, next) {
     window.removeEventListener("touchstart", this.handletouchs);
@@ -79,7 +96,7 @@ export default {
 </script>
 
 <style>
-.helperbox{
+.helperbox {
   display: flex;
   flex-direction: column;
   background: rgb(244, 244, 244);
@@ -88,7 +105,7 @@ export default {
   position: fixed;
   top: 0;
 }
-.router{
+.router {
   padding: 4.6rem 0 4.2rem 0;
 }
 .helperbox .mytabbar {

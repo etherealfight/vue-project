@@ -167,6 +167,7 @@ html {
   width: 100vw;
   background: url("http://www.shuoshuodaitupian.com/css/userpage_back.jpg")
     no-repeat;
+  background-size: 100% 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -204,6 +205,7 @@ html {
   align-items: center;
   background: white;
   border-radius: 0.25rem;
+  padding-bottom: 6rem;
   box-sizing: border-box;
 }
 #profileTitle {

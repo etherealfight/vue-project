@@ -57,21 +57,24 @@ export default {
 
 <style>
 .newsBox {
-  width: 90vw;
+  width: 100vw;
   border-top: 1px solid lightgray;
   padding: 1.5rem 2rem 1.5rem 2rem;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 .newsText {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   padding: 0 0 1rem 0;
-  height: 2rem;
+  height: 4rem;
+  font-size: 1.5rem;
   overflow: hidden;
   word-wrap: break-word;
   text-overflow: ellipsis;
+  box-sizing: border-box;
 } 
 .newsBox .newsImg {
   padding: 1rem 0 1rem 0;
