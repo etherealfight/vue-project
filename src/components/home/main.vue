@@ -48,10 +48,14 @@ export default {
 .block{
   padding: 2rem;
 }
+.el-carousel{
+  padding: 0 !important;
+}
 .el-carousel__item  {
   color: #475669;
   line-height: 7.5rem;
   margin: 0;
+  border-radius: 1rem;
 }
 .newslist{
   padding-bottom: 4rem;

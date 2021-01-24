@@ -1,5 +1,5 @@
 <template>
-  <div class="rewardBox">
+  <div class="rewardBox" @click="toDetail">
     <div class="rewardHeader">
       <img :src="userimg" class="userImg" />
       <div class="userName">{{ username }}</div>
@@ -60,17 +60,25 @@ export default {
       default: 0,
     },
   },
+  methods: {
+    toDetail(){
+      this.$router.push({path:"/rewardDetail"})
+    }
+  }
 };
 </script>
 
 <style>
 .rewardBox {
-  width: 90vw;
+  width: 94vw;
+  margin-top: 1.5rem;
+  border-radius: 1rem;
   display: flex;
   flex-direction: column;
   padding: 0 2rem 0 2rem;
   overflow: hidden;
-  border-bottom: 1px solid lightgrey;
+  box-sizing: border-box;
+  background: white;
 }
 .rewardHeader {
   display: flex;

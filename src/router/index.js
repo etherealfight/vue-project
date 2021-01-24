@@ -9,6 +9,7 @@ import newsdetail from '../components/news/newsDetail'
 import helper from '../components/helper/helper'
 import rewardList from '../components/helper/rewardPlatform/rewardList'
 import learningList from '../components/helper/learningPlatform/learningList'
+import rewardDetail from '../components/helper/rewardPlatform/rewardDetail'
 import chat from '../components/chat/chat'
 Vue.use(VueRouter)
 
@@ -58,6 +59,11 @@ const routes = [{
         component: learningList
       }
     ]
+  },
+  {
+    path: '/rewardDetail',
+    name: 'rewardDetail',
+    component: rewardDetail
   },
   {
     path: '/chat',

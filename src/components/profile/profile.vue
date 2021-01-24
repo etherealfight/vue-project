@@ -5,7 +5,9 @@
   <div class="profileMain">
     <div class="box">
       <div class="profileHeader">
-        <img :src="$store.state.userImage" id="profileImg" />
+        <v-touch v-on:touchstart="start">
+          <img :src="$store.state.userImage" id="profileImg" />
+        </v-touch>
         <el-upload
           class="upload-demo"
           action="http://121.196.154.219:8080/uploadfile"
@@ -79,7 +81,6 @@
           ></textarea>
         </div>
       </div>
-
       <div class="profileFooter">
         <el-button class="profileSubmit">提交</el-button>
       </div>
@@ -101,6 +102,9 @@ export default {
   },
 
   methods: {
+    start() {
+      console.log("start");
+    },
     // async previewFiles(event) {
     //   console.log(event.target.files[0]);
     //   const res = await uploadImg(event.target.files[0]);
@@ -152,14 +156,14 @@ export default {
 </script>
 
 <style scoped>
+html {
+  height: 100vh;
+}
 .profileMain {
-  box-sizing: border-box;
   width: 100vw;
-  height: 80vh;
-  overflow: hidden;
 }
 .profileHeader {
-  height: 20rem;
+  height: 18rem;
   width: 100vw;
   background: url("http://www.shuoshuodaitupian.com/css/userpage_back.jpg")
     no-repeat;
@@ -168,11 +172,13 @@ export default {
   justify-content: center;
   align-items: center;
   border-bottom: 1px lightgray solid;
+  box-sizing: border-box;
 }
 #profileImg {
   border-radius: 50%;
   width: 7rem;
   height: 7rem;
+  box-sizing: border-box;
 }
 #profileUsername {
   font-size: 2rem;
@@ -192,24 +198,24 @@ export default {
   align-items: center;
 }
 .box {
-  overflow: hidden;
-  top: 0%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background: white;
   border-radius: 0.25rem;
+  box-sizing: border-box;
 }
 #profileTitle {
   display: flex;
   align-items: center;
-  height: 8vh;
+  height: 4rem;
   width: 100vw;
   padding-left: 2rem;
   font-size: 1.5rem;
   font-weight: bolder;
   border-bottom: 1px lightgray solid;
+  box-sizing: border-box;
 }
 .profileMiddle {
   display: flex;
@@ -220,6 +226,7 @@ export default {
   padding-bottom: 0.75rem;
   flex-direction: column;
   align-items: flex-start;
+  box-sizing: border-box;
 }
 .item {
   display: flex;
@@ -229,12 +236,14 @@ export default {
   height: 3.5rem;
   padding-left: 2.5rem;
   white-space: nowrap;
+  box-sizing: border-box;
 }
 .profileInputbox {
   border: lightgray solid 1px;
   width: 50vw;
   height: 2.5rem;
   outline: none;
+  box-sizing: border-box;
 }
 .profileSubmit {
   background: #409eff !important;
@@ -243,9 +252,11 @@ export default {
   width: 8rem;
   height: 3.5rem;
   outline: none;
+  box-sizing: border-box;
 }
 
 .profileIntroduction {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

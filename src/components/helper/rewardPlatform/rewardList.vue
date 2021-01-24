@@ -71,4 +71,10 @@ export default {
 </script>
 
 <style>
+.rewardList{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 </style>

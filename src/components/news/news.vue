@@ -1,6 +1,6 @@
 <template>
   <div class="newsBox" @click="toDetail">
-    <div class="newsText">{{ contentText }}</div>
+    <div class="newsText">{{ title }}</div>
     <div class="newsImg">
       <ul>
         <li v-for="(img, index) in fileaddress" :key="index"> <img :src="fileaddress[index]" /></li>
@@ -16,6 +16,11 @@
 <script>
 export default {
   props: {
+    //新闻标题
+    title: {
+      type: String,
+      default: "",
+    },
     //新闻图片
     fileaddress: {
       type: Array,
@@ -68,7 +73,7 @@ export default {
   word-wrap: break-word;
   text-overflow: ellipsis;
 } 
-.newsImg {
+.newsBox .newsImg {
   padding: 1rem 0 1rem 0;
 }
 .newsImg ul{
@@ -80,8 +85,8 @@ export default {
     padding-right: 1rem;
 }
 .newsImg ul li img{
-    width: 10rem;
-    height: 10rem;
+    width: 28vw;
+    height: 15vh;
     border-radius: 0.5rem;
 }
 .newsIntroduction {

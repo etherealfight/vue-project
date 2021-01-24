@@ -10,6 +10,7 @@
       :fileaddress="item.fileaddress"
       :id="item.id"
       :username="item.username"
+      :title="item.title"
       :contentText="item.contentText"
       :date="item.date"
     ></news>
@@ -34,28 +35,32 @@ export default {
         {
           id: 1,
           username: "quan",
+          title:"这是一个大新闻",
           contentText:
             "23333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
           fileaddress: [
             "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
+             "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
+              "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
           ],
           date: "2021-1-11",
         },
         {
           id: 2,
           username: "quan",
+          title:"这是一个大大大大大大大新闻",
           contentText: "2333333333",
           fileaddress: [
             "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
+             "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
+              "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
           ],
           date: "2021-1-16",
         },
         {
           id: 3,
           username: "quan",
+          title:"这是一个大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大新闻",
           contentText: "2333333333",
           fileaddress: [
             "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",

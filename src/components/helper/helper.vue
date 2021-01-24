@@ -28,18 +28,15 @@ export default {
       let angx = endx - startx;
       let angy = endy - starty;
       let result = 0;
-
-      if (Math.abs(angx) < 20 && Math.abs(angy) < 20) {
+      if (Math.abs(angx) < 60 ) {
         return result;
       }
-
       let angle = this.getAngle(angx, angy);
       if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
         result = 1;
       } else if (angle >= -45 && angle <= 45) {
         result = 2;
       }
-
       return result;
     },
     getAngle(angx, angy) {
@@ -84,9 +81,8 @@ export default {
 <style>
 .helperbox{
   display: flex;
-  width: 100vw;
-  height: 100vh;
   flex-direction: column;
+  background: rgb(244, 244, 244);
 }
 .helperbox .helperbar {
   position: fixed;
