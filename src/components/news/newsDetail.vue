@@ -21,28 +21,15 @@
 
 <script>
 export default {
-  props: {
-    title: {
-      type: String,
-      default: "这是一个大新闻",
-    },
-    author: {
-      type: String,
-      default: "cccc",
-    },
-    date: {
-      type: String,
-      default: "2021-01-16",
-    },
-    imgUrl: {
-      type: String,
-      default: "https://picsum.photos/460/360?random=1",
-    },
-    context: {
-      type: String,
-      default:
+  data() {
+    return {
+      title: "这是一个大新闻",
+      author: "cccc",
+      date: "2021-01-16",
+      imgUrl: "https://picsum.photos/460/360?random=1",
+      context:
         "ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    },
+    };
   },
   methods: {
     back() {

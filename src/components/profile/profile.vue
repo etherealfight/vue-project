@@ -191,7 +191,13 @@ html {
   flex-direction: column;
   padding-top: 1rem;
 }
-
+#changePhoto {
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+}
+.el-upload__tip {
+  font-size: 1rem;
+}
 .profileMain {
   display: flex;
   flex-direction: column;
@@ -244,6 +250,7 @@ html {
   border: lightgray solid 1px;
   width: 50vw;
   height: 2.5rem;
+  font-size: 1rem;
   outline: none;
   box-sizing: border-box;
 }
@@ -254,6 +261,7 @@ html {
   width: 8rem;
   height: 3.5rem;
   outline: none;
+  font-size: 1rem;
   box-sizing: border-box;
 }
 

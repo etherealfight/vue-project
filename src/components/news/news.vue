@@ -69,8 +69,8 @@ export default {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   padding: 0 0 1rem 0;
-  height: 4rem;
-  font-size: 1.5rem;
+  height: 3.5rem;
+  font-size: 1.25rem;
   overflow: hidden;
   word-wrap: break-word;
   text-overflow: ellipsis;
@@ -88,8 +88,8 @@ export default {
     padding-right: 1rem;
 }
 .newsImg ul li img{
-    width: 28vw;
-    height: 15vh;
+    width: 10rem;
+    height: 8rem;
     border-radius: 0.5rem;
 }
 .newsIntroduction {

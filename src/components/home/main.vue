@@ -18,19 +18,19 @@
 <script>
 import my_navbar from "./my_navbar";
 import my_tabbar from "./my_tabbar";
-import newsImg from "../news/newsImg"
-import newsList from "../news/newsList"
+import newsImg from "../news/newsImg";
+import newsList from "../news/newsList";
 export default {
   components: {
     "my-navbar": my_navbar,
     "my-tabbar": my_tabbar,
-    "newsimg":newsImg,
-    "newslist":newsList
+    newsimg: newsImg,
+    newslist: newsList,
   },
-  data () {
+  data() {
     return {
-     // newsData:{}
-    }
+      // newsData:{}
+    };
   },
   methods: {
     move() {
@@ -45,24 +45,23 @@ export default {
   width: 100vw;
   height: 100vh;
 }
-.block{
+.block {
   padding: 2rem;
 }
-.el-carousel{
+.el-carousel {
   padding: 0 !important;
 }
-.el-carousel__item  {
+.el-carousel__item {
   color: #475669;
   line-height: 7.5rem;
   margin: 0;
   border-radius: 1rem;
 }
-.newslist{
+.newslist {
   padding-bottom: 4rem;
 }
 .tabbar {
   position: fixed;
   bottom: 0;
- 
 }
 </style>

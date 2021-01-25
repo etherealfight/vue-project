@@ -19,11 +19,17 @@ export default {
     };
   },
   mounted() {
-    window.addEventListener("touchstart", this.debounce(this.handletouchs,250));
-    window.addEventListener("touchend", this.debounce(this.handletouche,250));
+    window.addEventListener("touchstart",this.startTouch);
+    window.addEventListener("touchend", this.endTouch);
   },
   components: { helperbar: helperbar, mytabbar: mytabbar },
   methods: {
+    startTouch(e) {
+      this.debounce(this.handletouchs(e), 250);
+    },
+    endTouch(e) {
+      this.debounce(this.handletouche(e), 250);
+    },
     getDirection(startx, starty, endx, endy) {
       let angx = endx - startx;
       let angy = endy - starty;
@@ -87,10 +93,9 @@ export default {
       };
     },
   },
-  beforeRouteLeave(to, from, next) {
-    window.removeEventListener("touchstart", this.handletouchs);
-    window.removeEventListener("touchend", this.handletouche);
-    next();
+  destroyed() {
+    window.removeEventListener("touchstart",this.startTouch);
+    window.removeEventListener("touchend",this.endTouch);
   },
 };
 </script>

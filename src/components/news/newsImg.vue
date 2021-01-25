@@ -25,6 +25,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 1rem;
 }
 img {
   width: 100%;
