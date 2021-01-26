@@ -10,14 +10,12 @@
       </div>
     </div>
     <div class="rewardDetailMain">
-      <div v-swiper:mySwiper="swiperOption">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide" :key="imgurl" v-for="imgurl in fileaddress">
-            <img :src="imgurl" />
-          </div>
-        </div>
-        <div class="swiper-pagination"></div>
-      </div>
+      <swiper :options="swiperOption" class="czp">
+        <swiper-slide v-for="imgurl in fileaddress" :key="imgurl"
+          ><img :src="imgurl"
+        /></swiper-slide>
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
       <v-touch @swiperight="swiperright" class="wrapper" ref="wrapper">
         <div class="rewardDetailContext">
           {{ contentText }}
@@ -35,19 +33,15 @@
 </template>
 
 <script>
-import { Swiper, SwiperSlide, directive } from "vue-awesome-swiper";
-import "swiper/swiper-bundle.css";
+import "swiper/dist/css/swiper.css";
+import { swiper, swiperSlide } from "vue-awesome-swiper";
 
 export default {
   components: {
-    Swiper,
-    SwiperSlide,
-  },
-  directives: {
-    swiper: directive,
+    swiper,
+    swiperSlide,
   },
   mounted() {
-    this.mySwiper.slideTo(3, 1000, false);
     let mainHight = document.querySelector(".rewardDetailMain").offsetHeight;
     let swiperHight = document.querySelector(".swiper-container").offsetHeight;
     let footerHight = document.querySelector(".rewardDetailFooter").offsetHeight;
@@ -60,15 +54,21 @@ export default {
   data() {
     return {
       swiperOption: {
+        loop: true,
         pagination: {
           el: ".swiper-pagination",
+          clickable: true,
         },
-        // ...
+        autoplay: {
+          delay: 1500,
+          stopOnLastSlide: false,
+          disableOnInteraction: true,
+        }, // 可选选项，自动滑动
       },
       fileaddress: [
-        "https://picsum.photos/360/460?random=1",
-        "https://picsum.photos/360/460?random=2",
-        "https://picsum.photos/360/460?random=3",
+        "https://picsum.photos/460/360?random=1",
+        "https://picsum.photos/460/360?random=2",
+        "https://picsum.photos/460/360?random=3",
       ],
       contentText: "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
       date: "2021-01-25",

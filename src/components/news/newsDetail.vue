@@ -9,14 +9,12 @@
       <div class="newsdetailDate">{{ date }}</div>
     </div>
     <div class="newsDetailMain">
-      <div v-swiper:mySwiper="swiperOption">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide" :key="imgurl" v-for="imgurl in imgUrls">
-            <img :src="imgurl" />
-          </div>
-        </div>
-        <div class="swiper-pagination"></div>
-      </div>
+      <swiper :options="swiperOption" class="czp">
+        <swiper-slide v-for="imgurl in imgUrls" :key="imgurl"
+          ><img :src="imgurl"
+        /></swiper-slide>
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
       <v-touch @swiperight="swiperright" class="wrapper" ref="wrapper">
         <div class="newsContext">
           {{ context }}
@@ -27,31 +25,35 @@
 </template>
 
 <script>
-import { Swiper, SwiperSlide, directive } from "vue-awesome-swiper";
-import "swiper/swiper-bundle.css";
+import "swiper/dist/css/swiper.css";
+import { swiper, swiperSlide } from "vue-awesome-swiper";
+
 export default {
   components: {
-    Swiper,
-    SwiperSlide,
+    swiper,
+    swiperSlide,
   },
-  directives: {
-    swiper: directive,
-  },
+
   mounted() {
-    this.mySwiper.slideTo(3, 1000, false);
-    let mainHeight=document.querySelector(".newsDetailMain").offsetHeight;
-    let swiperHeight=document.querySelector(".swiper-container").offsetHeight;
-    let wrapperHeight=mainHeight-swiperHeight;
+    let mainHeight = document.querySelector(".newsDetailMain").offsetHeight;
+    let swiperHeight = document.querySelector(".swiper-container").offsetHeight;
+    let wrapperHeight = mainHeight - swiperHeight;
     let wrapper = document.getElementsByClassName("wrapper");
     wrapper[0].style.height = wrapperHeight + "px";
   },
   data() {
     return {
       swiperOption: {
+        loop: true,
         pagination: {
           el: ".swiper-pagination",
+          clickable: true,
         },
-        // ...
+        autoplay: {
+          delay: 1500,
+          stopOnLastSlide: false,
+          disableOnInteraction: true,
+        }, // 可选选项，自动滑动
       },
       title: "这是一个大新闻",
       author: "cccc",

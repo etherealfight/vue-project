@@ -6,13 +6,19 @@
 </template>
 
 <script >
+let num=Math.random() * 10;
+console.log(num);
 export default {
-  data() {
-    return {
-      text: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      imgUrl:
-        "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-    };
+
+  props: {
+    text: {
+      type: String,
+      default: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    },
+    imgUrl: {
+      type: String,
+      default: `https://picsum.photos/460/360?random=${num}`,
+    },
   },
 };
 </script>

@@ -2,11 +2,11 @@
   <div class="mainPage">
     <my-navbar></my-navbar>
     <div class="block">
-      <el-carousel height="15rem" :interval="5000">
-        <el-carousel-item v-for="item in 4" :key="item">
-          <newsimg></newsimg>
-        </el-carousel-item>
-      </el-carousel>
+     <swiper :options="swiperOption" class="czp">
+        <swiper-slide v-for="item in 4" :key="item"
+          ><newsimg></newsimg></swiper-slide>
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
     </div>
     <newslist class="newslist" :newsData="newsData"></newslist>
     <div class="mainFooter">
@@ -20,21 +20,46 @@ import my_navbar from "./my_navbar";
 import my_tabbar from "./my_tabbar";
 import newsImg from "../news/newsImg";
 import newsList from "../news/newsList";
+import "swiper/dist/css/swiper.css";
+import { swiper, swiperSlide } from "vue-awesome-swiper";
+
 export default {
   components: {
     "my-navbar": my_navbar,
     "my-tabbar": my_tabbar,
     newsimg: newsImg,
     newslist: newsList,
+    swiper,
+    swiperSlide,
   },
   data() {
     return {
       // newsData:{}
+      swiperOption: {
+        loop: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        autoplay: {
+          delay: 3000,
+          stopOnLastSlide: false,
+          disableOnInteraction: true,
+        }, // 可选选项，自动滑动
+      },
     };
   },
   methods: {
     move() {
       window.open("https://www.baidu.com", "_blank");
+    },
+    swiperright() {
+      console.log("r");
+      prev();
+    },
+    swiperleft() {
+      console.log("l");
+      next();
     },
   },
 };
@@ -48,14 +73,8 @@ export default {
 .block {
   padding: 2rem;
 }
-.el-carousel {
-  padding: 0 !important;
-}
-.el-carousel__item {
-  color: #475669;
-  line-height: 7.5rem;
-  margin: 0;
-  border-radius: 1rem;
+.swiper-container {
+  border-radius: 0.5rem;
 }
 .newslist {
   padding-bottom: 4rem;
