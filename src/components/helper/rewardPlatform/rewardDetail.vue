@@ -18,7 +18,7 @@
         </div>
         <div class="swiper-pagination"></div>
       </div>
-      <v-touch @swiperight="swiperright" class="wrapper">
+      <v-touch @swiperight="swiperright" class="wrapper" ref="wrapper">
         <div class="rewardDetailContext">
           {{ contentText }}
         </div>
@@ -37,17 +37,7 @@
 <script>
 import { Swiper, SwiperSlide, directive } from "vue-awesome-swiper";
 import "swiper/swiper-bundle.css";
-function set() {
-  let mainHight = document.querySelector(".rewardDetailMain");
-  let swiperHight = document.querySelector(".swiper-container");
-  console.log(window.getComputedStyle(mainHight).height);
-  console.log(window.getComputedStyle(swiperHight).height);
-  let waperHight =
-    window.getComputedStyle(mainHight).height -
-    getComputedStyle(swiperHight).height;
-  let wrapper = document.getElementsByClassName("wrapper");
-  console.log(wrapper);
-}
+
 export default {
   components: {
     Swiper,
@@ -58,7 +48,14 @@ export default {
   },
   mounted() {
     this.mySwiper.slideTo(3, 1000, false);
-    set();
+    let mainHight = document.querySelector(".rewardDetailMain").offsetHeight;
+    let swiperHight = document.querySelector(".swiper-container").offsetHeight;
+    let footerHight = document.querySelector(".rewardDetailFooter").offsetHeight;
+    let waperHight = mainHight - swiperHight - footerHight-20;
+    let wrapper = document.getElementsByClassName("wrapper");
+    console.log(wrapper);
+    console.log(waperHight);
+    wrapper[0].style.height = waperHight + "px";
   },
   data() {
     return {
@@ -73,7 +70,7 @@ export default {
         "https://picsum.photos/360/460?random=2",
         "https://picsum.photos/360/460?random=3",
       ],
-      contentText: "ccccccccccccccc",
+      contentText: "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
       date: "2021-01-25",
       id: 0,
       username: "aaa",
@@ -92,10 +89,6 @@ export default {
     },
   },
 };
-function setWaper() {
-  let mainHght = document.querySelector(".rewardDetailMain");
-  console.log(mainHght);
-}
 </script>
 
 <style scoped>
@@ -139,8 +132,8 @@ html {
   border-bottom: 1px solid rgb(244, 244, 244);
 }
 .rewardDetail .rewardDetailTitle .rewardDetailUserImg {
-  width: 7rem;
-  height: 7rem;
+  width: 6rem;
+  height: 6rem;
   border-radius: 50%;
 }
 .rewardDetail .rewardDetailTitle .nameBox {
@@ -156,6 +149,7 @@ html {
   height: 100%;
   padding: 1rem 0 6rem 0;
   overflow: scroll;
+  box-sizing: border-box;
 }
 .swiper-container {
   width: 30rem;
