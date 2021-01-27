@@ -88,8 +88,8 @@ export default {
     padding-right: 1rem;
 }
 .newsImg ul li img{
-    width: 10rem;
-    height: 8rem;
+    width: 28vw;
+    height: 13vh;
     border-radius: 0.5rem;
 }
 .newsIntroduction {

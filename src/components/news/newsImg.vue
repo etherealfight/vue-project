@@ -1,23 +1,21 @@
 <template>
   <div class="newsImg">
-    <img :src="imgUrl" />
+    <img :src="imgUrl+num" />
     <span>{{ text }}</span>
   </div>
 </template>
 
 <script >
-let num=Math.random() * 10;
-console.log(num);
 export default {
-
   props: {
+    num: {},
     text: {
       type: String,
       default: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     },
     imgUrl: {
       type: String,
-      default: `https://picsum.photos/460/360?random=${num}`,
+      default: `https://picsum.photos/460/360?random=`,
     },
   },
 };

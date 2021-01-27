@@ -39,9 +39,9 @@ export default {
           contentText:
             "23333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
           fileaddress: [
-            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-             "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-              "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
+            "https://picsum.photos/460/360?random=1",
+             "https://picsum.photos/460/360?random=5",
+              "https://picsum.photos/460/360?random=6",
           ],
           date: "2021-1-11",
         },
@@ -51,9 +51,9 @@ export default {
           title:"这是一个大大大大大大大新闻",
           contentText: "2333333333",
           fileaddress: [
-            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-             "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-              "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
+            "https://picsum.photos/460/360?random=7",
+             "https://picsum.photos/460/360?random=8",
+              "https://picsum.photos/460/360?random=9",
           ],
           date: "2021-1-16",
         },
@@ -63,7 +63,7 @@ export default {
           title:"这是一个大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大新闻",
           contentText: "2333333333",
           fileaddress: [
-            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
+            "https://picsum.photos/460/360?random=11",
           ],
           date: "2021-1-16",
         },
