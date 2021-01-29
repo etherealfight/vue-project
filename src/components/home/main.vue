@@ -3,7 +3,6 @@
     <div class="content">
       <div class="mainPage">
         <my-navbar></my-navbar>
-
         <div class="block">
           <swiper :options="swiperOption" class="czp">
             <swiper-slide v-for="item in 4" :key="item"
@@ -73,6 +72,8 @@ export default {
         const wrapper = document.querySelector(".wrapper");
         this.scroll = new BScroll(wrapper, {
           pullUpLoad: true,
+          click: true,
+          tap: true,
           pullUpLoad: {
             threshold: -30, // 当上拉距离超过30px时触发 pullingUp 事件
           },

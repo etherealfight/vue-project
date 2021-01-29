@@ -1,7 +1,11 @@
 <template>
   <div class="helperbox">
     <helperbar class="helperbar" :activeIndex="activeIndex"></helperbar>
-    <router-view class="router"></router-view>
+    <div class="helperwrapper">
+      <div class="content">
+        <router-view class="router"></router-view>
+      </div>
+    </div>
     <mytabbar class="mytabbar" activeIndex="2"></mytabbar>
   </div>
 </template>
@@ -9,6 +13,7 @@
 <script>
 import helperbar from "./helperbar";
 import mytabbar from "../home/my_tabbar";
+import BScroll from "better-scroll";
 
 export default {
   data() {
@@ -19,11 +24,36 @@ export default {
     };
   },
   mounted() {
-    window.addEventListener("touchstart",this.startTouch);
+    this.loadData();
+    console.log(this.$route.path);
+    window.addEventListener("touchstart", this.startTouch);
     window.addEventListener("touchend", this.endTouch);
+    if (this.$route.path === "/helper/learningList") {
+      this.activeIndex="2";
+    } else {
+      this.activeIndex="1";
+    }
   },
   components: { helperbar: helperbar, mytabbar: mytabbar },
   methods: {
+    loadData() {
+      this.$nextTick(() => {
+        const wrapper = document.querySelector(".helperwrapper");
+        this.scroll = new BScroll(wrapper, {
+          pullUpLoad: true,
+          click: true,
+          tap: true,
+          pullUpLoad: {
+            threshold: -30, // 当上拉距离超过30px时触发 pullingUp 事件
+          },
+        });
+        console.log(this.scroll);
+        this.scroll.on("pullingUp", () => {
+          console.log("jz");
+          this.scroll.finishPullUp();
+        });
+      });
+    },
     startTouch(e) {
       this.debounce(this.handletouchs(e), 250);
     },
@@ -94,20 +124,32 @@ export default {
     },
   },
   destroyed() {
-    window.removeEventListener("touchstart",this.startTouch);
-    window.removeEventListener("touchend",this.endTouch);
+    window.removeEventListener("touchstart", this.startTouch);
+    window.removeEventListener("touchend", this.endTouch);
   },
 };
 </script>
 
 <style>
+.helperwrapper {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  left: 0;
+  top: 0;
+  margin: 0 auto;
+  overflow: hidden;
+}
 .helperbox {
   display: flex;
+  width: 100vw;
+  height: 100vh;
   flex-direction: column;
   background: rgb(244, 244, 244);
 }
 .helperbox .helperbar {
   position: fixed;
+  z-index: 5;
   top: 0;
 }
 .router {

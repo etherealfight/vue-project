@@ -10,6 +10,7 @@ import helper from '../components/helper/helper'
 import rewardList from '../components/helper/rewardPlatform/rewardList'
 import learningList from '../components/helper/learningPlatform/learningList'
 import rewardDetail from '../components/helper/rewardPlatform/rewardDetail'
+import learningDetail from '../components/helper/learningPlatform/learningDetail'
 import chat from '../components/chat/chat'
 Vue.use(VueRouter)
 
@@ -64,6 +65,11 @@ const routes = [{
     path: '/rewardDetail',
     name: 'rewardDetail',
     component: rewardDetail
+  },
+  {
+    path: '/learningDetail',
+    name: 'learningDetail',
+    component: learningDetail
   },
   {
     path: '/chat',

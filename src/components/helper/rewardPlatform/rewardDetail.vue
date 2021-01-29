@@ -96,7 +96,7 @@ html {
   width: 100vw;
   height: 100vh;
 }
-.wrapper {
+.rewardDetailMain .wrapper {
   width: 100vw;
   touch-action: pan-y !important;
 }
