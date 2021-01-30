@@ -1,39 +1,51 @@
 <template>
-  <div class="learnDetail">
-    <div class="learnDetailt"><span> 学习平台</span></div>
-    <i class="el-icon-back" @click="back"></i>
-    <div class="learnDetailTitle">
-      <img :src="userimg" class="learnDetailUserImg" />
-      <div class="nameBox">
-        <div class="learnDetailName">{{ username }}</div>
-        <div class="learnDetailDate">{{ date }}</div>
-      </div>
-    </div>
-    <div class="learnDetailMain">
-      <swiper :options="swiperOption" class="czp">
-        <swiper-slide v-for="imgurl in fileaddress" :key="imgurl"
-          ><img :src="imgurl"
-        /></swiper-slide>
-        <div class="swiper-pagination" slot="pagination"></div>
-      </swiper>
-      <video-player
-        class="video-player"
-        ref="videoPlayer"
-        :playsinline="true"
-        :options="playerOptions"
-      ></video-player>
-      <v-touch @swiperight="swiperright" class="wrapper" ref="wrapper">
-        <div class="learnDetailContext">
-          {{ contentText }}
+  <div class="bswrapper">
+    <div class="content">
+      <div class="learnDetail">
+        <div class="learnDetailt"><span> 学习平台</span></div>
+        <i class="el-icon-back" @click="back"></i>
+        <div class="learnDetailTitle">
+          <img :src="userimg" class="learnDetailUserImg" />
+          <div class="nameBox">
+            <div class="learnDetailName">{{ username }}</div>
+            <div class="learnDetailDate">{{ date }}</div>
+          </div>
         </div>
-      </v-touch>
-    </div>
-    <div class="learnDetailFooter">
-      <div class="learnDetailmessage">
-        <img src="../../../assets/lt_un.png" />
-        <span>留言</span>
+        <div class="learnDetailMain">
+          <swiper :options="swiperOption" class="czp">
+            <swiper-slide v-for="imgurl in fileaddress" :key="imgurl"
+              ><img :src="imgurl"
+            /></swiper-slide>
+            <div class="swiper-pagination" slot="pagination"></div>
+          </swiper>
+          <video-player
+            class="video-player"
+            ref="videoPlayer"
+            :playsinline="true"
+            :options="playerOptions"
+          ></video-player>
+          <v-touch @swiperight="swiperright" class="wrapper" ref="wrapper">
+            <div class="learnDetailContext">
+              {{ contentText }}
+            </div>
+            <div class="commentBox">
+              <div class="commentTitle">
+                <span>评论</span>
+              </div>
+              <div class="commentMain">
+                <commentList></commentList>
+              </div>
+            </div>
+          </v-touch>
+        </div>
       </div>
-      <el-button>接</el-button>
+      <div class="learnDetailFooter">
+        <div class="learnDetailmessage">
+          <img src="../../../assets/lt_un.png" />
+          <span>留言</span>
+        </div>
+        <el-button>接</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -42,13 +54,17 @@
 import "swiper/dist/css/swiper.css";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import "video.js/dist/video-js.css";
+import commentList from "./commentList";
+import BScroll from "better-scroll";
 
 export default {
   components: {
     swiper,
     swiperSlide,
+    commentList,
   },
   mounted() {
+    this.loadData();
     let mainHight = document.querySelector(".learnDetailMain").offsetHeight;
     let swiperHight = document.querySelector(".swiper-container").offsetHeight;
     let vedioHight = document.querySelector(".video-player").offsetHeight;
@@ -58,6 +74,9 @@ export default {
     console.log(wrapper);
     console.log(waperHight);
     wrapper[0].style.height = waperHight + "px";
+
+    let bodyHeight = document.documentElement.scrollHeight;
+    console.log("gao", bodyHeight);
   },
   data() {
     return {
@@ -85,8 +104,8 @@ export default {
         fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
         sources: [
           {
-            type: "video/mp4", // 这里的种类支持很多种：基本视频格式、直播、流媒体等，具体可以参看git网址项目
-            src: require("@/assets/test.mp4"), // url地址
+            type: "video/mp4",
+            src: require("@/assets/test.mp4"),
           },
         ],
         // width: document.documentElement.clientWidth, //播放器宽度
@@ -121,18 +140,39 @@ export default {
     swiperright() {
       this.$router.back(-1);
     },
+    loadData() {
+      this.$nextTick(() => {
+        const wrapper = document.querySelector(".bswrapper");
+        this.scroll = new BScroll(wrapper, {
+          pullUpLoad: true,
+          click: true,
+          tap: true,
+          pullUpLoad: {
+            threshold: -30, // 当上拉距离超过30px时触发 pullingUp 事件
+          },
+        });
+        console.log(this.scroll);
+        this.scroll.on("pullingUp", () => {
+          console.log("jz");
+          this.scroll.finishPullUp();
+        });
+      });
+    },
   },
 };
 </script>
 
 <style scoped>
+.bswrapper {
+  position: absolute;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+}
 video {
   width: 100vw;
   height: 50vh;
-}
-html {
-  width: 100vw;
-  height: 100vh;
 }
 .learnDetailMain .wrapper {
   width: 100vw;
@@ -155,7 +195,6 @@ html {
 .learnDetail {
   display: flex;
   flex-direction: column;
-  height: 100vh;
 }
 .learnDetailt {
   font-size: 2rem;
@@ -192,9 +231,7 @@ html {
 }
 .learnDetail .learnDetailMain {
   width: 100vw;
-  height: 100%;
   padding: 1rem 0 6rem 0;
-  overflow: scroll;
   box-sizing: border-box;
 }
 .swiper-container {
@@ -235,5 +272,17 @@ html {
 }
 .learnDetailFooter .el-button {
   height: 4rem;
+}
+.commentBox {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 6rem;
+}
+.commentBox .commentTitle {
+  padding: 1rem 2rem 1rem 2rem;
+  border-top: 1rem solid rgb(244, 244, 244);
+}
+.commentBox .commentTitle span {
+  font-size: 1.5rem;
 }
 </style>

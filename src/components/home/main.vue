@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="bswrapper">
     <div class="content">
       <div class="mainPage">
         <my-navbar></my-navbar>
@@ -69,7 +69,7 @@ export default {
     },
     loadData() {
       this.$nextTick(() => {
-        const wrapper = document.querySelector(".wrapper");
+        const wrapper = document.querySelector(".bswrapper");
         this.scroll = new BScroll(wrapper, {
           pullUpLoad: true,
           click: true,
@@ -93,7 +93,7 @@ export default {
 .mainPage {
   width: 100vw;
 }
-.wrapper {
+.bswrapper {
   position: absolute;
   height: 100vh;
   left: 0;

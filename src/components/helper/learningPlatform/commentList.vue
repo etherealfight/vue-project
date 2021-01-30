@@ -13,7 +13,7 @@
 
 <script>
 import comment from "./comment";
-import comment from './comment.vue';
+
 export default {
   components: {
     comment,
