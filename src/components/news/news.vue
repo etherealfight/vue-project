@@ -68,8 +68,7 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  padding: 0 0 1rem 0;
-  height: 3.5rem;
+  height: 3.4rem;
   font-size: 1.25rem;
   overflow: hidden;
   word-wrap: break-word;

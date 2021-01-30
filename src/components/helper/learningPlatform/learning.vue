@@ -1,12 +1,12 @@
 <template>
-  <div class="rewardBox" @click="toDetail">
-    <div class="rewardHeader">
+  <div class="learnBox" @click="toDetail">
+    <div class="learnHeader">
       <img :src="userimg" class="userImg" />
       <div class="userName">{{ username }}</div>
     </div>
-    <div class="rewardMain">
-      <div class="rewardText">{{ contentText }}</div>
-      <div class="rewardImgBox">
+    <div class="learnMain">
+      <div class="learnText">{{ contentText }}</div>
+      <div class="learnImgBox">
         <ul>
           <li v-for="(img, index) in fileaddress" :key="index">
             <img :src="fileaddress[index]" />
@@ -14,9 +14,9 @@
         </ul>
       </div>
     </div>
-    <div class="rewardFooter">
-      <div class="rewardDate">{{ date }}</div>
-      <div class="rewardClicks">评论：{{ clicks }}</div>
+    <div class="learnFooter">
+      <div class="learnDate">{{ date }}</div>
+      <div class="learnClicks">评论：{{ clicks }}</div>
     </div>
   </div>
 </template>
@@ -61,15 +61,15 @@ export default {
     },
   },
   methods: {
-    toDetail(){
-      this.$router.push({path:"/learningDetail"})
-    }
-  }
+    toDetail() {
+      this.$router.push({ path: "/learningDetail" });
+    },
+  },
 };
 </script>
 
 <style>
-.rewardBox {
+.learnBox {
   width: 94vw;
   margin-top: 1.5rem;
   border-radius: 1rem;
@@ -80,46 +80,48 @@ export default {
   box-sizing: border-box;
   background: white;
 }
-.rewardHeader {
+.learnHeader {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   padding-top: 2rem;
 }
-.rewardBox .rewardHeader .userImg {
+.learnBox .learnHeader .userImg {
   width: 6rem;
   height: 6rem;
   border-radius: 50%;
   margin-right: 2rem;
 }
-.rewardBox .rewardHeader .userName {
+.learnBox .learnHeader .userName {
   font-size: 1.5rem;
 }
-.rewardBox .rewardMain {
+.learnBox .learnMain {
   padding-top: 1.5rem;
 }
-.rewardBox .rewardMain .rewardText {
+.learnBox .learnMain .learnText {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  padding: 0 0 1.5rem 0;
-  height: 2rem;
+  height: 2.9rem;
+  margin-bottom: 1rem;
   overflow: hidden;
   word-wrap: break-word;
   text-overflow: ellipsis;
 }
-.rewardBox .rewardMain .rewardImgBox ul {
+.learnBox .learnMain .learnImgBox ul {
   display: flex;
   justify-content: flex-start;
 }
-.rewardBox .rewardMain li {
+.learnBox .learnMain li {
   list-style: none;
   padding-right: 1rem;
 }
-.rewardBox .rewardMain li img {
+.learnBox .learnMain li img {
   border-radius: 0.5rem;
+  width: 25vw;
+  height: 12vh;
 }
-.rewardBox .rewardFooter {
+.learnBox .learnFooter {
   display: flex;
   justify-content: space-around;
   align-items: center;

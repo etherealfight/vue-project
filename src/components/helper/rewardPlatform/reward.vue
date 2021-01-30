@@ -61,10 +61,10 @@ export default {
     },
   },
   methods: {
-    toDetail(){
-      this.$router.push({path:"/rewardDetail"})
-    }
-  }
+    toDetail() {
+      this.$router.push({ path: "/rewardDetail" });
+    },
+  },
 };
 </script>
 
@@ -102,11 +102,12 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  padding: 0 0 1.5rem 0;
-  height: 2rem;
+  height: 2.9rem;
   overflow: hidden;
   word-wrap: break-word;
   text-overflow: ellipsis;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
 }
 .rewardBox .rewardMain .rewardImgBox ul {
   display: flex;
@@ -118,6 +119,8 @@ export default {
 }
 .rewardBox .rewardMain li img {
   border-radius: 0.5rem;
+  width: 25vw;
+  height: 12vh;
 }
 .rewardBox .rewardFooter {
   display: flex;

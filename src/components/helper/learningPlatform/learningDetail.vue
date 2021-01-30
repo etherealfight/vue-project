@@ -41,7 +41,7 @@
 <script>
 import "swiper/dist/css/swiper.css";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
-import 'video.js/dist/video-js.css'
+import "video.js/dist/video-js.css";
 
 export default {
   components: {
@@ -51,8 +51,9 @@ export default {
   mounted() {
     let mainHight = document.querySelector(".learnDetailMain").offsetHeight;
     let swiperHight = document.querySelector(".swiper-container").offsetHeight;
+    let vedioHight = document.querySelector(".video-player").offsetHeight;
     let footerHight = document.querySelector(".learnDetailFooter").offsetHeight;
-    let waperHight = mainHight - swiperHight - footerHight - 20;
+    let waperHight = mainHight - swiperHight - footerHight - vedioHight - 20;
     let wrapper = document.getElementsByClassName("wrapper");
     console.log(wrapper);
     console.log(waperHight);
@@ -85,8 +86,8 @@ export default {
         sources: [
           {
             type: "video/mp4", // 这里的种类支持很多种：基本视频格式、直播、流媒体等，具体可以参看git网址项目
-            src: require("@/assets/test.mp4") // url地址
-          }
+            src: require("@/assets/test.mp4"), // url地址
+          },
         ],
         // width: document.documentElement.clientWidth, //播放器宽度
         notSupportedMessage: "此视频暂无法播放，请稍后再试", // 允许覆盖Video.js无法播放媒体源时显示的默认信息。
@@ -94,8 +95,8 @@ export default {
           timeDivider: true,
           durationDisplay: true,
           remainingTimeDisplay: false,
-          fullscreenToggle: true // 全屏按钮
-        }
+          fullscreenToggle: true, // 全屏按钮
+        },
       },
       fileaddress: [
         "https://picsum.photos/460/360?random=1",
@@ -137,13 +138,13 @@ html {
   width: 100vw;
   touch-action: pan-y !important;
 }
-.learnDetailMain .video-player{
-    width: 100vw;
-    padding: 2rem;
-    box-sizing: border-box;
+.learnDetailMain .video-player {
+  width: 100vw;
+  padding: 2rem;
+  box-sizing: border-box;
 }
-.vjs-big-play-button{
-    height: 20rem !important;
+.vjs-big-play-button {
+  height: 20rem !important;
 }
 .el-icon-back {
   position: absolute;
