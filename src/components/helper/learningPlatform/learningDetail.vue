@@ -35,16 +35,13 @@
               <div class="commentMain">
                 <commentList></commentList>
               </div>
+              <div class="newComment">
+                <textarea id="newComment" cols="30" rows="5" placeholder="说些啥吧"></textarea>
+                <el-button>发表</el-button>
+              </div>
             </div>
           </v-touch>
         </div>
-      </div>
-      <div class="learnDetailFooter">
-        <div class="learnDetailmessage">
-          <img src="../../../assets/lt_un.png" />
-          <span>留言</span>
-        </div>
-        <el-button>接</el-button>
       </div>
     </div>
   </div>
@@ -231,7 +228,7 @@ video {
 }
 .learnDetail .learnDetailMain {
   width: 100vw;
-  padding: 1rem 0 6rem 0;
+  padding: 1rem 0 0 0;
   box-sizing: border-box;
 }
 .swiper-container {
@@ -249,34 +246,22 @@ video {
   display: -webkit-box;
   word-break: break-all;
 }
-.learnDetailFooter {
-  width: 100vw;
-  padding: 0 2rem 0 2rem;
-  background: white;
+.newComment{
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  border-top: 1px solid rgb(244, 244, 244);
-  bottom: 0%;
+  justify-content: space-around;
+  align-items: flex-end;
+  padding: 2rem;
   box-sizing: border-box;
+  border-top: 1px solid rgb(244, 244, 244);
+  border-bottom: 1px solid rgb(244, 244, 244);
 }
-.learnDetailmessage img {
-  width: 4rem;
-  height: 4rem;
-}
-.learnDetailFooter .learnDetailmessage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.learnDetailFooter .el-button {
-  height: 4rem;
+.newComment #newComment{
+  padding: 1rem;
+  outline: none;
 }
 .commentBox {
   display: flex;
   flex-direction: column;
-  padding-bottom: 6rem;
 }
 .commentBox .commentTitle {
   padding: 1rem 2rem 1rem 2rem;
@@ -285,4 +270,5 @@ video {
 .commentBox .commentTitle span {
   font-size: 1.5rem;
 }
+
 </style>
