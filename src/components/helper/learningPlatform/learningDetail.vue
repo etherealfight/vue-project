@@ -36,7 +36,7 @@
                 <commentList></commentList>
               </div>
               <div class="newComment">
-                <textarea id="newComment" cols="30" rows="5" placeholder="说些啥吧"></textarea>
+                <textarea id="newComment" cols="30" rows="1" placeholder="说些啥吧"></textarea>
                 <el-button>发表</el-button>
               </div>
             </div>
@@ -258,6 +258,8 @@ video {
 .newComment #newComment{
   padding: 1rem;
   outline: none;
+  background: rgb(244, 244, 244);
+  border-radius: 2rem;
 }
 .commentBox {
   display: flex;
