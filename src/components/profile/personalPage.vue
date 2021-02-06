@@ -1,46 +1,64 @@
-<!--
-* @FileDescription:用户主页组件，用于查看用户主页
--->
+
 <template>
   <div id="personalMain">
-    <mainHead></mainHead>
-    <div class="personalMiddle">
-      <div class="personalIntroduction">
-        <div class="personalImg">
-          <img :src="userImage" class="personalImg" />
+    <div class="personaltop">
+      <i class="el-icon-back" @click="back"></i>
+      <div class="personalMiddle">
+        <div class="personalIntroduction">
+          <div class="personalImg">
+            <img :src="userImage" class="personalImg" />
+          </div>
+          <div class="personalText">
+            <span style="font-size: 1.75rem">{{ username }}</span>
+            <span class="personalWords">个性签名：{{ sign }}</span>
+            <span class="personalWords">个人简介：{{ introduction }}</span>
+          </div>
+          <el-button
+            v-show="showChange"
+            class="personalChange"
+            @click="personalChange"
+            >修改个人资料</el-button
+          >
         </div>
-        <div class="personalText">
-          <span style="font-size: 30px">{{ username }}</span>
-          <span class="personalWords">个性签名：{{ sign }}</span>
-          <span class="personalWords">个人简介：{{ introduction }}</span>
+        <div class="personalContents">
+          <el-button
+            :loading="true"
+            class="mainMore"
+            v-if="showLoading"
+          ></el-button>
         </div>
-        <el-button
-          v-show="showChange"
-          class="personalChange"
-          @click="personalChange"
-          >修改个人资料</el-button
-        >
       </div>
-      <div class="personalContents">
-        <contentList id="personalList" :contentData="datas"></contentList>
-        <el-button
-          :loading="true"
-          class="mainMore"
-          v-if="showLoading"
-        ></el-button>
+      <div class="personalpageBar">
+        <personalpageBar :activeIndex="activeIndex"></personalpageBar>
+      </div>
+    </div>
+    <div class="personalwrapper">
+      <div class="personalpageMain">
+        <v-touch
+          @swiperight="swiperright"
+          @swipeleft="swiperleft"
+          class="wrapper"
+          ref="wrapper"
+        >
+          <div class="list">
+            <router-view class="router"></router-view>
+          </div>
+        </v-touch>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import mainHead from "../Homepage/main-header";
-import contentList from "../Homepage/contentList";
-import { searchData1 } from "../../api";
+import personalpageBar from "./personalpageBar";
+import { swiper, swiperSlide } from "vue-awesome-swiper";
+import BScroll from "better-scroll";
+
 export default {
   components: {
-    mainHead: mainHead,
-    contentList: contentList,
+    personalpageBar,
+    swiper,
+    swiperSlide,
   },
   data() {
     return {
@@ -53,57 +71,62 @@ export default {
       userImage: this.$route.query.userImage,
       sign: this.$route.query.sign,
       introduction: this.$route.query.introduction,
+      activeIndex: "1",
     };
   },
-  async created() {
-    let that = this;
-    const res = await searchData1(that.username, this.pageNum);
-    if ((this.totalNum = 0)) {
-      this.$message.warning("没有满足条件的内容");
-    }
-    this.datas = res.detail;
-    this.totalNum = res.pageNumber;
-    //console.log(res);
-    this.pageNum++;
-  },
   mounted() {
-    window.addEventListener("scroll", this.handleScroll);
+    console.log(this.$route.query.username);
+    this.loadData();
+    let personalMiddle=document.querySelector(".personalMiddle").offsetHeight;   
+    let personalpageBarHeight=document.querySelector(".personalpageBar").offsetHeight;
+    let personaltop=document.querySelector(".personaltop").offsetHeight;
+    let personalwrapper=document.querySelector(".personalwrapper").offsetHeight;
+    personalwrapper=personalwrapper+personaltop-personalMiddle-personalpageBarHeight;
+    let wrapper=document.getElementsByClassName("personalwrapper");
+    wrapper[0].style.height=personalwrapper+"px";
   },
   methods: {
-    /**
-     * 根据查询条件获取文章信息
-     */
-    async getData() {
-      let that = this;
-      try {
-        const res1 = await searchData1(that.keyword, that.pageNum);
-        //console.log(res1);
-        this.datas = [...this.datas, ...res1.detail];
-        this.pageNum++;
-      } catch (error) {
-        this.$message.warning(error.message);
-      }
-    },
-    /**
-     * 监听屏幕滚动情况，到底时动态加载文章组件
-     */
-    handleScroll() {
-      if (
-        document.documentElement.scrollTop + window.innerHeight >=
-        document.body.scrollHeight - 1
-      ) {
-        if (this.pageNum > this.totalNum) {
-          this.$message.info("到底啦别拉了");
-          this.showLoading = false;
-          return;
-        } else {
-          this.showLoading = true;
-          this.getData();
-        }
-      }
-    },
     personalChange() {
       this.$router.push("/profile");
+    },
+    back() {
+      this.$router.push("/helper");
+    },
+    swiperright() {
+      console.log("r");
+      if (this.activeIndex === "2") {
+        this.$router.push({ path: "/personalPage/rewardList" });
+        this.activeIndex = "1";
+        console.log("r2");
+      }
+    },
+    swiperleft() {
+      console.log("l");
+      console.log(this.activeIndex);
+      if (this.activeIndex === "1") {
+        this.$router.push({ path: "/personalPage/learningList" });
+        this.activeIndex = "2";
+        console.log("l2");
+      }
+    },
+    loadData() {
+      this.$nextTick(() => {
+        const wrapper = document.querySelector(".personalwrapper");
+        this.scroll = new BScroll(wrapper, {
+          pullUpLoad: true,
+          scrollX: true,
+          click: true,
+          tap: true,
+          pullUpLoad: {
+            threshold: -30, // 当上拉距离超过30px时触发 pullingUp 事件
+          },
+        });
+        console.log(this.scroll);
+        this.scroll.on("pullingUp", () => {
+          console.log("jz");
+          this.scroll.finishPullUp();
+        });
+      });
     },
   },
   computed: {
@@ -117,6 +140,15 @@ export default {
 </script>
 
 <style scoped>
+.personaltop {
+  height: 30vh;
+}
+.el-icon-back {
+  position: absolute;
+  font-size: 3rem;
+  left: 5%;
+  top: 2%;
+}
 .personalMiddle {
   display: flex;
   flex-direction: column;
@@ -124,37 +156,57 @@ export default {
   align-items: center;
 }
 .personalIntroduction {
-  height: 200px;
-  width: 840px;
-  padding-top: 40px;
+  height: 20vh;
+  width: 100vw;
+  padding-top: 2rem;
   background: url("http://www.shuoshuodaitupian.com/css/userpage_back.jpg")
     no-repeat;
   background-size: cover;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  box-sizing: border-box;
 }
 .personalImg {
-  margin: 0 20px 0 20px;
-  width: 120px;
-  height: 120px;
-  border-radius: 10px;
+  margin: 0 2rem 0 1rem;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
 }
 .personalText {
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  font-size: 1.5rem;
+  padding: 1rem;
 }
 
 .personalWords {
-  font-size: 15px;
-  padding-top: 5px;
-  width: 600px;
-  word-break: break-all; 
+  padding-top: 0.25rem;
+  word-break: break-all;
 }
 .personalChange {
-  margin-left: -130px;
-  margin-top: -80px ;
-  padding: 10px;
-} 
+  margin-left: -6.5rem;
+  margin-top: -4rem;
+  padding: 0.5rem;
+}
+.personalpageBar {
+  box-sizing: border-box;
+  background: rgb(240, 240, 240);
+}
+.personalpageMain {
+  background: rgb(240, 240, 240);
+}
+.personalpageMain .wrapper .router {
+  padding: 0;
+}
+.personalwrapper {
+  position: absolute;
+  height: 70vh;
+  width: 100vw;
+  left: 0;
+  bottom: 0;
+  margin: 0 auto;
+  overflow: hidden;
+}
 </style>

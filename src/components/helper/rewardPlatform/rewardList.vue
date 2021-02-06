@@ -6,6 +6,8 @@
       :id="item.id"
       :username="item.username"
       :userimg="item.userimg"
+      :sign="item.sign"
+      :introduction="item.introduction"
       :fileaddress="item.fileaddress"
       :contentText="item.contentText"
       :date="item.date"
@@ -29,6 +31,8 @@ export default {
           username: "quan",
           userimg:
             "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
+          sign: "hhhhhhhhhh",
+          introduction: "6666666666666666666666",
           contentText:
             "23333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
           fileaddress: [
@@ -44,6 +48,8 @@ export default {
           username: "quan",
           userimg:
             "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
+          sign: "hhhhhhhhhh",
+          introduction: "6666666666666666666666",
           contentText: "2333333333",
           fileaddress: [
             "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
@@ -57,6 +63,8 @@ export default {
           username: "quan",
           userimg:
             "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
+          sign: "hhhhhhhhhh",
+          introduction: "6666666666666666666666",
           contentText: "2333333333",
           fileaddress: [
             "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
@@ -71,7 +79,7 @@ export default {
 </script>
 
 <style>
-.rewardList{
+.rewardList {
   display: flex;
   flex-direction: column;
   justify-content: center;

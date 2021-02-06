@@ -3,7 +3,6 @@
 -->
 <template>
   <div id="mypersonalMain">
-    <mainHead></mainHead>
     <div class="mypersonalMiddle">
       <div class="mypersonalIntroduction">
         <div class="mypersonalImg">
@@ -17,7 +16,6 @@
         <el-button v-show="showChange" class="mypersonalChange" @click="personalChange">修改个人资料</el-button>
       </div>
       <div class="mypersonalContents">
-        <contentList id="mypersonalList" :contentData="datas"></contentList>
         <el-button
           :loading="true"
           class="mymainMore"
@@ -29,13 +27,9 @@
 </template>
 
 <script>
-import mainHead from "../Homepage/main-header";
-import contentList from "../Homepage/contentList";
-import { searchData1 } from "../../api";
+
 export default {
   components: {
-    mainHead: mainHead,
-    contentList: contentList,
   },
   data() {
     return {

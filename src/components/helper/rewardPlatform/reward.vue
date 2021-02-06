@@ -1,10 +1,10 @@
 <template>
-  <div class="rewardBox" @click="toDetail">
-    <div class="rewardHeader">
+  <div class="rewardBox">
+    <div class="rewardHeader" @click="toPersonal">
       <img :src="userimg" class="userImg" />
       <div class="userName">{{ username }}</div>
     </div>
-    <div class="rewardMain">
+    <div class="rewardMain" @click="toDetail">
       <div class="rewardText">{{ contentText }}</div>
       <div class="rewardImgBox">
         <ul>
@@ -14,7 +14,7 @@
         </ul>
       </div>
     </div>
-    <div class="rewardFooter">
+    <div class="rewardFooter" @click="toDetail">
       <div class="rewardDate">{{ date }}</div>
       <div class="rewardClicks">点击量：{{ clicks }}</div>
     </div>
@@ -54,6 +54,14 @@ export default {
       type: String,
       default: "",
     },
+    sign: {
+      type: String,
+      default: "",
+    },
+    introduction: {
+      type: String,
+      default: "",
+    },
     //点击量
     clicks: {
       type: Number,
@@ -61,6 +69,29 @@ export default {
     },
   },
   methods: {
+    toPersonal() {
+      if (this.$store.state.userName === this.username) {
+        this.$router.push({
+          path: "/mypersonalPage",
+          query: {
+            username: this.username,
+            userImage: this.userimg,
+            sign: this.sign,
+            introduction: this.introduction,
+          },
+        });
+      } else {
+        this.$router.push({
+          path: "/personalPage" ,
+          query: {
+            username: this.username,
+            userImage: this.userimg,
+            sign: this.sign,
+            introduction: this.introduction,
+          },
+        });
+      }
+    },
     toDetail() {
       this.$router.push({ path: "/rewardDetail" });
     },

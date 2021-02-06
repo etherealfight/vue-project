@@ -1,10 +1,10 @@
 <template>
-  <div class="learnBox" @click="toDetail">
+  <div class="learnBox">
     <div class="learnHeader">
       <img :src="userimg" class="userImg" />
       <div class="userName">{{ username }}</div>
     </div>
-    <div class="learnMain">
+    <div class="learnMain" @click="toDetail">
       <div class="learnText">{{ contentText }}</div>
       <div class="learnImgBox">
         <ul>
@@ -14,7 +14,7 @@
         </ul>
       </div>
     </div>
-    <div class="learnFooter">
+    <div class="learnFooter" @click="toDetail">
       <div class="learnDate">{{ date }}</div>
       <div class="learnClicks">评论：{{ clicks }}</div>
     </div>
