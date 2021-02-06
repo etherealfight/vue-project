@@ -44,6 +44,10 @@ export default {
       type: Number,
       default: 0,
     },
+    userId:{
+      type: Number,
+      default: 0,
+    },
     //作者
     username: {
       type: String,
@@ -71,24 +75,14 @@ export default {
   methods: {
     toPersonal() {
       if (this.$store.state.userName === this.username) {
+        this.$store.commit('changeId', {currenrId:this.userId})
         this.$router.push({
-          path: "/mypersonalPage",
-          query: {
-            username: this.username,
-            userImage: this.userimg,
-            sign: this.sign,
-            introduction: this.introduction,
-          },
+          name: "mypersonalPage",
         });
       } else {
+        this.$store.commit('changeId', {currenrId:this.userId})
         this.$router.push({
-          path: "/personalPage" ,
-          query: {
-            username: this.username,
-            userImage: this.userimg,
-            sign: this.sign,
-            introduction: this.introduction,
-          },
+          name: "personalPage" ,
         });
       }
     },

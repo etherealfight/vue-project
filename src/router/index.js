@@ -93,6 +93,7 @@ const routes = [{
     path: '/mypersonalPage',
     name: 'mypersonalPage',
     component: mypersonalPage,
+    redirect: '/mypersonalPage/rewardList',
     children: [{
         path: 'rewardList',
         component: rewardList

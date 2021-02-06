@@ -1,6 +1,6 @@
 <template>
   <div class="learnBox">
-    <div class="learnHeader">
+    <div class="learnHeader" @click="toPersonal">
       <img :src="userimg" class="userImg" />
       <div class="userName">{{ username }}</div>
     </div>
@@ -63,6 +63,19 @@ export default {
   methods: {
     toDetail() {
       this.$router.push({ path: "/learningDetail" });
+    },
+    toPersonal() {
+      if (this.$store.state.userName === this.username) {
+        this.$store.commit('changeId', {currenrId:this.userId})
+        this.$router.push({
+          name: "mypersonalPage",
+        });
+      } else {
+        this.$store.commit('changeId', {currenrId:this.userId})
+        this.$router.push({
+          name: "personalPage" ,
+        });
+      }
     },
   },
 };

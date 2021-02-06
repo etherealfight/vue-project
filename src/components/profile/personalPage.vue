@@ -1,4 +1,3 @@
-
 <template>
   <div id="personalMain">
     <div class="personaltop">
@@ -67,23 +66,37 @@ export default {
       pageNum: 1, //当前展示到的页面
       totalNum: 1, //总共查询到满足条件的页面
       showLoading: false, //是否在加载中标识
-      username: this.$route.query.username,
-      userImage: this.$route.query.userImage,
-      sign: this.$route.query.sign,
-      introduction: this.$route.query.introduction,
+      username: "cccc",
+      userImage: this.$store.state.userImage,
+      sign: "666666666666666",
+      introduction: "23333333333333333333333333333333333333333333",
       activeIndex: "1",
     };
   },
   mounted() {
-    console.log(this.$route.query.username);
     this.loadData();
-    let personalMiddle=document.querySelector(".personalMiddle").offsetHeight;   
-    let personalpageBarHeight=document.querySelector(".personalpageBar").offsetHeight;
-    let personaltop=document.querySelector(".personaltop").offsetHeight;
-    let personalwrapper=document.querySelector(".personalwrapper").offsetHeight;
-    personalwrapper=personalwrapper+personaltop-personalMiddle-personalpageBarHeight;
-    let wrapper=document.getElementsByClassName("personalwrapper");
-    wrapper[0].style.height=personalwrapper+"px";
+    let personalMiddle = document.querySelector(".personalMiddle").offsetHeight;
+    let personalpageBarHeight = document.querySelector(".personalpageBar")
+      .offsetHeight;
+    let personaltop = document.querySelector(".personaltop").offsetHeight;
+    let personalwrapper = document.querySelector(".personalwrapper")
+      .offsetHeight;
+    personalwrapper =
+      personalwrapper + personaltop - personalMiddle - personalpageBarHeight;
+    let wrapper = document.getElementsByClassName("personalwrapper");
+    wrapper[0].style.height = personalwrapper + "px";
+    if (this.$route.path === "/personalPage/learningList") {
+      this.activeIndex="2";
+    } else {
+      this.activeIndex="1";
+    }
+  },
+  updated () {
+    if (this.$route.path === "/personalPage/learningList") {
+      this.activeIndex="2";
+    } else {
+      this.activeIndex="1";
+    }
   },
   methods: {
     personalChange() {
@@ -121,7 +134,7 @@ export default {
             threshold: -30, // 当上拉距离超过30px时触发 pullingUp 事件
           },
         });
-        console.log(this.scroll);
+        //console.log(this.scroll);
         this.scroll.on("pullingUp", () => {
           console.log("jz");
           this.scroll.finishPullUp();
@@ -198,7 +211,7 @@ export default {
   background: rgb(240, 240, 240);
 }
 .personalpageMain .wrapper .router {
-  padding: 0;
+  padding: 0 0 2rem 0;
 }
 .personalwrapper {
   position: absolute;
