@@ -11,8 +11,8 @@ export default new Vuex.Store({
     sex: 0, //用户性别
     loginState: false, //登录状态
     userImage: "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg", //用户头像
-    sign: '', //用户签名
-    introduction: '', //用户简介
+    sign: '555555555', //用户签名
+    introduction: '6666666666', //用户简介
     currentId:'',//当前页面用户id
   },
   mutations: {

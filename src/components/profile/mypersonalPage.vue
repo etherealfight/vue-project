@@ -1,5 +1,11 @@
 <template>
   <div id="mypersonalMain">
+    <el-button
+      round
+      icon="el-icon-plus"
+      class="add"
+      @click="publish"
+    ></el-button>
     <div class="mypersonaltop">
       <i class="el-icon-back" @click="back"></i>
       <div class="mypersonalMiddle">
@@ -69,14 +75,18 @@ export default {
   },
   mounted() {
     this.loadData();
-    let mypersonalMiddle = document.querySelector(".mypersonalMiddle").offsetHeight;
+    let mypersonalMiddle = document.querySelector(".mypersonalMiddle")
+      .offsetHeight;
     let mypersonalpageBarHeight = document.querySelector(".mypersonalpageBar")
       .offsetHeight;
     let mypersonaltop = document.querySelector(".mypersonaltop").offsetHeight;
     let mypersonalwrapper = document.querySelector(".mypersonalwrapper")
       .offsetHeight;
     mypersonalwrapper =
-      mypersonalwrapper + mypersonaltop - mypersonalMiddle - mypersonalpageBarHeight;
+      mypersonalwrapper +
+      mypersonaltop -
+      mypersonalMiddle -
+      mypersonalpageBarHeight;
     let wrapper = document.getElementsByClassName("mypersonalwrapper");
     wrapper[0].style.height = mypersonalwrapper + "px";
   },
@@ -123,6 +133,13 @@ export default {
         });
       });
     },
+    publish(){
+       if (this.$route.path==="/mypersonalPage/rewardList") {
+         this.$router.push("/mypersonalPage/rewardList/publishReward")
+       }else if(this.$route.path==="/mypersonalPage/learningList"){
+
+       }
+    },
   },
   computed: {
     showChange() {
@@ -135,6 +152,18 @@ export default {
 </script>
 
 <style scoped>
+.add {
+  height: 70px !important;
+  width: 70px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  font-size: 40px !important;
+  color: lightgray;
+  position: fixed;
+  bottom: 10%;
+  right: 10%;
+  z-index: 10;
+}
 .mypersonaltop {
   height: 30vh;
 }

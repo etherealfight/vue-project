@@ -14,6 +14,8 @@ import learningDetail from '../components/helper/learningPlatform/learningDetail
 import chat from '../components/chat/chat'
 import personalPage from '../components/profile/personalPage'
 import mypersonalPage from '../components/profile/mypersonalPage'
+import publishReward from '../components/profile/publishReward'
+
 Vue.use(VueRouter)
 
 const routes = [{
@@ -96,15 +98,20 @@ const routes = [{
     redirect: '/mypersonalPage/rewardList',
     children: [{
         path: 'rewardList',
-        component: rewardList
+        component: rewardList,
+        children: [{
+          path: 'publishReward',
+          name: 'publishReward',
+          component: publishReward
+        }, ]
       },
-
       {
         path: 'learningList',
         component: learningList
       }
     ]
   },
+
 
   {
     path: '/chat',
