@@ -99,11 +99,6 @@ const routes = [{
     children: [{
         path: 'rewardList',
         component: rewardList,
-        children: [{
-          path: 'publishReward',
-          name: 'publishReward',
-          component: publishReward
-        }, ]
       },
       {
         path: 'learningList',

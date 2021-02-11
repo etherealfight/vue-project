@@ -1,5 +1,19 @@
 <template>
   <div id="mypersonalMain">
+    <publishReward
+      class="publishReward"
+      v-show="isMaskReward"
+      @child-ok="childok1"
+      @child-back="childback1"
+    >
+    </publishReward>
+    <publishLearn
+      class="publishReward"
+      v-show="isMaskLearn"
+      @child-ok="childok2"
+      @child-back="childback2"
+    >
+    </publishLearn>
     <el-button
       round
       icon="el-icon-plus"
@@ -52,15 +66,22 @@
 import personalpageBar from "./personalpageBar";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import BScroll from "better-scroll";
+import publishReward from "./publishReward";
+import publishLearn from "./publishLearn"
 
 export default {
   components: {
     personalpageBar,
     swiper,
     swiperSlide,
+    publishReward,
+    publishLearn,
+    
   },
   data() {
     return {
+      isMaskReward: false,
+      isMaskLearn: false,
       datas: [],
       scroll: true, //
       pageNum: 1, //当前展示到的页面
@@ -133,12 +154,26 @@ export default {
         });
       });
     },
-    publish(){
-       if (this.$route.path==="/mypersonalPage/rewardList") {
-         this.$router.push("/mypersonalPage/rewardList/publishReward")
-       }else if(this.$route.path==="/mypersonalPage/learningList"){
-
-       }
+    publish() {
+      if (this.$route.path === "/mypersonalPage/rewardList") {
+        this.isMaskReward = true;
+      } else if (this.$route.path === "/mypersonalPage/learningList") {
+        this.isMaskLearn = true;
+      }
+    },
+    childok1() {
+      this.$message("ok");
+      this.isMaskReward = false;
+    },
+    childback1() {
+      this.isMaskReward = false;
+    },
+    childok2() {
+      this.$message("ok");
+      this.isMaskLearn = false;
+    },
+    childback2() {
+      this.isMaskLearn = false;
     },
   },
   computed: {
@@ -227,5 +262,8 @@ export default {
   bottom: 0;
   margin: 0 auto;
   overflow: hidden;
+}
+.publishReward {
+  position: fixed;
 }
 </style>

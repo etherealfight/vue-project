@@ -45,12 +45,16 @@ export default {
       else {
         console.log(this.publishRewardText);
         this.$emit("child-ok");
+        console.log(this.propsItem.isMask);
+        this.propsItem.isMask = false;
+        console.log(this.propsItem.isMask);
         // this.$message.info(res.msg);
         // console.log(res)
       }
     },
     back(){
       this.$emit("child-back");
+      this.propsItem.isMask = false;
     }
   },
   components: {},
