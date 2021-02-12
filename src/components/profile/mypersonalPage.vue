@@ -19,8 +19,9 @@
       icon="el-icon-plus"
       class="add"
       @click="publish"
+      v-show="isShow"
     ></el-button>
-    <div class="mypersonaltop">
+    <div class="mypersonaltop" v-show="isShow">
       <i class="el-icon-back" @click="back"></i>
       <div class="mypersonalMiddle">
         <div class="mypersonalIntroduction">
@@ -45,7 +46,7 @@
         <personalpageBar :activeIndex="activeIndex"></personalpageBar>
       </div>
     </div>
-    <div class="mypersonalwrapper">
+    <div class="mypersonalwrapper" v-show="isShow">
       <div class="mypersonalpageMain">
         <v-touch
           @swiperight="swiperright"
@@ -182,6 +183,9 @@ export default {
       //console.log(this.$store.state.userName);
       return this.username === this.$store.state.userName;
     },
+    isShow() {
+      return !(this.isMaskReward||this.isMaskLearn)
+    }
   },
 };
 </script>
@@ -264,6 +268,8 @@ export default {
   overflow: hidden;
 }
 .publishReward {
-  position: fixed;
+
+  height: 100%;
+  overflow: scroll;
 }
 </style>

@@ -52,10 +52,10 @@ export default {
         // console.log(res)
       }
     },
-    back(){
+    back() {
       this.$emit("child-back");
       this.propsItem.isMask = false;
-    }
+    },
   },
   components: {},
 };
@@ -84,12 +84,12 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100vw;
-  padding: 3rem;
-  margin-top: 1rem;
+  padding: 50rem;
   z-index: 20;
   background: white;
-    opacity: 1;
+  opacity: 1;
   box-sizing: border-box;
+  overflow: scroll;
 }
 #publishReward {
   width: 80vw;
@@ -100,6 +100,13 @@ export default {
 }
 #publishRewardButton {
   margin-top: 1rem;
+  background: #409eff !important;
+  color: white !important;
+  padding: 0 !important;
   width: 8rem;
+  height: 3.5rem;
+  outline: none;
+  font-size: 1rem;
+  box-sizing: border-box;
 }
 </style>
