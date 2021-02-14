@@ -17,9 +17,11 @@
       <div class="upload">
         <el-upload
           class="uploaditem"
+          ref="upload"
           action="https://jsonplaceholder.typicode.com/posts/"
           :auto-upload="false"
           :limit="9"
+          :file-list="photoList"
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
@@ -29,8 +31,25 @@
         <el-dialog :visible.sync="dialogVisible">
           <img width="100%" :src="dialogImageUrl" alt="" />
         </el-dialog>
+        <el-upload
+          class="upload-demo"
+          ref="upload2"
+          action="https://jsonplaceholder.typicode.com/posts/"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          :file-list="fileList"
+          :auto-upload="false"
+          :accept="mp4"
+        >
+          <el-button slot="trigger" size="small" type="primary"
+            >选取文件</el-button
+          >
+          <div slot="tip" class="el-upload__tip">
+            只能上传jpg/png文件，且不超过500kb
+          </div>
+        </el-upload>
       </div>
-      <el-button round id="publishLearnButton" @click="publishLearn" 
+      <el-button round id="publishLearnButton" @click="publishLearn"
         >发布</el-button
       >
     </div>
@@ -44,6 +63,8 @@ export default {
       publishLearnText: "",
       dialogImageUrl: "",
       dialogVisible: false,
+      photoList: [],
+      fileList: [],
     };
   },
   props: {
@@ -64,6 +85,11 @@ export default {
       else {
         console.log(this.publishLearnText);
         this.$emit("child-ok");
+        this.$refs.upload.submit();
+        this.$refs.upload2.submit();
+        this.publishLearnText = "";
+        this.photoList = [];
+        this.fileList = [];
         // this.$message.info(res.msg);
         // console.log(res)
       }
@@ -144,6 +170,9 @@ export default {
   height: 10rem !important;
   line-height: 0 !important;
   margin: 0.25rem 0.5rem 0.5rem 0;
+}
+.upload-demo {
+  margin: 2rem 0 0 3rem;
 }
 #publishLearnButton {
   margin-top: 1rem;

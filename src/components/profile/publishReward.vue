@@ -17,10 +17,12 @@
       <div class="upload">
         <el-upload
           class="uploaditem"
+          ref="upload"
           action="https://jsonplaceholder.typicode.com/posts/"
           :auto-upload="false"
           :limit="9"
           list-type="picture-card"
+          :file-list="fileList"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
         >
@@ -30,7 +32,7 @@
           <img width="100%" :src="dialogImageUrl" alt="" />
         </el-dialog>
       </div>
-      <el-button round id="publishRewardButton" @click="publishReward" 
+      <el-button round id="publishRewardButton" @click="publishReward"
         >发布</el-button
       >
     </div>
@@ -44,6 +46,7 @@ export default {
       publishRewardText: "",
       dialogImageUrl: "",
       dialogVisible: false,
+      fileList:[]
     };
   },
   props: {
@@ -64,6 +67,8 @@ export default {
       else {
         console.log(this.publishRewardText);
         this.$emit("child-ok");
+        this.$refs.upload.submit();
+        this.publishRewardText="";
         // this.$message.info(res.msg);
         // console.log(res)
       }

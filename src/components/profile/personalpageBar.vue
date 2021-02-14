@@ -25,10 +25,16 @@ export default {
   },
   methods: {
     move1() {
-      this.$router.push({ path: "/personalPage/rewardList" });
+      if (this.$route.path === "/personalPage/learningList")
+        this.$router.push({ path: "/personalPage/rewardList" });
+      else if (this.$route.path === "/mypersonalPage/learningList")
+        this.$router.push({ path: "/mypersonalPage/rewardList" });
     },
     move2() {
-      this.$router.push({ path: "/personalPage/learningList" });
+      if (this.$route.path === "/personalPage/rewardList")
+        this.$router.push({ path: "/personalPage/learningList" });
+      else if (this.$route.path === "/mypersonalPage/rewardList")
+        this.$router.push({ path: "/mypersonalPage/learningList" });
     },
   },
 };
@@ -46,7 +52,7 @@ export default {
   color: #409eff !important;
 }
 
-.personalpageBar .el-menu-demo .itembox .el-menu-item{
+.personalpageBar .el-menu-demo .itembox .el-menu-item {
   display: flex;
   align-items: center;
   height: 5rem;
