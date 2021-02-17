@@ -4,7 +4,7 @@
       <div class="learnDetail">
         <div class="learnDetailt"><span> 学习平台</span></div>
         <i class="el-icon-back" @click="back"></i>
-        <div class="learnDetailTitle">
+        <div class="learnDetailTitle" @click="toPersonalPage">
           <img :src="userimg" class="learnDetailUserImg" />
           <div class="nameBox">
             <div class="learnDetailName">{{ username }}</div>
@@ -36,7 +36,12 @@
                 <commentList></commentList>
               </div>
               <div class="newComment">
-                <textarea id="newComment" cols="30" rows="1" placeholder="说些啥吧"></textarea>
+                <textarea
+                  id="newComment"
+                  cols="30"
+                  rows="1"
+                  placeholder="说些啥吧"
+                ></textarea>
                 <el-button>发表</el-button>
               </div>
             </div>
@@ -131,6 +136,19 @@ export default {
   },
 
   methods: {
+    toPersonalPage() {
+      if (this.$store.state.userName === this.username) {
+        this.$store.commit("changeId", { currenrId: this.userId });
+        this.$router.push({
+          name: "mypersonalPage",
+        });
+      } else {
+        this.$store.commit("changeId", { currenrId: this.userId });
+        this.$router.push({
+          name: "personalPage",
+        });
+      }
+    },
     back() {
       this.$router.back(-1);
     },
@@ -246,7 +264,7 @@ video {
   display: -webkit-box;
   word-break: break-all;
 }
-.newComment{
+.newComment {
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
@@ -255,7 +273,7 @@ video {
   border-top: 1px solid rgb(244, 244, 244);
   border-bottom: 1px solid rgb(244, 244, 244);
 }
-.newComment #newComment{
+.newComment #newComment {
   padding: 1rem;
   outline: none;
   background: rgb(244, 244, 244);
@@ -272,5 +290,4 @@ video {
 .commentBox .commentTitle span {
   font-size: 1.5rem;
 }
-
 </style>

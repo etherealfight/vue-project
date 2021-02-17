@@ -2,7 +2,7 @@
   <div class="rewardDetail">
     <div class="rewardDetailt"><span> 悬赏详情</span></div>
     <i class="el-icon-back" @click="back"></i>
-    <div class="rewardDetailTitle">
+    <div class="rewardDetailTitle" @click="toPersonalPage">
       <img :src="userimg" class="rewardDetailUserImg" />
       <div class="nameBox">
         <div class="rewardDetailName">{{ username }}</div>
@@ -81,6 +81,19 @@ export default {
   },
 
   methods: {
+    toPersonalPage() {
+      if (this.$store.state.userName === this.username) {
+        this.$store.commit("changeId", { currenrId: this.userId });
+        this.$router.push({
+          name: "mypersonalPage",
+        });
+      } else {
+        this.$store.commit("changeId", { currenrId: this.userId });
+        this.$router.push({
+          name: "personalPage",
+        });
+      }
+    },
     back() {
       this.$router.back(-1);
     },
