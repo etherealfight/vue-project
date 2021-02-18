@@ -1,7 +1,7 @@
 <template>
   <div class="chatListBox">
       <chatComponent
-      v-for="item in learninglist"
+      v-for="item in chatInformation"
       :key="item.id"
       :id="item.id"
       :username="item.username"
