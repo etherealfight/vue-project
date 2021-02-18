@@ -7,11 +7,9 @@
     </div>
     <div class="right">
       <div class="time">
-        {{date}}
+        {{ date }}
       </div>
-      <div class="icon">
-        
-      </div>
+      <div class="icon" v-show="!isRead"><i class="el-icon-warning"></i></div>
     </div>
   </div>
 </template>
@@ -44,9 +42,53 @@ export default {
       type: String,
       default: "",
     },
+    //已读标识
+    isRead: {
+      type: Boolean,
+      default: true,
+    },
   },
 };
 </script>
 
-<style>
+<style scoped>
+.chatBox {
+  display: flex;
+  border-bottom: 1px solid rgb(240, 240, 240);
+}
+.chatBox .left {
+  width: 20vw;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+.chatBox .left img {
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+}
+.chatBox .center {
+  width: 60vw;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+.chatBox .center .name {
+  font-size: 1.5rem;
+}
+.chatBox .center .context {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  padding-top: 1rem;
+}
+.chatBox .right {
+  width: 20%;
+  padding: 2rem 2rem 2rem 0;
+  box-sizing: border-box;
+}
+.chatBox .right i{
+  color: red;
+}
 </style>

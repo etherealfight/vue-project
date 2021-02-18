@@ -1,6 +1,6 @@
 <template>
   <div class="chatbox">
-    <span>chat</span>
+    <div class="title">消息</div>
     <chatList></chatList>
     <my-tabbar class="tabbar" activeIndex="3"></my-tabbar>
   </div>
@@ -21,6 +21,11 @@ export default {
 .chatbox {
   height: 100vh;
   width: 100vw;
+}
+.chatbox .title{
+  width: 5rem;  
+  margin: 0 auto;
+  font-size: 2rem;
 }
 .tabbar {
   position: fixed;
