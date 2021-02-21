@@ -1,5 +1,5 @@
 <template>
-  <div class="chatBox">
+  <div class="chatBox" @click="toDetail">
     <div class="left"><img :src="userimg" alt="" /></div>
     <div class="center">
       <div class="name">{{ username }}</div>
@@ -48,6 +48,14 @@ export default {
       default: true,
     },
   },
+  methods: {
+    toDetail() {
+      this.$router.push({
+        path: "/chatDetail",
+        query: { username: this.username },
+      });
+    },
+  },
 };
 </script>
 
@@ -88,7 +96,7 @@ export default {
   padding: 2rem 2rem 2rem 0;
   box-sizing: border-box;
 }
-.chatBox .right i{
+.chatBox .right i {
   color: red;
 }
 </style>

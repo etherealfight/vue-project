@@ -12,9 +12,10 @@ import learningList from '../components/helper/learningPlatform/learningList'
 import rewardDetail from '../components/helper/rewardPlatform/rewardDetail'
 import learningDetail from '../components/helper/learningPlatform/learningDetail'
 import chat from '../components/chat/chat'
+import chatDetail from '../components/chat/chatDetail'
 import personalPage from '../components/profile/personalPage'
 import mypersonalPage from '../components/profile/mypersonalPage'
-import publishReward from '../components/profile/publishReward'
+
 
 Vue.use(VueRouter)
 
@@ -112,6 +113,11 @@ const routes = [{
     path: '/chat',
     name: 'chat',
     component: chat
+  },
+  {
+    path: '/chatDetail',
+    name: 'chatDetail',
+    component: chatDetail
   },
 ]
 
