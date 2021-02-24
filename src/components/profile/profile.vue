@@ -83,6 +83,7 @@
       </div>
       <div class="profileFooter">
         <el-button class="profileSubmit">提交</el-button>
+        <el-button class="quit" type="danger">退出登录</el-button>
       </div>
     </div>
     <my-tabbar class="tabbar" activeIndex="4"></my-tabbar>
@@ -252,6 +253,22 @@ html {
   height: 2.5rem;
   font-size: 1rem;
   outline: none;
+  box-sizing: border-box;
+}
+.profileFooter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.quit {
+  margin: 0 !important;
+  padding: 0 !important;
+  margin-top: 1rem;
+  width: 8rem;
+  height: 3.5rem;
+  outline: none;
+  font-size: 1rem;
   box-sizing: border-box;
 }
 .profileSubmit {
