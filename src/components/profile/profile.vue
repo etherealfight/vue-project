@@ -82,8 +82,8 @@
         </div>
       </div>
       <div class="profileFooter">
-        <el-button class="profileSubmit">提交</el-button>
-        <el-button class="quit" type="danger">退出登录</el-button>
+        <el-button class="profileSubmit" @click="update">提交</el-button>
+        <el-button class="quit" type="danger" @click="quit">退出登录</el-button>
       </div>
     </div>
     <my-tabbar class="tabbar" activeIndex="4"></my-tabbar>
@@ -152,6 +152,12 @@ export default {
       console.log(res);
       this.$message.info("修改成功");
     },
+    quit(){
+      this.$store.commit("changeLoginStates", {
+        loginState: false,
+      });
+      this.$router.push({path:"/login"})
+    }
   },
 };
 </script>
@@ -262,9 +268,8 @@ html {
   align-items: center;
 }
 .quit {
-  margin: 0 !important;
+  margin: 1rem 0 0 0 !important;
   padding: 0 !important;
-  margin-top: 1rem;
   width: 8rem;
   height: 3.5rem;
   outline: none;

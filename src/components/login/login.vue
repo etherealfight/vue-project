@@ -28,6 +28,7 @@ export default {
   methods: {
     async login() {
       let that = this;
+      this.$router.push({ path: "./main" });
       const res = await login(that.username, that.password);
       console.log(res);
       this.$router.push({ path: "./main" });
