@@ -10,19 +10,23 @@
         v-for="item in dialog"
         :key="item.id"
       >
-        <div class="right" v-if="item.person === 'user'">
-          <span class="cneter">{{ item.time }}</span>
-          <div class="context contextRight">{{ item.context }}</div>
-          <div class="image">
-            <img :src="userImg" />
+        <div class="rightBox" v-if="item.person === 'user'">
+          <span class="center">{{ item.time }}</span>
+          <div class="right">
+            <div class="context contextRight">{{ item.context }}</div>
+            <div class="image">
+              <img :src="userImg" />
+            </div>
           </div>
         </div>
-        <div class="left" v-if="item.person === 'object'">
-          <span class="cneter">{{ item.time }}</span>
-          <div class="image">
-            <img :src="objectImg" />
+        <div class="leftBox" v-if="item.person === 'object'">
+          <span class="center">{{ item.time }}</span>
+          <div class="left">
+            <div class="image">
+              <img :src="objectImg" />
+            </div>
+            <div class="context contextLeft">{{ item.context }}</div>
           </div>
-          <div class="context contextLeft">{{ item.context }}</div>
         </div>
       </div>
     </div>
@@ -42,11 +46,32 @@ export default {
       userImg: this.$store.state.userImage,
       objectImg: this.$store.state.userImage,
       dialog: [
-        { id: 1, person: "user", context: "hhhhhhhh" },
-        { id: 2, person: "object", context: "66666666" },
-        { id: 3, person: "user", context: "eeeeeehhhhhhhh" },
-        { id: 4, person: "object", context: "66666666666" },
-        { id: 5, person: "object", context: "66666666" },
+        { id: 1, person: "user", context: "hhhhhhhh", time: "2021-2-16 10:11" },
+        {
+          id: 2,
+          person: "object",
+          context: "66666666",
+          time: "2021-2-16 11:10",
+        },
+        {
+          id: 3,
+          person: "user",
+          context:
+            "eeeeeehhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+          time: "2021-2-16 11:11",
+        },
+        {
+          id: 4,
+          person: "object",
+          context: "66666666666",
+          time: "2021-2-16 11:19",
+        },
+        {
+          id: 5,
+          person: "object",
+          context: "66666666",
+          time: "2021-2-16 11:20",
+        },
       ],
       input: "",
     };
@@ -87,24 +112,32 @@ export default {
 }
 .content {
   width: calc(100% - 40px);
-  padding: 20px;
+  padding: 1rem;
   overflow-y: scroll;
   flex: 1;
 }
 .content:hover::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.1);
 }
+.leftBox,
+.rightBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .context {
-  max-width: 400px;
-  padding: 10px;
+  max-width: 60vw;
+  padding: 0.75rem;
   border-radius: 5px;
+  box-sizing: border-box;
   position: relative;
   color: #000;
   word-wrap: break-word;
   word-break: normal;
 }
 .left .context {
-  margin-left: 15px;
+  margin-left: 1rem;
   background-color: #fff;
 }
 .left .context:before {
@@ -112,14 +145,14 @@ export default {
   position: absolute;
   width: 0;
   height: 0;
-  border-left: 10px solid transparent;
-  border-top: 10px solid transparent;
-  border-right: 10px solid #fff;
-  border-bottom: 10px solid transparent;
-  left: -20px;
+  border-left: 0.5rem solid transparent;
+  border-top: 0.5rem solid transparent;
+  border-right: 0.5rem solid #fff;
+  border-bottom: 0.5rem solid transparent;
+  left: -1rem;
 }
 .right .context {
-  margin-right: 15px;
+  margin-right: 1rem;
   background-color: #9eea6a;
 }
 .right .context:before {
@@ -127,29 +160,31 @@ export default {
   position: absolute;
   width: 0;
   height: 0;
-  border-left: 10px solid #9eea6a;
-  border-top: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  right: -20px;
+  border-left: 0.5rem solid #9eea6a;
+  border-top: 0.5rem solid transparent;
+  border-right: 0.5rem solid transparent;
+  border-bottom: 0.5rem solid transparent;
+  right: -1rem;
 }
 .left {
-  margin-top: 15px;
+  margin-top: 1rem;
   display: flex;
   width: 100%;
   justify-content: flex-start;
 }
 .right {
-  margin-top: 15px;
+  margin-top: 1rem;
   display: flex;
   width: 100%;
   justify-content: flex-end;
 }
-.item.item-center {
+.right .center,
+.left .center {
   justify-content: center;
 }
-.item.item-center span {
-  font-size: 12px;
+.right .center,
+.left .center {
+  font-size: 1rem;
   padding: 2px 4px;
   color: #fff;
   background-color: #dadada;
