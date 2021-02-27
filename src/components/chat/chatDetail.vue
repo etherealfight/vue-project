@@ -3,29 +3,31 @@
     <div class="header">
       <i class="el-icon-back" @click="back"></i><span>{{ objectname }}</span>
     </div>
-    <div class="main">
-      <div
-        class="content"
-        :class="item.person"
-        v-for="item in dialog"
-        :key="item.id"
-      >
-        <div class="rightBox" v-if="item.person === 'user'">
-          <span class="center">{{ item.time }}</span>
-          <div class="right">
-            <div class="context contextRight">{{ item.context }}</div>
-            <div class="image">
-              <img :src="userImg" />
+    <div class="chatwrapper">
+      <div class="main">
+        <div
+          class="content"
+          :class="item.person"
+          v-for="item in dialog"
+          :key="item.id"
+        >
+          <div class="rightBox" v-if="item.person === 'user'">
+            <span class="center">{{ item.time }}</span>
+            <div class="right">
+              <div class="context contextRight">{{ item.context }}</div>
+              <div class="image">
+                <img :src="userImg" />
+              </div>
             </div>
           </div>
-        </div>
-        <div class="leftBox" v-if="item.person === 'object'">
-          <span class="center">{{ item.time }}</span>
-          <div class="left">
-            <div class="image">
-              <img :src="objectImg" />
+          <div class="leftBox" v-if="item.person === 'object'">
+            <span class="center">{{ item.time }}</span>
+            <div class="left">
+              <div class="image">
+                <img :src="objectImg" />
+              </div>
+              <div class="context contextLeft">{{ item.context }}</div>
             </div>
-            <div class="context contextLeft">{{ item.context }}</div>
           </div>
         </div>
       </div>
@@ -38,6 +40,7 @@
 </template>
 
 <script>
+import BScroll from "better-scroll";
 export default {
   data() {
     return {
@@ -72,6 +75,44 @@ export default {
           context: "66666666",
           time: "2021-2-16 11:20",
         },
+        {
+          id: 6,
+          person: "user",
+          context:
+            "eeeeeehhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+          time: "2021-2-16 11:11",
+        },
+        {
+          id: 7,
+          person: "object",
+          context: "66666666666",
+          time: "2021-2-16 11:19",
+        },
+        {
+          id: 8,
+          person: "object",
+          context: "66666666",
+          time: "2021-2-16 11:20",
+        },
+        {
+          id: 9,
+          person: "user",
+          context:
+            "eeeeeehhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+          time: "2021-2-16 11:11",
+        },
+        {
+          id: 10,
+          person: "object",
+          context: "66666666666",
+          time: "2021-2-16 11:19",
+        },
+        {
+          id: 11,
+          person: "object",
+          context: "66666666",
+          time: "2021-2-16 11:20",
+        },
       ],
       input: "",
     };
@@ -80,11 +121,31 @@ export default {
     back() {
       this.$router.back(-1);
     },
-    updated() {
-      //滚动条置底
-      let height = document.querySelector(".content").scrollHeight;
-      document.querySelector(".content").scrollTop = height;
+    loadData() {
+      this.$nextTick(() => {
+        const wrapper = document.querySelector(".chatwrapper");
+        this.scroll = new BScroll(wrapper, {
+          click: true,
+          tap: true,
+          pullDownRefresh: {
+            threshold: 30,
+          },
+        });
+        
+        //下拉加载数据 
+        this.scroll.on("pullingDown", () => {
+          console.log("jz");
+          this.scroll.finishPullDown()
+        });
+      });
     },
+  },
+  mounted() {
+    this.loadData();
+    //滚动条置底
+    let height = document.querySelector(".main").scrollHeight;
+    console.log(height)
+    window.scrollTo(0,height);
   },
 };
 </script>
@@ -100,6 +161,11 @@ export default {
   justify-content: center;
   align-items: center;
   height: 5rem;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  background-color: rgb(240, 240, 240);
+  z-index: 30;
 }
 .chatDetailBox .header span {
   font-size: 1.5rem;
@@ -108,7 +174,18 @@ export default {
   position: absolute;
   font-size: 3rem;
   left: 5%;
-  top: 2%;
+  top: 20%;
+}
+.chatwrapper {
+  position: absolute;
+  width: 100vw;
+  height: 85vh;
+  margin: 5rem 0 6rem 0;
+}
+.main {
+  background-color: rgb(240, 240, 240);
+  padding-bottom: 5rem;
+  box-sizing: border-box;
 }
 .content {
   width: calc(100% - 40px);
@@ -178,27 +255,9 @@ export default {
   width: 100%;
   justify-content: flex-end;
 }
-.right .center,
-.left .center {
-  justify-content: center;
-}
-.right .center,
-.left .center {
-  font-size: 1rem;
-  padding: 2px 4px;
-  color: #fff;
-  background-color: #dadada;
-  border-radius: 3px;
-  -moz-user-select: none; /*火狐*/
-  -webkit-user-select: none; /*webkit浏览器*/
-  -ms-user-select: none; /*IE10*/
-  -khtml-user-select: none; /*早期浏览器*/
-  user-select: none;
-}
-
 .image img {
-  width: 42px;
-  height: 42px;
+  width: 4rem;
+  height: 4rem;
   border-radius: 50%;
 }
 .footer {
@@ -209,6 +268,7 @@ export default {
   bottom: 0;
   display: flex;
   justify-content: space-around;
+  background: rgb(240, 240, 240);
 }
 .footer .el-input >>> .el-input__inner {
   width: 70vw;
