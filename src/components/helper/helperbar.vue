@@ -5,10 +5,10 @@
       class="el-menu-demo"
       mode="horizontal"
     >
-      <div class="itembox" @click="move1">
+      <div class="itembox 1" @click="move1">
         <el-menu-item index="1" class="tabItem">悬赏平台</el-menu-item>
       </div>
-      <div class="itembox" @click="move2">
+      <div class="itembox 2" @click="move2">
         <el-menu-item index="2" class="tabItem">学习资源</el-menu-item>
       </div>
     </el-menu>
@@ -17,6 +17,12 @@
 
 <script>
 export default {
+  updated() {
+    $(".itembox 1").hover(function () {
+      $(this).removeClass("hover");
+    });
+    console.log("update");
+  },
   props: {
     activeIndex: {
       type: String,
@@ -41,12 +47,11 @@ export default {
   justify-content: space-around;
   align-items: center;
 }
-.el-menu--horizontal .el-menu-item:not(.is-disabled):focus,
-.el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
+.el-menu--horizontal .el-menu-item:not(.is-disabled):focus {
   color: #409eff !important;
 }
 
-.helperbar .el-menu-demo .itembox .el-menu-item{
+.helperbar .el-menu-demo .itembox .el-menu-item {
   display: flex;
   align-items: center;
   height: 5rem;
