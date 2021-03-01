@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { regist } from "../../api";
+import { regist, checkState } from "../../api";
 export default {
   data() {
     return {
@@ -44,13 +44,20 @@ export default {
       let that = this;
       const res = await regist(that.username, that.usermail, that.password);
       console.log(res);
-      if (res.sign) {
-        this.$message.info("注册成功");
-        this.$router.push({ path: "./login" });
-      }else{
-        this.$message.warning(res.result); 
+      if (res.success) {
+        let r = confirm("已完成邮箱激活");
+        if (r) {
+          const res2 = await checkState(res.detail.userid);
+          if (res2.success) {
+            this.$message.info("注册成功");
+            this.$router.push({ path: "./login" });
+          }else{
+            this.$message.warning(res2.msg);
+          }
+        }
+      } else {
+        this.$message.warning(res.msg);
       }
-      
     },
   },
   watch: {

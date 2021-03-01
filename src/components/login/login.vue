@@ -3,10 +3,12 @@
     <div class="login">
       <h2>用户登录</h2>
       <div class="login_box">
-        <input type="text" required /><label>账号</label>
+        <input type="text" required v-model="username" /><label>账号</label>
       </div>
       <div class="login_box">
-        <input type="password" required="required" /><label>密码</label>
+        <input type="password" required="required" v-model="password" /><label
+          >密码</label
+        >
       </div>
       <div class="loginFooter">
         <button class="loginButton" @click="login">登录</button>
@@ -21,6 +23,7 @@ import { login } from "../../api";
 export default {
   data() {
     return {
+      user:{userid:"",usermail:"",password:""},
       username: "",
       password: "",
     };
@@ -28,16 +31,25 @@ export default {
   methods: {
     async login() {
       let that = this;
-      this.$router.push({ path: "./main" });
-      const res = await login(that.username, that.password);
+      let id=Number(that.username)
+      console.log(isNaN(id));
+      if (isNaN(id)) {
+        that.user.usermail=that.username;
+        that.user.userid="";
+        that.user.password=that.password;
+      }else{
+        that.user.usermail="";
+        that.user.userid=that.username;
+        that.user.password=that.password;
+      }
+      const res = await login(that.user);
       console.log(res);
       if (res.sign) {
         this.$router.push({ path: "./main" });
-        this.$message.info("登录成功")
-      }else{
-        this.$message.warning(res.result)
+        this.$message.info("登录成功");
+      } else {
+        this.$message.warning(res.msg);
       }
-      
     },
     regist() {
       this.$router.push({ path: "/regist" });
