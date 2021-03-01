@@ -40,26 +40,26 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .personalpageBar .el-menu-demo {
   width: 100vw;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
-.el-menu--horizontal .el-menu-item:not(.is-disabled):focus,
-.el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
-  color: #409eff !important;
-}
 
 .personalpageBar .el-menu-demo .itembox .el-menu-item {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   height: 5rem;
   font-size: 1.5rem;
 }
 .personalpageBar .el-menu-demo .itembox .el-menu-item.is-active {
+  color: #409eff;
   border-bottom: 2px solid #409eff;
   background: transparent;
+}
+.el-menu--horizontal .el-menu-item:hover {
+  background: white;
 }
 </style>

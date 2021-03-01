@@ -40,15 +40,12 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .helperbar .el-menu-demo {
   width: 100vw;
   display: flex;
   justify-content: space-around;
   align-items: center;
-}
-.el-menu--horizontal .el-menu-item:not(.is-disabled):focus {
-  color: #409eff !important;
 }
 
 .helperbar .el-menu-demo .itembox .el-menu-item {
@@ -58,7 +55,11 @@ export default {
   font-size: 1.5rem;
 }
 .helperbar .el-menu-demo .itembox .el-menu-item.is-active {
+  color: #409eff;
   border-bottom: 2px solid #409eff;
   background: transparent;
+}
+.el-menu--horizontal .el-menu-item:hover{
+  background: white;
 }
 </style>

@@ -14,7 +14,7 @@ export const regist=(username,usermail,password)=>{
 
 export const login=(username,password)=>{
     return instance({
-        url:'/login',
+        url:'/user/login',
         method:'GET',
         params:{
             username,

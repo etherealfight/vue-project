@@ -23,6 +23,7 @@ export default {
       starty: 0,
     };
   },
+
   mounted() {
     this.loadData();
     console.log(this.$route.path);

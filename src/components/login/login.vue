@@ -31,7 +31,13 @@ export default {
       this.$router.push({ path: "./main" });
       const res = await login(that.username, that.password);
       console.log(res);
-      this.$router.push({ path: "./main" });
+      if (res.sign) {
+        this.$router.push({ path: "./main" });
+        this.$message.info("登录成功")
+      }else{
+        this.$message.warning(res.result)
+      }
+      
     },
     regist() {
       this.$router.push({ path: "/regist" });

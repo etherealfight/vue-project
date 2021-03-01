@@ -44,7 +44,13 @@ export default {
       let that = this;
       const res = await regist(that.username, that.usermail, that.password);
       console.log(res);
-      this.$router.push({ path: "./login" });
+      if (res.sign) {
+        this.$message.info("注册成功");
+        this.$router.push({ path: "./login" });
+      }else{
+        this.$message.warning(res.result); 
+      }
+      
     },
   },
   watch: {
