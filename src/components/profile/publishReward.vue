@@ -18,11 +18,13 @@
         <el-upload
           class="uploaditem"
           ref="upload"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action="http://192.168.43.126:8080/rewardimages"
           :auto-upload="false"
           :limit="9"
           list-type="picture-card"
           :file-list="fileList"
+          :on-error="showError"
+          :on-success="showSuccess"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
         >
@@ -32,7 +34,7 @@
           <img width="100%" :src="dialogImageUrl" alt="" />
         </el-dialog>
       </div>
-      <el-button round id="publishRewardButton" @click="publishReward"
+      <el-button round id="publishRewardButton" @click="publishRewards"
         >发布</el-button
       >
     </div>
@@ -40,13 +42,15 @@
 </template>
 
 <script>
+import { publishReward } from "../../api";
 export default {
   data() {
     return {
       publishRewardText: "",
       dialogImageUrl: "",
       dialogVisible: false,
-      fileList:[]
+      fileList: "",
+      imgUrl: "",
     };
   },
   props: {
@@ -59,19 +63,34 @@ export default {
     /**
      * 发布文章
      */
-    async publishReward() {
+    async publishRewards() {
       let that = this;
       if (this.$store.state.userName == "") this.$message.warning("请先登录");
       else if (that.publishRewardText == "")
         this.$message.warning("发布内容不可为空");
       else {
-        console.log(this.publishRewardText);
+        console.log(that.$store.state.userId);
         this.$emit("child-ok");
         this.$refs.upload.submit();
-        this.publishRewardText="";
         // this.$message.info(res.msg);
         // console.log(res)
       }
+    },
+    showError(err, file, fileList) {
+      console.log("error", err);
+    },
+    async showSuccess(response, file, fileList) {
+      console.log("success", response);
+      this.imgUrl = "http://192.168.43.126:8080" + response.detail;
+      console.log(this.imgUrl);
+      const res = await publishReward(
+        this.$store.state.userId,
+        this.publishRewardText,
+        this.imgUrl
+      );
+      console.log(res)
+      console.log(res.result);
+      this.publishRewardText = "";
     },
     back() {
       this.$emit("child-back");

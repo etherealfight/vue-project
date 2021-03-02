@@ -22,6 +22,7 @@
         >
       </div>
       <div class="loginFooter">
+        <button class="loginButton" @click="login">登录</button>
         <button class="loginButton" @click="regist">注册</button>
       </div>
     </div>
@@ -40,10 +41,14 @@ export default {
     };
   },
   methods: {
+    login() {
+      this.$router.push({ path: "/login" });
+    },
     async regist() {
       let that = this;
       const res = await regist(that.username, that.usermail, that.password);
       console.log(res);
+      console.log(res.detail);
       if (res.success) {
         let r = confirm("已完成邮箱激活");
         if (r) {
@@ -51,7 +56,7 @@ export default {
           if (res2.success) {
             this.$message.info("注册成功");
             this.$router.push({ path: "./login" });
-          }else{
+          } else {
             this.$message.warning(res2.msg);
           }
         }

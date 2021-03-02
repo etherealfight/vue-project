@@ -68,7 +68,7 @@ import personalpageBar from "./personalpageBar";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import BScroll from "better-scroll";
 import publishReward from "./publishReward";
-import publishLearn from "./publishLearn"
+import publishLearn from "./publishLearn";
 
 export default {
   components: {
@@ -77,7 +77,6 @@ export default {
     swiperSlide,
     publishReward,
     publishLearn,
-    
   },
   data() {
     return {
@@ -163,14 +162,14 @@ export default {
       }
     },
     childok1() {
-      this.$message("ok");
+      this.$message.info("ok");
       this.isMaskReward = false;
     },
     childback1() {
       this.isMaskReward = false;
     },
     childok2() {
-      this.$message("ok");
+      this.$message.info("ok");
       this.isMaskLearn = false;
     },
     childback2() {
@@ -184,8 +183,8 @@ export default {
       return this.username === this.$store.state.userName;
     },
     isShow() {
-      return !(this.isMaskReward||this.isMaskLearn)
-    }
+      return !(this.isMaskReward || this.isMaskLearn);
+    },
   },
 };
 </script>
@@ -268,7 +267,6 @@ export default {
   overflow: hidden;
 }
 .publishReward {
-
   height: 100%;
   overflow: scroll;
 }

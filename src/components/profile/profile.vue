@@ -6,7 +6,7 @@
     <div class="box">
       <div class="profileHeader">
         <v-touch v-on:touchstart="start">
-          <img :src="$store.state.userImage" id="profileImg" />
+          <img :src="$store.state.userImage" id="profileImg" @click="toMypersonalPage"/>
         </v-touch>
         <el-upload
           class="upload-demo"
@@ -103,6 +103,9 @@ export default {
   },
 
   methods: {
+    toMypersonalPage(){
+        this.$router.push({path:"/mypersonalpage"})
+    },
     start() {
       console.log("start");
     },

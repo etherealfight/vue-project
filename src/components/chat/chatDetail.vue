@@ -34,7 +34,9 @@
     </div>
     <div class="footer">
       <el-input v-model="input"></el-input
-      ><el-button type="info" round class="inputButton">发送</el-button>
+      ><el-button type="info" round class="inputButton" @click="send"
+        >发送</el-button
+      >
     </div>
   </div>
 </template>
@@ -48,6 +50,8 @@ export default {
       objectname: "quan",
       userImg: this.$store.state.userImage,
       objectImg: this.$store.state.userImage,
+      input: "",
+      message: { id: 0, person: "user", context: "", time: "" },
       dialog: [
         { id: 1, person: "user", context: "hhhhhhhh", time: "2021-2-16 10:11" },
         {
@@ -113,8 +117,13 @@ export default {
           context: "66666666",
           time: "2021-2-16 11:20",
         },
+        {
+          id: 12,
+          person: "object",
+          context: "66666666",
+          time: "2021-2-16 11:20",
+        }
       ],
-      input: "",
     };
   },
   methods: {
@@ -131,22 +140,38 @@ export default {
             threshold: 30,
           },
         });
-        
-        //下拉加载数据 
+
+        //下拉加载数据
         this.scroll.on("pullingDown", () => {
           console.log("jz");
-          this.scroll.finishPullDown()
+          this.scroll.finishPullDown();
         });
       });
+    },
+    send() {
+      let myDate = new Date();
+      this.message.time = myDate.toLocaleString();
+      console.log(this.message.time);
+      this.message.id = this.dialog.length + 1;
+      this.message.context = this.input;
+      this.dialog.push(this.message);
+      console.log(this.dialog);
+      console.log(this.dialog[11].time);
+      this.input = "";
     },
   },
   mounted() {
     this.loadData();
     //滚动条置底
     let height = document.querySelector(".main").scrollHeight;
-    console.log(height)
-    window.scrollTo(0,height);
+    console.log(height);
+    window.scrollTo(0, height);
   },
+  updated () {
+    let height = document.querySelector(".main").scrollHeight;
+    console.log(height);
+    window.scrollTo(0, height);
+  }
 };
 </script>
 

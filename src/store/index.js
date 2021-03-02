@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     userMail: '', //邮箱
-    userId: '', //用户ID
+    userId: '37974253', //用户ID
     userName: 'quan', //用户名
     sex: 0, //用户性别
     loginState: false, //登录状态
@@ -23,6 +23,7 @@ export default new Vuex.Store({
       state.sign = payload.sign;
       state.introduction = payload.introduction;
       state.userImage = payload.userImage;
+      state.userId = payload.userId;
       state.loginState = true;
     },
     changeState(state, payload) {

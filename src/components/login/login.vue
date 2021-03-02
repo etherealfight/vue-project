@@ -19,34 +19,37 @@
 </template>
 
 <script>
-import { login } from "../../api";
+import { login1, login2 } from "../../api";
 export default {
   data() {
     return {
-      user:{userid:"",usermail:"",password:""},
       username: "",
       password: "",
     };
   },
   methods: {
     async login() {
-      let that = this;
-      let id=Number(that.username)
+      let id = Number(this.username);
       console.log(isNaN(id));
+      let res = "";
       if (isNaN(id)) {
-        that.user.usermail=that.username;
-        that.user.userid="";
-        that.user.password=that.password;
-      }else{
-        that.user.usermail="";
-        that.user.userid=that.username;
-        that.user.password=that.password;
+        res = await login2(this.username, this.password);
+      } else {
+        res = await login1(this.username, this.password);
       }
-      const res = await login(that.user);
       console.log(res);
-      if (res.sign) {
-        this.$router.push({ path: "./main" });
+      if (res.success) {
         this.$message.info("登录成功");
+        this.$store.commit("initialState", {
+          userName: res.detail.username,
+          userId: res.detail.userid,
+          userMail:res.detail.usermail,
+          sex: res.detail.gender,
+          sign: res.detail.signature,
+          introduction: res.detail.introductory,
+          userImage: res.detail.headportrait,
+        });
+        this.$router.push({ path: "./main" });
       } else {
         this.$message.warning(res.msg);
       }
