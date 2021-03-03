@@ -1,5 +1,5 @@
 <!--
-* @FileDescription:发布组件，用于用户发表新文章
+* @FileDescription:发布组件，用于用户发表新悬赏
 -->
 <template>
   <div class="publishRewardBox">
@@ -18,11 +18,12 @@
         <el-upload
           class="uploaditem"
           ref="upload"
-          action="http://192.168.43.126:8080/rewardimages"
+          action="http://192.168.1.109:8080/rewardimages"
           :auto-upload="false"
           :limit="9"
           list-type="picture-card"
           :file-list="fileList"
+          :before-upload="showList"
           :on-error="showError"
           :on-success="showSuccess"
           :on-preview="handlePictureCardPreview"
@@ -49,8 +50,10 @@ export default {
       publishRewardText: "",
       dialogImageUrl: "",
       dialogVisible: false,
-      fileList: "",
+      fileList: "aa",
       imgUrl: "",
+      counter: 0,
+      imgNum: 0,
     };
   },
   props: {
@@ -64,43 +67,72 @@ export default {
      * 发布文章
      */
     async publishRewards() {
-      let that = this;
       if (this.$store.state.userName == "") this.$message.warning("请先登录");
-      else if (that.publishRewardText == "")
+      else if (this.publishRewardText == "")
         this.$message.warning("发布内容不可为空");
       else {
-        console.log(that.$store.state.userId);
         this.$emit("child-ok");
         this.$refs.upload.submit();
         // this.$message.info(res.msg);
         // console.log(res)
       }
     },
+    /**
+     * 上传前统计图片数量
+     */
+    showList(file) {
+      this.imgNum = this.imgNum + 1;
+      console.log("file:", file);
+    },
+    /**
+     * 上传失败钩子
+     */
     showError(err, file, fileList) {
       console.log("error", err);
     },
+    /**
+     * 上传成功钩子
+     */
     async showSuccess(response, file, fileList) {
-      console.log("success", response);
-      this.imgUrl = "http://192.168.43.126:8080" + response.detail;
-      console.log(this.imgUrl);
-      const res = await publishReward(
-        this.$store.state.userId,
-        this.publishRewardText,
-        this.imgUrl
-      );
-      console.log(res)
-      console.log(res.result);
-      this.publishRewardText = "";
+      console.log("nums:", this.imgNum);
+      console.log("success:", response);
+      if (this.counter < this.imgNum - 1) {
+        this.imgUrl = this.imgUrl + "http://192.168.1.109:8080" + response.detail + ",";
+        console.log(this.imgUrl);
+        this.counter = this.counter + 1;
+      } else {
+        this.imgUrl = this.imgUrl + "http://192.168.1.109:8080" + response.detail;
+        console.log("finish:", this.imgUrl);
+        const res = await publishReward(
+          this.$store.state.userId,
+          this.publishRewardText,
+          this.imgUrl
+        );
+        console.log(res);
+        this.publishRewardText = "";
+        this.$refs.upload.clearFiles();
+        this.imgNum = 0;
+        this.counter = 0;
+      }
     },
-    back() {
-      this.$emit("child-back");
-    },
+    /**
+     * 移除图片
+     */
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
+    /**
+     * 预览图片
+     */
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
+    },
+    /**
+     * 返回上一页面
+     */
+    back() {
+      this.$emit("child-back");
     },
   },
   components: {},

@@ -18,15 +18,45 @@
             /></swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
           </swiper>
-          <video-player
+          <!-- <video-player
             class="video-player"
             ref="videoPlayer"
             :playsinline="true"
             :options="playerOptions"
-          ></video-player>
+          ></video-player> -->
           <v-touch @swiperight="swiperright" class="wrapper" ref="wrapper">
             <div class="learnDetailContext">
               {{ contentText }}
+            </div>
+            <div class="videoList">
+              <h2 class="videoTitle">课程视频</h2>
+              <ol>
+                <li
+                  v-for="item in videoList"
+                  :key="item.id"
+                  @click="toVideoPage(item.id)"
+                >
+                  <div class="itembox">
+                    <span>{{ item.videoName }}</span>
+                    <i class="el-icon-download" @click="download"></i>
+                  </div>
+                </li>
+              </ol>
+            </div>
+            <div class="fileList">
+              <h2 class="fileTitle">课程资源</h2>
+              <ol>
+                <li
+                  v-for="item in fileList"
+                  :key="item.id"
+                  @click="dowmloadFile"
+                >
+                  <div class="itembox">
+                    <span> {{ item.fileName }}</span>
+                    <i class="el-icon-download" @click="download"></i>
+                  </div>
+                </li>
+              </ol>
             </div>
             <div class="commentBox">
               <div class="commentTitle">
@@ -69,16 +99,12 @@ export default {
     this.loadData();
     let mainHight = document.querySelector(".learnDetailMain").offsetHeight;
     let swiperHight = document.querySelector(".swiper-container").offsetHeight;
-    let vedioHight = document.querySelector(".video-player").offsetHeight;
-    let footerHight = document.querySelector(".learnDetailFooter").offsetHeight;
-    let waperHight = mainHight - swiperHight - footerHight - vedioHight - 20;
+    let waperHight = mainHight - swiperHight - 20;
     let wrapper = document.getElementsByClassName("wrapper");
-    console.log(wrapper);
-    console.log(waperHight);
     wrapper[0].style.height = waperHight + "px";
 
     let bodyHeight = document.documentElement.scrollHeight;
-    console.log("gao", bodyHeight);
+
   },
   data() {
     return {
@@ -94,31 +120,42 @@ export default {
           disableOnInteraction: true,
         }, // 可选选项，自动滑动
       },
-      playerOptions: {
-        height: 400,
-        playbackRates: [0.7, 1.0, 1.5, 2.0], // 播放速度
-        autoplay: false, // 如果true,浏览器准备好时开始回放。
-        muted: false, // 默认情况下将会消除任何音频。
-        loop: false, // 导致视频一结束就重新开始。
-        preload: "auto", // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
-        language: "zh-CN",
-        aspectRatio: "16:9", // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
-        fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
-        sources: [
-          {
-            type: "video/mp4",
-            src: require("@/assets/test.mp4"),
-          },
-        ],
-        // width: document.documentElement.clientWidth, //播放器宽度
-        notSupportedMessage: "此视频暂无法播放，请稍后再试", // 允许覆盖Video.js无法播放媒体源时显示的默认信息。
-        controlBar: {
-          timeDivider: true,
-          durationDisplay: true,
-          remainingTimeDisplay: false,
-          fullscreenToggle: true, // 全屏按钮
-        },
-      },
+      videoList: [
+        { id: 1, address: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4", videoName: "111111" },
+        { id: 2, address: "http://vjs.zencdn.net/v/oceans.mp4", videoName: "222222" },
+        { id: 3, address: "https://media.w3.org/2010/05/sintel/trailer.mp4", videoName: "333333" },
+      ],
+      fileList: [
+        { id: 1, address: "../../../assets/test.mp4", fileName: "111111" },
+        { id: 2, address: "../../../assets/test.mp4", fileName: "222222" },
+        { id: 3, address: "../../../assets/test.mp4", fileName: "333333" },
+      ],
+      // playerOptions: {
+      //   height: 400,
+      //   playbackRates: [0.7, 1.0, 1.5, 2.0], // 播放速度
+      //   autoplay: false, // 如果true,浏览器准备好时开始回放。
+      //   muted: false, // 默认情况下将会消除任何音频。
+      //   loop: false, // 导致视频一结束就重新开始。
+      //   preload: "auto", // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
+      //   language: "zh-CN",
+      //   aspectRatio: "16:9", // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
+      //   fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
+      //   sources: [
+      //     {
+      //       type: "video/mp4",
+      //       src: require("@/assets/test.mp4"),
+      //     },
+      //   ],
+      //   // width: document.documentElement.clientWidth, //播放器宽度
+      //   notSupportedMessage: "此视频暂无法播放，请稍后再试", // 允许覆盖Video.js无法播放媒体源时显示的默认信息。
+      //   controlBar: {
+      //     timeDivider: true,
+      //     durationDisplay: true,
+      //     remainingTimeDisplay: false,
+      //     fullscreenToggle: true, // 全屏按钮
+      //   },
+      // },
+      title: "test",
       fileaddress: [
         "https://picsum.photos/460/360?random=1",
         "https://picsum.photos/460/360?random=2",
@@ -173,6 +210,21 @@ export default {
         });
       });
     },
+    toVideoPage(id) {
+      this.$router.push({
+        name: "videoPlayerPage",
+        query: {
+          id: id,
+          title: this.title,
+          videoList: JSON.stringify(this.videoList),
+        },
+      });
+      console.log(JSON.stringify(this.videoList));
+    },
+    dowmloadFile() {},
+    download() {
+      console.log("下载");
+    },
   },
 };
 </script>
@@ -185,22 +237,22 @@ export default {
   top: 0;
   overflow: hidden;
 }
-video {
+/* video {
   width: 100vw;
   height: 50vh;
-}
+} */
 .learnDetailMain .wrapper {
   width: 100vw;
   touch-action: pan-y !important;
 }
-.learnDetailMain .video-player {
+/* .learnDetailMain .video-player {
   width: 100vw;
   padding: 2rem;
   box-sizing: border-box;
 }
 .vjs-big-play-button {
   height: 20rem !important;
-}
+} */
 .el-icon-back {
   position: absolute;
   font-size: 3rem;
@@ -263,6 +315,26 @@ video {
   padding: 2rem;
   display: -webkit-box;
   word-break: break-all;
+}
+.videoList,
+.fileList {
+  padding: 1rem 2rem 1rem 2rem;
+  box-sizing: border-box;
+}
+.videoList ol,
+.fileList ol {
+  padding: 1rem 2rem;
+  margin-left: 1.5rem;
+}
+.videoList ol li,
+.fileList ol li {
+  margin-left: -0.5rem;
+  padding: 0.5rem 1.5rem;
+}
+.itembox {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 .newComment {
   display: flex;

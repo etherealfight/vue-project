@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:注册页面，用于用户注册
+-->
 <template>
   <div class="login_page">
     <div class="login">
@@ -41,9 +44,15 @@ export default {
     };
   },
   methods: {
+    /**
+     * 跳转到登录页面
+     */
     login() {
       this.$router.push({ path: "/login" });
     },
+    /**
+     * 通过邮箱验证注册账号
+     */
     async regist() {
       let that = this;
       const res = await regist(that.username, that.usermail, that.password);
@@ -66,6 +75,9 @@ export default {
     },
   },
   watch: {
+    /**
+     * 判断邮箱格式是否规范
+     */
     usermail: function () {
       let re = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
       if (re.test(this.usermail)) {

@@ -18,7 +18,7 @@ export const regist=(username,usermail,password)=>{
 }
 /**
  * 用户登录
- * @param {String} username 
+ * @param {String} userid 
  * @param {String} password 
  */
 export const login1=(userid,password)=>{
@@ -33,7 +33,7 @@ export const login1=(userid,password)=>{
 }
 /**
  * 用户登录
- * @param {String} username 
+ * @param {String} usermail 
  * @param {String} password 
  */
 export const login2=(usermail,password)=>{
@@ -59,7 +59,12 @@ export const checkState=(userid)=>{
         }
     })
 }
-
+/**
+ * 发布悬赏
+ * @param {String} userid 
+ * @param {String} rewardinfo 
+ * @param {String} images 
+ */
 export const publishReward=(userid,rewardinfo,images)=>{
     return instance({
         url:'/info/updateinfo',

@@ -17,12 +17,6 @@
 
 <script>
 export default {
-  updated() {
-    $(".itembox 1").hover(function () {
-      $(this).removeClass("hover");
-    });
-    console.log("update");
-  },
   props: {
     activeIndex: {
       type: String,
@@ -59,7 +53,7 @@ export default {
   border-bottom: 2px solid #409eff;
   background: transparent;
 }
-.el-menu--horizontal .el-menu-item:hover{
-  background: white;
+.el-menu--horizontal .el-menu-item:hover {
+  background: rgb(244, 244, 244);
 }
 </style>

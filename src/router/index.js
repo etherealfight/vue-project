@@ -11,6 +11,7 @@ import rewardList from '../components/helper/rewardPlatform/rewardList'
 import learningList from '../components/helper/learningPlatform/learningList'
 import rewardDetail from '../components/helper/rewardPlatform/rewardDetail'
 import learningDetail from '../components/helper/learningPlatform/learningDetail'
+import videoPlayerPage from '../components/helper/learningPlatform/videoPlayerPage'
 import chat from '../components/chat/chat'
 import chatDetail from '../components/chat/chatDetail'
 import personalPage from '../components/profile/personalPage'
@@ -77,6 +78,11 @@ const routes = [{
     component: learningDetail
   },
   {
+    path: '/videoPlayerPage',
+    name: 'videoPlayerPage',
+    component: videoPlayerPage
+  },
+  {
     path: '/personalPage',
     name: 'personalPage',
     component: personalPage,
@@ -107,8 +113,6 @@ const routes = [{
       }
     ]
   },
-
-
   {
     path: '/chat',
     name: 'chat',

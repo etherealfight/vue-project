@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:登录页面，用于用户登录以及获取登录用户信息
+-->
 <template>
   <div class="login_page">
     <div class="login">
@@ -28,6 +31,9 @@ export default {
     };
   },
   methods: {
+    /**
+     * 进行登录操作
+     */
     async login() {
       let id = Number(this.username);
       console.log(isNaN(id));
@@ -54,6 +60,9 @@ export default {
         this.$message.warning(res.msg);
       }
     },
+    /**
+     * 跳转到注册页面
+     */
     regist() {
       this.$router.push({ path: "/regist" });
     },
