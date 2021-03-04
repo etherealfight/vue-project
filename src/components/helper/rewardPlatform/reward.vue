@@ -41,7 +41,7 @@ export default {
     },
     //id
     id: {
-      type: Number,
+      type: String,
       default: 0,
     },
     userId:{
@@ -68,7 +68,7 @@ export default {
     },
     //点击量
     clicks: {
-      type: Number,
+      type: String,
       default: 0,
     },
   },

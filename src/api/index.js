@@ -1,15 +1,17 @@
-import {instance} from './instance'
+import {
+    instance
+} from './instance'
 /**
  * 用户注册
  * @param {String} username 
  * @param {String} usermail 
  * @param {String} password 
  */
-export const regist=(username,usermail,password)=>{
+export const regist = (username, usermail, password) => {
     return instance({
-        url:'/user/regist',
-        method:'GET',
-        params:{
+        url: '/user/regist',
+        method: 'GET',
+        params: {
             username,
             usermail,
             password
@@ -21,11 +23,11 @@ export const regist=(username,usermail,password)=>{
  * @param {String} userid 
  * @param {String} password 
  */
-export const login1=(userid,password)=>{
+export const login1 = (userid, password) => {
     return instance({
-        url:'/user/login',
-        method:'GET',
-        params:{
+        url: '/user/login',
+        method: 'GET',
+        params: {
             userid,
             password
         }
@@ -36,11 +38,11 @@ export const login1=(userid,password)=>{
  * @param {String} usermail 
  * @param {String} password 
  */
-export const login2=(usermail,password)=>{
+export const login2 = (usermail, password) => {
     return instance({
-        url:'/user/login',
-        method:'GET',
-        params:{
+        url: '/user/login',
+        method: 'GET',
+        params: {
             usermail,
             password
         }
@@ -50,12 +52,25 @@ export const login2=(usermail,password)=>{
  * 检查邮箱激活状态
  * @param {String} userid 
  */
-export const checkState=(userid)=>{
+export const checkState = (userid) => {
     return instance({
-        url:'/user/checkState',
-        method:'GET',
-        params:{
+        url: '/user/checkState',
+        method: 'GET',
+        params: {
             userid,
+        }
+    })
+}
+/**
+ * 
+ * @param {String} cuurrentPage 
+ */
+export const searchData = (currentPage) => {
+    return instance({
+        url: '/info/findrewardinfo',
+        method: 'GET',
+        params: {
+            currentPage
         }
     })
 }
@@ -65,11 +80,11 @@ export const checkState=(userid)=>{
  * @param {String} rewardinfo 
  * @param {String} images 
  */
-export const publishReward=(userid,rewardinfo,images)=>{
+export const publishReward = (userid, rewardinfo, images) => {
     return instance({
-        url:'/info/updateinfo',
-        method:'GET',
-        params:{
+        url: '/info/updateinfo',
+        method: 'GET',
+        params: {
             userid,
             rewardinfo,
             images

@@ -10,10 +10,8 @@
         ></el-input></div
     ></transition>
     <helperbar :class="show" :activeIndex="activeIndex"></helperbar>
-    <div class="helperwrapper">
-      <div class="content">
-        <router-view class="router"></router-view>
-      </div>
+    <div class="content">
+      <router-view class="router" :input="input" :searchTarget="searchTarget"></router-view>
     </div>
     <mytabbar class="mytabbar" activeIndex="2"></mytabbar>
   </div>
@@ -22,12 +20,12 @@
 <script>
 import helperbar from "./helperbar";
 import mytabbar from "../home/my_tabbar";
-import BScroll from "better-scroll";
 
 export default {
   data() {
     return {
       input: "",
+      searchTarget:"",
       activeIndex: "1",
       startx: 0,
       starty: 0,
@@ -35,8 +33,14 @@ export default {
       show: "default",
     };
   },
+  async created() {
+    // const res = await searchData(this.pageNum);
+    // this.datas = res.detail;
+    // this.totalNum = res.pageNumber;
+    // this.pageNum++;
+  },
   mounted() {
-    this.loadData();
+    // this.loadData();
     console.log(this.$route.path);
     window.addEventListener("touchstart", this.throttle1());
     window.addEventListener("touchmove", this.throttle2());
@@ -50,26 +54,35 @@ export default {
   components: { helperbar: helperbar, mytabbar: mytabbar },
   methods: {
     search() {
-      console.log("search");
+      if (this.$route.path === "/helper/rewardList") {
+        this.searchTarget="rewardList";
+        console.log("searchrew:");
+        
+      } else if (this.$route.path === "/helper/learningList") {
+        this.searchTarget="learningList";
+        console.log("searchlear:");
+
+      }
     },
-    loadData() {
-      this.$nextTick(() => {
-        const wrapper = document.querySelector(".helperwrapper");
-        this.scroll = new BScroll(wrapper, {
-          pullUpLoad: true,
-          click: true,
-          tap: true,
-          pullUpLoad: {
-            threshold: -30, // 当上拉距离超过30px时触发 pullingUp 事件
-          },
-        });
-        console.log(this.scroll);
-        this.scroll.on("pullingUp", () => {
-          console.log("jz");
-          this.scroll.finishPullUp();
-        });
-      });
-    },
+
+    // loadData() {
+    //   this.$nextTick(() => {
+    //     const wrapper = document.querySelector(".helperwrapper");
+    //     this.scroll = new BScroll(wrapper, {
+    //       pullUpLoad: true,
+    //       click: true,
+    //       tap: true,
+    //       pullUpLoad: {
+    //         threshold: -30, // 当上拉距离超过30px时触发 pullingUp 事件
+    //       },
+    //     });
+    //     console.log(this.scroll);
+    //     this.scroll.on("pullingUp", () => {
+    //       console.log("jz");
+    //       this.scroll.finishPullUp();
+    //     });
+    //   });
+    // },
     getDirection(startx, starty, endx, endy) {
       let angx = endx - startx;
       let angy = endy - starty;
@@ -98,11 +111,11 @@ export default {
       console.log("my", movey);
       let dir = movey - this.starty;
       console.log("dir:", dir);
-      if (dir > 3) {
+      if (dir > 5) {
         this.isShow = true;
         this.show = "down";
         console.log("move+:", movey - this.starty, "true");
-      } else if (dir < -3) {
+      } else if (dir < -5) {
         this.isShow = false;
         this.show = "up";
         console.log("move-:", movey - this.starty, "flase");
@@ -145,7 +158,7 @@ export default {
           let t = setTimeout(function () {
             func.apply(context, args);
             timer = null;
-          }, 500);
+          }, 250);
           // console.log("timer:", t);
         }
       };
@@ -153,7 +166,7 @@ export default {
     throttle2() {
       setTimeout(() => {
         console.log("wait...");
-      }, 250);
+      }, 150);
       let func = this.handletouchm;
       let timer = null;
       return function () {
@@ -166,7 +179,7 @@ export default {
           let t = setTimeout(function () {
             func.apply(context, args);
             timer = null;
-          }, 500);
+          }, 250);
           // console.log("timer:", t);
         }
       };
@@ -184,11 +197,16 @@ export default {
           let t = setTimeout(function () {
             func.apply(context, args);
             timer = null;
-          }, 500);
+          }, 250);
           // console.log("timer:", t);
         }
       };
     },
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log("up");
+    this.input = "";
+    next();
   },
   destroyed() {
     console.log("leave");
@@ -200,15 +218,6 @@ export default {
 </script>
 
 <style scoped>
-.helperwrapper {
-  position: absolute;
-  height: 100vh;
-  width: 100vw;
-  left: 0;
-  top: 0;
-  margin: 0 auto;
-  overflow: hidden;
-}
 .helperbox {
   display: flex;
   width: 100vw;
@@ -217,10 +226,10 @@ export default {
   background: rgb(244, 244, 244);
 }
 .fade-enter-active {
-  transition: all 0.5s linear;
+  transition: all 0.25s linear;
 }
 .fade-leave-active {
-  transition: all 0.5s linear;
+  transition: all 0.25s linear;
 }
 .fade-enter, .fade-leave-to
 /* .slide-fade-leave-active for below version 2.1.8 */ {
@@ -260,7 +269,7 @@ export default {
 }
 .helperbox .down {
   margin-top: 4rem;
-  animation: bounce-in 0.5s linear reverse;
+  animation: bounce-in 0.25s linear reverse;
 }
 @keyframes bounce-in {
   0% {
@@ -272,7 +281,7 @@ export default {
 }
 .helperbox .up {
   margin-top: 0;
-  animation: bounce-on 0.5s linear;
+  animation: bounce-on 0.25s linear;
 }
 @keyframes bounce-on {
   0% {
@@ -284,9 +293,6 @@ export default {
 }
 .helperbox .helperbar >>> .el-menu {
   background: rgb(244, 244, 244);
-}
-.router {
-  padding: 8.6rem 0 4.2rem 0;
 }
 .helperbox .mytabbar {
   position: fixed;
