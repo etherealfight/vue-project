@@ -62,7 +62,7 @@ export const checkState = (userid) => {
     })
 }
 /**
- * 
+ * 悬赏页面初始化
  * @param {String} cuurrentPage 
  */
 export const searchData = (currentPage) => {
@@ -71,6 +71,45 @@ export const searchData = (currentPage) => {
         method: 'GET',
         params: {
             currentPage
+        }
+    })
+}
+/**
+ * 根据关键字查询指定悬赏
+ * @param {String} production 
+ * @param {String} cuurrentPage 
+ */
+export const searchReward1 = (production, currentPage) => {
+    return instance({
+        url: '/info/findrewardbystr',
+        method: 'GET',
+        params: {
+            production,
+            currentPage
+        }
+    })
+}
+/**
+ * 根据用户名查询指定悬赏
+ * @param {String} production 
+ * @param {String} cuurrentPage 
+ */
+export const searchReward2 = (production, currentPage) => {
+    return instance({
+        url: '/info/findrewardbyName',
+        method: 'GET',
+        params: {
+            production,
+            currentPage
+        }
+    })
+}
+export const toRewardDetail = (commentid)=>{
+    return instance({
+        url: '/info/findrewardbyid',
+        method: 'GET',
+        params: {
+            commentid,
         }
     })
 }
@@ -88,6 +127,36 @@ export const publishReward = (userid, rewardinfo, images) => {
             userid,
             rewardinfo,
             images
+        }
+    })
+}
+/**
+ * 根据关键字查询指定学习资源
+ * @param {String} production 
+ * @param {String} cuurrentPage 
+ */
+export const searchLearning1 = (production, currentPage) => {
+    return instance({
+        url: '/info/findrewardbystr',
+        method: 'GET',
+        params: {
+            production,
+            currentPage
+        }
+    })
+}
+/**
+ * 根据用户名查询指定学习资源
+ * @param {String} production 
+ * @param {String} cuurrentPage 
+ */
+export const searchLearning2 = (production, currentPage) => {
+    return instance({
+        url: '/info/findrewardbyName',
+        method: 'GET',
+        params: {
+            production,
+            currentPage
         }
     })
 }

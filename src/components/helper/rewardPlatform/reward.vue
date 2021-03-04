@@ -44,7 +44,7 @@ export default {
       type: String,
       default: 0,
     },
-    userId:{
+    userId: {
       type: Number,
       default: 0,
     },
@@ -75,19 +75,22 @@ export default {
   methods: {
     toPersonal() {
       if (this.$store.state.userName === this.username) {
-        this.$store.commit('changeId', {currenrId:this.userId})
+        this.$store.commit("changeId", { currenrId: this.userId });
         this.$router.push({
           name: "mypersonalPage",
         });
       } else {
-        this.$store.commit('changeId', {currenrId:this.userId})
+        this.$store.commit("changeId", { currenrId: this.userId });
         this.$router.push({
-          name: "personalPage" ,
+          name: "personalPage",
         });
       }
     },
     toDetail() {
-      this.$router.push({ path: "/rewardDetail" });
+      this.$router.push({
+        path: "/rewardDetail",
+        query: { rewardid: this.id },
+      });
     },
   },
 };

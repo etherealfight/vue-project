@@ -11,7 +11,12 @@
     ></transition>
     <helperbar :class="show" :activeIndex="activeIndex"></helperbar>
     <div class="content">
-      <router-view class="router" :input="input" :searchTarget="searchTarget"></router-view>
+      <router-view
+        class="router"
+        :input="input"
+        :searchTarget="searchTarget"
+        @clearSearch="clearSearch"
+      ></router-view>
     </div>
     <mytabbar class="mytabbar" activeIndex="2"></mytabbar>
   </div>
@@ -25,7 +30,7 @@ export default {
   data() {
     return {
       input: "",
-      searchTarget:"",
+      searchTarget: "",
       activeIndex: "1",
       startx: 0,
       starty: 0,
@@ -33,18 +38,12 @@ export default {
       show: "default",
     };
   },
-  async created() {
-    // const res = await searchData(this.pageNum);
-    // this.datas = res.detail;
-    // this.totalNum = res.pageNumber;
-    // this.pageNum++;
-  },
   mounted() {
     // this.loadData();
     console.log(this.$route.path);
-    window.addEventListener("touchstart", this.throttle1());
-    window.addEventListener("touchmove", this.throttle2());
-    window.addEventListener("touchend", this.throttle3());
+    window.addEventListener("touchstart", this.handletouchs,true);
+    window.addEventListener("touchmove", this.handletouchm,true);
+    window.addEventListener("touchend", this.handletouche,true);
     if (this.$route.path === "/helper/learningList") {
       this.activeIndex = "2";
     } else {
@@ -55,34 +54,17 @@ export default {
   methods: {
     search() {
       if (this.$route.path === "/helper/rewardList") {
-        this.searchTarget="rewardList";
+        this.searchTarget = "rewardList";
         console.log("searchrew:");
-        
       } else if (this.$route.path === "/helper/learningList") {
-        this.searchTarget="learningList";
+        this.searchTarget = "learningList";
         console.log("searchlear:");
-
       }
     },
-
-    // loadData() {
-    //   this.$nextTick(() => {
-    //     const wrapper = document.querySelector(".helperwrapper");
-    //     this.scroll = new BScroll(wrapper, {
-    //       pullUpLoad: true,
-    //       click: true,
-    //       tap: true,
-    //       pullUpLoad: {
-    //         threshold: -30, // 当上拉距离超过30px时触发 pullingUp 事件
-    //       },
-    //     });
-    //     console.log(this.scroll);
-    //     this.scroll.on("pullingUp", () => {
-    //       console.log("jz");
-    //       this.scroll.finishPullUp();
-    //     });
-    //   });
-    // },
+    clearSearch() {
+      this.searchTarget = "";
+      this.input = "";
+    },
     getDirection(startx, starty, endx, endy) {
       let angx = endx - startx;
       let angy = endy - starty;
@@ -111,11 +93,11 @@ export default {
       console.log("my", movey);
       let dir = movey - this.starty;
       console.log("dir:", dir);
-      if (dir > 5) {
+      if (dir > 10) {
         this.isShow = true;
         this.show = "down";
         console.log("move+:", movey - this.starty, "true");
-      } else if (dir < -5) {
+      } else if (dir < -10) {
         this.isShow = false;
         this.show = "up";
         console.log("move-:", movey - this.starty, "flase");
@@ -145,63 +127,6 @@ export default {
         default:
       }
     },
-    throttle1() {
-      let func = this.handletouchs;
-      let timer = null;
-      return function () {
-        let context = this;
-        let args = arguments;
-        if (timer) {
-          return;
-        } else {
-          timer = true;
-          let t = setTimeout(function () {
-            func.apply(context, args);
-            timer = null;
-          }, 250);
-          // console.log("timer:", t);
-        }
-      };
-    },
-    throttle2() {
-      setTimeout(() => {
-        console.log("wait...");
-      }, 150);
-      let func = this.handletouchm;
-      let timer = null;
-      return function () {
-        let context = this;
-        let args = arguments;
-        if (timer) {
-          return;
-        } else {
-          timer = true;
-          let t = setTimeout(function () {
-            func.apply(context, args);
-            timer = null;
-          }, 250);
-          // console.log("timer:", t);
-        }
-      };
-    },
-    throttle3() {
-      let func = this.handletouche;
-      let timer = null;
-      return function () {
-        let context = this;
-        let args = arguments;
-        if (timer) {
-          return;
-        } else {
-          timer = true;
-          let t = setTimeout(function () {
-            func.apply(context, args);
-            timer = null;
-          }, 250);
-          // console.log("timer:", t);
-        }
-      };
-    },
   },
   beforeRouteUpdate(to, from, next) {
     console.log("up");
@@ -210,9 +135,9 @@ export default {
   },
   destroyed() {
     console.log("leave");
-    window.removeEventListener("touchstart", this.throttle1);
-    window.removeEventListener("touchmove", this.throttle2);
-    window.removeEventListener("touchend", this.throttle3);
+    window.removeEventListener("touchstart", this.handletouchs,true);
+    window.removeEventListener("touchmove", this.handletouchm,true);
+    window.removeEventListener("touchend", this.handletouche,true);
   },
 };
 </script>

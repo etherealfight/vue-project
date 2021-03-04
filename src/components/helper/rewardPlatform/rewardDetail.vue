@@ -35,17 +35,33 @@
 <script>
 import "swiper/dist/css/swiper.css";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
+import { toRewardDetail } from "../../../api";
 
 export default {
   components: {
     swiper,
     swiperSlide,
   },
+  /**
+   * 初始化悬赏页
+   */
+  async created() {
+    console.log("id:", this.$route.query.rewardid);
+    const res = await toRewardDetail(this.$route.query.rewardid);
+    console.log("init:", res);
+    this.fileaddress = res.images;
+    this.username = res.username;
+    this.userimg = res.headportrait;
+    this.id = res.commentid;
+    this.userid = res.userid;
+    this.clicks = res.rewardhits;
+  },
   mounted() {
     let mainHight = document.querySelector(".rewardDetailMain").offsetHeight;
     let swiperHight = document.querySelector(".swiper-container").offsetHeight;
-    let footerHight = document.querySelector(".rewardDetailFooter").offsetHeight;
-    let waperHight = mainHight - swiperHight - footerHight-20;
+    let footerHight = document.querySelector(".rewardDetailFooter")
+      .offsetHeight;
+    let waperHight = mainHight - swiperHight - footerHight - 20;
     let wrapper = document.getElementsByClassName("wrapper");
     console.log(wrapper);
     console.log(waperHight);
@@ -70,10 +86,12 @@ export default {
         "https://picsum.photos/460/360?random=2",
         "https://picsum.photos/460/360?random=3",
       ],
-      contentText: "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      contentText:
+        "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
       date: "2021-01-25",
       id: 0,
       username: "aaa",
+      userid: 0,
       userimg:
         "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
       clicks: 0,
@@ -98,6 +116,7 @@ export default {
       this.$router.back(-1);
     },
     swiperright() {
+      console.log("back");
       this.$router.back(-1);
     },
   },

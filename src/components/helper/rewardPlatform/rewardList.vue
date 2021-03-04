@@ -18,11 +18,12 @@
 
 <script>
 import reward from "./reward";
-import { searchData } from "../../../api";
+import { searchData, searchReward1, searchReward2 } from "../../../api";
 import BScroll from "better-scroll";
 export default {
   data() {
     return {
+      keyword: "",
       initState: true, //判断是否为初始页面
       pageNum: 1, //当前展示到的页面
       totalNum: 1, //总共查询到满足条件的页面
@@ -64,15 +65,18 @@ export default {
      */
     async getData() {
       try {
-        if (this.input == "") {
+        console.log("startget");
+        if (this.keyword == "") {
           const res = await searchData(this.pageNum);
           this.rewardlist = [...this.rewardlist, ...res.detail];
           console.log(res);
           console.log("chushihua");
         } else {
           if (this.initState) {
-            const res1 = await searchData1(this.input, this.pageNum);
-            const res2 = await searchData2(this.input, this.pageNum);
+            console.log("startgetinit");
+            const res1 = await searchReward1(this.keyword, this.pageNum);
+            console.log(res1);
+            const res2 = await searchReward2(this.keyword, this.pageNum);
             this.totalNum = res1.pageNumber + res2.pageNumber;
             this.pageNum1 = res1.pageNumber;
             this.initState = false;
@@ -81,7 +85,7 @@ export default {
           }
           console.log(this.pageNum, this.pageNum1);
           if (this.pageNum <= this.pageNum1) {
-            const res1 = await searchData1(this.input, this.pageNum);
+            const res1 = await searchReward1(this.keyword, this.pageNum);
             console.log(res1);
             if (this.pageNum === 1) {
               this.rewardlist = res1.detail;
@@ -92,8 +96,8 @@ export default {
             this.totalNum >= this.pageNum &&
             this.pageNum > this.pageNum1
           ) {
-            const res2 = await searchData2(
-              this.input,
+            const res2 = await searchReward2(
+              this.keyword,
               this.pageNum - this.pageNum1
             );
             console.log(res2);
@@ -105,9 +109,9 @@ export default {
           }
 
           if (this.pageNum <= this.pageNum1) {
-            const res1 = await searchData1(this.input, this.pageNum);
+            const res1 = await searchReward1(this.keyword, this.pageNum);
             if (res1.detail.length < 10 && this.pageNum == 1) {
-              const res2 = await searchData2(this.input, this.pageNum);
+              const res2 = await searchReward2(this.keyword, this.pageNum);
               this.rewardlist = [...this.rewardlist, ...res2.detail];
               this.pageNum++;
               console.log(this.pageNum);
@@ -157,13 +161,15 @@ export default {
     },
   },
   watch: {
-    input() {
+    searchTarget() {
       if (this.searchTarget === "rewardList") {
+        this.keyword = this.input;
         this.rewardlist = [];
         this.pageNum = 1;
         this.pageNum = 1;
         this.initState = true;
         this.getData();
+        this.$emit("clearSearch");
       }
     },
   },
