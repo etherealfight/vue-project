@@ -84,6 +84,7 @@ export default {
       return (Math.atan2(angy, angx) * 180) / Math.PI;
     },
     handletouchs(e) {
+      console.log(e)
       this.startx = e.touches[0].pageX;
       this.starty = e.touches[0].pageY;
       console.log("sy:", this.starty);

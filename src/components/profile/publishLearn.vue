@@ -18,13 +18,16 @@
         <el-upload
           class="uploaditem"
           ref="upload"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action="http://192.168.1.109:8080/rewardimages"
           :auto-upload="false"
           :limit="9"
           :file-list="photoList"
           list-type="picture-card"
-          :on-preview="handlePictureCardPreview"
-          :on-remove="handleRemove"
+          :before-upload="showList1"
+          :on-preview="handlePictureCardPreview1"
+          :on-remove="handleRemove1"
+          :on-error="showError1"
+          :on-success="showSuccess1"
         >
           <i class="el-icon-plus"></i>
         </el-upload>
@@ -34,12 +37,28 @@
         <el-upload
           class="upload-demo"
           ref="upload2"
-          action="https://jsonplaceholder.typicode.com/posts/"
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
+          action="http://192.168.1.109:8080/rewardvideos"
+          :on-remove="handleRemove2"
+          :file-list="videoList"
+          :auto-upload="false"
+          :before-upload="showList2"
+          :on-error="showError2"
+          :on-success="showSuccess2"
+        >
+          <el-button slot="trigger" size="small" type="primary"
+            >选取视频</el-button
+          >
+        </el-upload>
+        <el-upload
+          class="upload-demo"
+          ref="upload3"
+          action="http://192.168.1.109:8080/rewardfiles"
+          :on-remove="handleRemove3"
           :file-list="fileList"
           :auto-upload="false"
-          :accept="mp4"
+          :before-upload="showList3"
+          :on-error="showError3"
+          :on-success="showSuccess3"
         >
           <el-button slot="trigger" size="small" type="primary"
             >选取文件</el-button
@@ -54,6 +73,7 @@
 </template>
 
 <script>
+import { publishLearning } from "../../api";
 export default {
   data() {
     return {
@@ -61,7 +81,17 @@ export default {
       dialogImageUrl: "",
       dialogVisible: false,
       photoList: [],
+      videoList: [],
       fileList: [],
+      imgUrl: "",
+      videoUrl: "",
+      fileUrl: "",
+      counter1: 0,
+      counter2: 0,
+      counter3: 0,
+      imgNum: 0,
+      videoNum: 0,
+      fileNum: 0,
     };
   },
   props: {
@@ -75,26 +105,155 @@ export default {
      * 发布文章
      */
     async publishLearn() {
-      let that = this;
       if (this.$store.state.userName == "") this.$message.warning("请先登录");
-      else if (that.publishLearnText == "")
+      else if (this.publishRewardText == "")
         this.$message.warning("发布内容不可为空");
       else {
-        console.log(this.publishLearnText);
         this.$emit("child-ok");
         this.$refs.upload.submit();
-        this.$refs.upload2.submit();
-        this.publishLearnText = "";
-        this.photoList = [];
-        this.fileList = [];
         // this.$message.info(res.msg);
         // console.log(res)
+      }
+    },
+    /**
+     * 上传前统计图片数量
+     */
+    showList1(file) {
+      this.imgNum = this.imgNum + 1;
+      console.log("file:", file);
+    },
+    /**
+     * 上传前统计视频数量
+     */
+    showList2(file) {
+      this.videoNum = this.videoNum + 1;
+      console.log("file:", file);
+    },
+    /**
+     * 上传前统计文件数量
+     */
+    showList3(file) {
+      this.fileNum = this.fileNum + 1;
+      console.log("file:", file);
+    },
+    /**
+     * 上传失败钩子
+     */
+    showError1(err, file, fileList) {
+      console.log("error", err);
+    },
+    showError2(err, file, fileList) {
+      console.log("error", err);
+    },
+    showError3(err, file, fileList) {
+      console.log("error", err);
+    },
+    /**
+     * 上传图片成功钩子
+     */
+    async showSuccess1(response, file, fileList) {
+      console.log("nums:", this.imgNum);
+      console.log("success:", response);
+      if (this.counter1 < this.imgNum) {
+        this.imgUrl =
+          this.imgUrl + "http://192.168.1.109:8080" + response.detail + ",";
+        console.log(this.imgUrl);
+        this.counter1 = this.counter1 + 1;
+      }
+      if (
+        this.counter1 === this.imgNum &&
+        this.counter2 === this.videoNum &&
+        this.counter3 === this.fileNum
+      ) {
+        console.log("finish:", this.imgUrl);
+        const res = await publishLearning(
+          this.$store.state.userId,
+          this.publishRewardText,
+          this.imgUrl,
+          this.videoUrl,
+          this.fileUrl
+        );
+        console.log(res);
+        this.publishRewardText = "";
+        this.$refs.upload.clearFiles();
+        this.imgNum = 0;
+        this.counter1 = 0;
+      }
+    },
+    /**
+     * 上传视频成功钩子
+     */
+    async showSuccess2(response, file, fileList) {
+      console.log("nums:", this.videoNum);
+      console.log("success:", response);
+      if (this.counter2 < this.videoNum) {
+        this.videoUrl =
+          this.videoUrl + "http://192.168.1.109:8080" + response.detail + ",";
+        console.log(this.videoUrl);
+        this.counter2 = this.counter2 + 1;
+      }
+      if (
+        this.counter1 === this.imgNum &&
+        this.counter2 === this.videoNum &&
+        this.counter3 === this.fileNum
+      ) {
+        console.log("finish:", this.videoUrl);
+        const res = await publishLearning(
+          this.$store.state.userId,
+          this.publishRewardText,
+          this.imgUrl,
+          this.videoUrl,
+          this.fileUrl
+        );
+        console.log(res);
+        this.publishRewardText = "";
+        this.$refs.upload2.clearFiles();
+        this.videoNum = 0;
+        this.counter2 = 0;
+      }
+    },
+    /**
+     * 上传文件成功钩子
+     */
+    async showSuccess3(response, file, fileList) {
+      console.log("nums:", this.fileNum);
+      console.log("success:", response);
+      if (this.counter3 < this.fileNum) {
+        this.fileUrl =
+          this.fileUrl + "http://192.168.1.109:8080" + response.detail + ",";
+        console.log(this.fileUrl);
+        this.counter3 = this.counter1 + 1;
+      }
+      if (
+        this.counter1 === this.imgNum &&
+        this.counter2 === this.videoNum &&
+        this.counter3 === this.fileNum
+      ) {
+        console.log("finish:", this.fileUrl);
+        const res = await publishLearning(
+          this.$store.state.userId,
+          this.publishRewardText,
+          this.imgUrl,
+          this.videoUrl,
+          this.fileUrl
+        );
+        console.log(res);
+        this.publishRewardText = "";
+        this.$refs.upload.clearFiles();
+        this.fileNum = 0;
+        this.counter3 = 0;
       }
     },
     back() {
       this.$emit("child-back");
     },
-    handleRemove(file, fileList) {
+    handleRemove1(file, fileList) {
+      console.log(file, fileList);
+    },
+    handleRemove2(file, fileList) {
+      console.log(file, fileList);
+    },
+    handleRemove3(file, fileList) {
       console.log(file, fileList);
     },
     handlePictureCardPreview(file) {

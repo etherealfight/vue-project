@@ -22,6 +22,7 @@
 </template>
 
 <script>
+
 export default {
   props: {
     //悬赏图片
@@ -62,7 +63,10 @@ export default {
   },
   methods: {
     toDetail() {
-      this.$router.push({ path: "/learningDetail" });
+      this.$router.push({
+        path: "/learningDetail",
+        query: { learningid: this.id, hits: this.clicks },
+      });
     },
     toPersonal() {
       if (this.$store.state.userName === this.username) {
@@ -76,6 +80,12 @@ export default {
           name: "personalPage" ,
         });
       }
+    },
+    async del() {
+      this.$emit("deleteContent", "");
+      console.log("zzd");
+      //const res = await deleteContent(ths.id);
+      //console.log(res);
     },
   },
 };

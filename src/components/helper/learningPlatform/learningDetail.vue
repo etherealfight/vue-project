@@ -88,8 +88,24 @@ import { swiper, swiperSlide } from "vue-awesome-swiper";
 import "video.js/dist/video-js.css";
 import commentList from "./commentList";
 import BScroll from "better-scroll";
+import { toStudyDetail } from "../../../api";
 
 export default {
+  async created() {
+    console.log("id:", this.$route.query.learningid);
+    console.log("hits", this.$route.query.hits);
+    const res = await toStudyDetail(
+      this.$route.query.learningid,
+      this.$route.query.hits
+    );
+    console.log("init:", res);
+    this.fileaddress = res.images;
+    this.username = res.username;
+    this.userimg = res.headportrait;
+    this.id = res.commentid;
+    this.userid = res.userid;
+    this.clicks = res.rewardhits;
+  },
   components: {
     swiper,
     swiperSlide,
@@ -104,7 +120,6 @@ export default {
     wrapper[0].style.height = waperHight + "px";
 
     let bodyHeight = document.documentElement.scrollHeight;
-
   },
   data() {
     return {
@@ -121,9 +136,21 @@ export default {
         }, // 可选选项，自动滑动
       },
       videoList: [
-        { id: 1, address: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4", videoName: "111111" },
-        { id: 2, address: "http://vjs.zencdn.net/v/oceans.mp4", videoName: "222222" },
-        { id: 3, address: "https://media.w3.org/2010/05/sintel/trailer.mp4", videoName: "333333" },
+        {
+          id: 1,
+          address: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4",
+          videoName: "111111",
+        },
+        {
+          id: 2,
+          address: "http://vjs.zencdn.net/v/oceans.mp4",
+          videoName: "222222",
+        },
+        {
+          id: 3,
+          address: "https://media.w3.org/2010/05/sintel/trailer.mp4",
+          videoName: "333333",
+        },
       ],
       fileList: [
         { id: 1, address: "../../../assets/test.mp4", fileName: "111111" },
@@ -166,6 +193,7 @@ export default {
       date: "2021-01-25",
       id: 0,
       username: "aaa",
+      userid: 0,
       userimg:
         "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
       clicks: 0,

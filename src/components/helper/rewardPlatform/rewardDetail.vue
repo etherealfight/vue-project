@@ -47,7 +47,8 @@ export default {
    */
   async created() {
     console.log("id:", this.$route.query.rewardid);
-    const res = await toRewardDetail(this.$route.query.rewardid);
+    console.log("hits",this.$route.query.hits)
+    const res = await toRewardDetail(this.$route.query.rewardid,this.$route.query.hits);
     console.log("init:", res);
     this.fileaddress = res.images;
     this.username = res.username;
@@ -82,9 +83,6 @@ export default {
         }, // 可选选项，自动滑动
       },
       fileaddress: [
-        "https://picsum.photos/460/360?random=1",
-        "https://picsum.photos/460/360?random=2",
-        "https://picsum.photos/460/360?random=3",
       ],
       contentText:
         "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",

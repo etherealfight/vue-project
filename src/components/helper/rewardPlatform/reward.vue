@@ -3,6 +3,7 @@
     <div class="rewardHeader" @click="toPersonal">
       <img :src="userimg" class="userImg" />
       <div class="userName">{{ username }}</div>
+      <i class="el-icon-close" v-show="isShow"></i>
     </div>
     <div class="rewardMain" @click="toDetail">
       <div class="rewardText">{{ contentText }}</div>
@@ -23,6 +24,16 @@
 
 <script>
 export default {
+  computed: {
+    isShow: function () {
+      if (this.$route.path==="/mypersonalPage/rewardList") {
+        return true
+      }
+      else{
+        return false
+      }
+    },
+  },
   props: {
     //悬赏图片
     fileaddress: {
@@ -68,7 +79,7 @@ export default {
     },
     //点击量
     clicks: {
-      type: String,
+      type: Number,
       default: 0,
     },
   },
@@ -89,8 +100,14 @@ export default {
     toDetail() {
       this.$router.push({
         path: "/rewardDetail",
-        query: { rewardid: this.id },
+        query: { rewardid: this.id, hits: this.clicks },
       });
+    },
+    async del() {
+      this.$emit("deleteContent", "");
+      console.log("zzd");
+      //const res = await deleteContent(ths.id);
+      //console.log(res);
     },
   },
 };

@@ -2,7 +2,7 @@
   <div class="rerwardwrapper">
     <div class="rewardList">
       <reward
-        v-for="item in rewardlist"
+        v-for="(item, index) in rewardlist"
         :key="item.commentid"
         :id="item.commentid"
         :username="item.username"
@@ -11,6 +11,7 @@
         :contentText="item.rewardinfo"
         :date="item.rewardtime"
         :clicks="item.rewardhits"
+        @deleteContent="handleDelete(index)"
       ></reward>
     </div>
   </div>
@@ -60,6 +61,12 @@ export default {
     },
   },
   methods: {
+    /**
+     * 删除评论
+     */
+    handleDelete(index) {
+      this.rewardlist.splice(index, 1);
+    },
     /**
      * 根据查询条件获取文章信息
      */

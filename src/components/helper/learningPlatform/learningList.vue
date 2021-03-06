@@ -2,15 +2,17 @@
   <div class="learningwrapper">
     <div class="learningList">
       <learning
-        v-for="item in learninglist"
-        :key="item.id"
-        :id="item.id"
+        v-for="(item, index) in learninglist"
+        :key="item.studyplatid"
+        :id="item.studyplatid"
         :username="item.username"
-        :userimg="item.userimg"
-        :fileaddress="item.fileaddress"
-        :contentText="item.contentText"
-        :date="item.date"
-        :clicks="item.clicks"
+        :userid="item.userid"
+        :userimg="item.headportrait"
+        :fileaddress="item.images"
+        :contentText="item.studyinfo"
+        :date="item.studytime"
+        :clicks="item.studyhits"
+         @deleteContent="handleDelete(index)"
       ></learning>
     </div>
   </div>
@@ -18,7 +20,7 @@
 
 <script>
 import learning from "./learning";
-import { searchData, searchLearning1, searchLearning2 } from "../../../api";
+import { searchStudy, searchLearning1, searchLearning2 } from "../../../api";
 import BScroll from "better-scroll";
 export default {
   data() {
@@ -30,46 +32,7 @@ export default {
       pageNum1: 1, //符合用户名的文章页数
       showLoading: false, //是否在加载中标识
       learninglist: [
-        {
-          id: 1,
-          username: "quan",
-          userimg:
-            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-          contentText:
-            "23333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
-          fileaddress: [
-            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-          ],
-          date: "2021-1-11",
-          clicks: 2333,
-        },
-        {
-          id: 2,
-          username: "quan",
-          userimg:
-            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-          contentText: "2333333333",
-          fileaddress: [
-            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-          ],
-          date: "2021-1-16",
-          clicks: 666,
-        },
-        {
-          id: 3,
-          username: "quan",
-          userimg:
-            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-          contentText: "2333333333",
-          fileaddress: [
-            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-          ],
-          date: "2021-1-16",
-          clicks: 0,
-        },
+        
       ],
     };
   },
@@ -80,7 +43,8 @@ export default {
    * 初始化首页
    */
   async created() {
-    const res = await searchData(this.pageNum);
+    const res = await searchStudy(this.pageNum);
+    console.log(res);
     this.learninglist = res.detail;
     this.totalNum = res.pageNumber;
     this.pageNum++;
@@ -99,6 +63,12 @@ export default {
     },
   },
   methods: {
+    /**
+     * 删除
+     */
+    handleDelete(index) {
+      this.learninglist.splice(index, 1);
+    },
     /**
      * 根据查询条件获取文章信息
      */

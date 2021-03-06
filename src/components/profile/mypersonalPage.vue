@@ -186,6 +186,12 @@ export default {
       return !(this.isMaskReward || this.isMaskLearn);
     },
   },
+  updated() {
+    //重新计算高度
+    this.scroll.refresh();
+    //当数据加载完毕以后通知better-scroll
+    this.scroll.finishPullUp();
+  },
 };
 </script>
 
@@ -254,8 +260,15 @@ export default {
 .mypersonalpageMain {
   background: rgb(240, 240, 240);
 }
-.mypersonalpageMain .wrapper .router {
+.router {
   padding: 0 0 2rem 0;
+}
+.rerwardwrapper >>> .rewardList ,
+.learningwrapper >>> .learningList{
+  padding: 0;
+  padding-bottom: 30vh;
+  box-sizing: border-box;
+  background: rgb(240, 240, 240);
 }
 .mypersonalwrapper {
   position: absolute;
