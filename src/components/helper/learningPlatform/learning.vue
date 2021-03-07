@@ -22,7 +22,6 @@
 </template>
 
 <script>
-
 export default {
   props: {
     //悬赏图片
@@ -42,7 +41,7 @@ export default {
     },
     //id
     id: {
-      type: Number,
+      type: String,
       default: 0,
     },
     //作者
@@ -63,6 +62,7 @@ export default {
   },
   methods: {
     toDetail() {
+      console.log("studyid:", this.id);
       this.$router.push({
         path: "/learningDetail",
         query: { learningid: this.id, hits: this.clicks },
@@ -70,14 +70,14 @@ export default {
     },
     toPersonal() {
       if (this.$store.state.userName === this.username) {
-        this.$store.commit('changeId', {currenrId:this.userId})
+        this.$store.commit("changeId", { currenrId: this.userId });
         this.$router.push({
           name: "mypersonalPage",
         });
       } else {
-        this.$store.commit('changeId', {currenrId:this.userId})
+        this.$store.commit("changeId", { currenrId: this.userId });
         this.$router.push({
-          name: "personalPage" ,
+          name: "personalPage",
         });
       }
     },

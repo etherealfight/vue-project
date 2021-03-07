@@ -110,6 +110,11 @@ export default {
       mypersonalpageBarHeight;
     let wrapper = document.getElementsByClassName("mypersonalwrapper");
     wrapper[0].style.height = mypersonalwrapper + "px";
+    if (this.$route.path === "/mypersonalPage/learningList") {
+      this.activeIndex = "2";
+    } else {
+      this.activeIndex = "1";
+    }
   },
   methods: {
     mypersonalChange() {

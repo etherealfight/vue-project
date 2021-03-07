@@ -1,9 +1,9 @@
 <template>
   <div class="rewardBox">
     <div class="rewardHeader" @click="toPersonal">
-      <img :src="userimg" class="userImg" />
+      <img :src="userimg" class="userImg" @click="test" />
       <div class="userName">{{ username }}</div>
-      <i class="el-icon-close" v-show="isShow"></i>
+      <i class="el-icon-close" v-if="isShow" @click="del"></i>
     </div>
     <div class="rewardMain" @click="toDetail">
       <div class="rewardText">{{ contentText }}</div>
@@ -26,11 +26,10 @@
 export default {
   computed: {
     isShow: function () {
-      if (this.$route.path==="/mypersonalPage/rewardList") {
-        return true
-      }
-      else{
-        return false
+      if (this.$route.path === "/mypersonalPage/rewardList") {
+        return true;
+      } else {
+        return false;
       }
     },
   },
@@ -84,6 +83,9 @@ export default {
     },
   },
   methods: {
+    test() {
+      console.log("test...", "route:", this.$route.path);
+    },
     toPersonal() {
       if (this.$store.state.userName === this.username) {
         this.$store.commit("changeId", { currenrId: this.userId });
@@ -103,11 +105,17 @@ export default {
         query: { rewardid: this.id, hits: this.clicks },
       });
     },
-    async del() {
-      this.$emit("deleteContent", "");
-      console.log("zzd");
-      //const res = await deleteContent(ths.id);
-      //console.log(res);
+    del() {
+      console.log(this.$route.path);
+      if (this.$route.path === "/mypersonalPage/rewardList") {
+        let conf = confirm("确定删除此悬赏?");
+        if (conf === true) {
+          this.$emit("deleteContent", "");
+        }
+
+        //const res = await deleteContent(ths.id);
+        //console.log(res);
+      }
     },
   },
 };
@@ -130,6 +138,11 @@ export default {
   justify-content: flex-start;
   align-items: center;
   padding-top: 2rem;
+}
+.rewardHeader .el-icon-close {
+  position: absolute;
+  right: 3rem;
+  font-size: 2rem;
 }
 .rewardBox .rewardHeader .userImg {
   width: 6rem;

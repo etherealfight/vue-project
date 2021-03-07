@@ -109,7 +109,7 @@ export const searchReward2 = (production, currentPage) => {
  * @param {String} commentid 
  * @param {String} cuurrentPage 
  */
-export const toRewardDetail = (commentid,hits) => {
+export const toRewardDetail = (commentid, hits) => {
     return instance({
         url: '/info/findrewardbyid',
         method: 'GET',
@@ -181,12 +181,12 @@ export const searchLearning2 = (production, currentPage) => {
 }
 /**
  * 根据学习id进入学习详情页
- * @param {String} commentid 
- * @param {String} cuurrentPage 
+ * @param {String} studyplatid 
+ * @param {String} hits 
  */
-export const toStudyDetail = (studyplatid,hits) => {
+export const toStudyDetail = (studyplatid, hits) => {
     return instance({
-        url: '/study/findrewardbyid',
+        url: '/study/findstudybyid',
         method: 'GET',
         params: {
             studyplatid,
@@ -199,15 +199,21 @@ export const toStudyDetail = (studyplatid,hits) => {
  * @param {String} userid 
  * @param {String} rewardinfo 
  * @param {String} images 
+ * @param {String} videos 
+ * @param {String} files 
  */
-export const publishLearning = (userid, studyinfo, images) => {
+export const publishLearning = (userid, studyinfo, images, videos, files, videoname, filename) => {
     return instance({
         url: '/study/updatestudy',
         method: 'GET',
         params: {
             userid,
             studyinfo,
-            images
+            images,
+            videos,
+            files,
+            videoname,
+            filename
         }
     })
 }

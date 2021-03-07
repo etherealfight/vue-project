@@ -32,12 +32,12 @@
               <h2 class="videoTitle">课程视频</h2>
               <ol>
                 <li
-                  v-for="item in videoList"
-                  :key="item.id"
+                  v-for="(item, index) in videoList"
+                  :key="index"
                   @click="toVideoPage(item.id)"
                 >
                   <div class="itembox">
-                    <span>{{ item.videoName }}</span>
+                    <span>{{ videoName[index] }}</span>
                     <i class="el-icon-download" @click="download"></i>
                   </div>
                 </li>
@@ -47,12 +47,12 @@
               <h2 class="fileTitle">课程资源</h2>
               <ol>
                 <li
-                  v-for="item in fileList"
-                  :key="item.id"
+                  v-for="(item, index) in fileList"
+                  :key="index"
                   @click="dowmloadFile"
                 >
                   <div class="itembox">
-                    <span> {{ item.fileName }}</span>
+                    <span> {{ fileName[index] }}</span>
                     <i class="el-icon-download" @click="download"></i>
                   </div>
                 </li>
@@ -105,6 +105,10 @@ export default {
     this.id = res.commentid;
     this.userid = res.userid;
     this.clicks = res.rewardhits;
+    this.videoList = res.videos;
+    this.fileList = res.files;
+    this.videoName = res.videoname;
+    this.fileName = res.filename;
   },
   components: {
     swiper,
@@ -135,28 +139,10 @@ export default {
           disableOnInteraction: true,
         }, // 可选选项，自动滑动
       },
-      videoList: [
-        {
-          id: 1,
-          address: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4",
-          videoName: "111111",
-        },
-        {
-          id: 2,
-          address: "http://vjs.zencdn.net/v/oceans.mp4",
-          videoName: "222222",
-        },
-        {
-          id: 3,
-          address: "https://media.w3.org/2010/05/sintel/trailer.mp4",
-          videoName: "333333",
-        },
-      ],
-      fileList: [
-        { id: 1, address: "../../../assets/test.mp4", fileName: "111111" },
-        { id: 2, address: "../../../assets/test.mp4", fileName: "222222" },
-        { id: 3, address: "../../../assets/test.mp4", fileName: "333333" },
-      ],
+      videoList: [],
+      fileList: [],
+      videoName: [],
+      fileName: [],
       // playerOptions: {
       //   height: 400,
       //   playbackRates: [0.7, 1.0, 1.5, 2.0], // 播放速度
@@ -184,9 +170,6 @@ export default {
       // },
       title: "test",
       fileaddress: [
-        "https://picsum.photos/460/360?random=1",
-        "https://picsum.photos/460/360?random=2",
-        "https://picsum.photos/460/360?random=3",
       ],
       contentText:
         "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",

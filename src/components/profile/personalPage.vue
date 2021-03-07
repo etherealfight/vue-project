@@ -5,7 +5,7 @@
       <div class="personalMiddle">
         <div class="personalIntroduction">
           <div class="personalImg">
-            <img :src="userImage" class="personalImg" />
+            <img :src="userImage" class="personalImg" @click="test"/>
           </div>
           <div class="personalText">
             <span style="font-size: 1.75rem">{{ username }}</span>
@@ -99,6 +99,9 @@ export default {
     }
   },
   methods: {
+    test() {
+      console.log("test...", "route:", this.$route.path);
+    },
     personalChange() {
       this.$router.push("/profile");
     },
@@ -212,6 +215,16 @@ export default {
 }
 .personalpageMain .wrapper .router {
   padding: 0 0 2rem 0;
+}
+.router {
+  padding: 0 0 2rem 0;
+}
+.rerwardwrapper >>> .rewardList ,
+.learningwrapper >>> .learningList{
+  padding: 0;
+  padding-bottom: 30vh;
+  box-sizing: border-box;
+  background: rgb(240, 240, 240);
 }
 .personalwrapper {
   position: absolute;

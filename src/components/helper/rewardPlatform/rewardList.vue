@@ -65,7 +65,9 @@ export default {
      * 删除评论
      */
     handleDelete(index) {
+      console.log("shan...")
       this.rewardlist.splice(index, 1);
+
     },
     /**
      * 根据查询条件获取文章信息

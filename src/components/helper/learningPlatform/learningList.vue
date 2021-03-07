@@ -44,7 +44,7 @@ export default {
    */
   async created() {
     const res = await searchStudy(this.pageNum);
-    console.log(res);
+    console.log("studyList:",res);
     this.learninglist = res.detail;
     this.totalNum = res.pageNumber;
     this.pageNum++;
@@ -170,19 +170,8 @@ export default {
     },
   },
   watch: {
-    input() {
-      if (this.searchTarget === "learningList") {
-        this.learninglist = [];
-        this.pageNum = 1;
-        this.pageNum = 1;
-        this.initState = true;
-        this.getData();
-      }
-    },
-  },
-  watch: {
     searchTarget() {
-      if (this.searchTarget === "learrningList") {
+      if (this.searchTarget === "learningList") {
         this.keyword = this.input;
         this.learninglist = [];
         this.pageNum = 1;

@@ -17,7 +17,7 @@
       <div class="upload">
         <el-upload
           class="uploaditem"
-          ref="upload"
+          ref="upload1"
           action="http://192.168.1.109:8080/rewardimages"
           :auto-upload="false"
           :limit="9"
@@ -92,6 +92,9 @@ export default {
       imgNum: 0,
       videoNum: 0,
       fileNum: 0,
+      videoName: "",
+      fileName: "",
+      updatestate: true,
     };
   },
   props: {
@@ -109,10 +112,12 @@ export default {
       else if (this.publishRewardText == "")
         this.$message.warning("发布内容不可为空");
       else {
-        this.$emit("child-ok");
-        this.$refs.upload.submit();
+        this.$refs.upload1.submit();
+        this.$refs.upload2.submit();
+        this.$refs.upload3.submit();
         // this.$message.info(res.msg);
         // console.log(res)
+        if (this.updatestate) this.$emit("child-ok");
       }
     },
     /**
@@ -127,39 +132,54 @@ export default {
      */
     showList2(file) {
       this.videoNum = this.videoNum + 1;
-      console.log("file:", file);
+      this.videoName = this.videoName + file.name + ",";
+      console.log("name:", file.name);
     },
     /**
      * 上传前统计文件数量
      */
     showList3(file) {
       this.fileNum = this.fileNum + 1;
-      console.log("file:", file);
+      this.fileName = this.fileName + file.name + ",";
+      console.log("name:", this.fileName);
     },
     /**
      * 上传失败钩子
      */
     showError1(err, file, fileList) {
       console.log("error", err);
+      this.$message.warning("图片上传失败");
+      this.updatestate = false;
     },
     showError2(err, file, fileList) {
       console.log("error", err);
+      this.$message.warning("视频上传失败");
+      this.updatestate = false;
     },
     showError3(err, file, fileList) {
       console.log("error", err);
+      this.$message.warning("文件上传失败");
+      this.updatestate = false;
     },
     /**
      * 上传图片成功钩子
      */
     async showSuccess1(response, file, fileList) {
       console.log("nums:", this.imgNum);
+      console.log("counter1:", this.counter1);
       console.log("success:", response);
       if (this.counter1 < this.imgNum) {
         this.imgUrl =
           this.imgUrl + "http://192.168.1.109:8080" + response.detail + ",";
-        console.log(this.imgUrl);
+        console.log("imgurl:", this.imgUrl);
         this.counter1 = this.counter1 + 1;
       }
+      console.log("nums1:", this.imgNum);
+      console.log("counter1:", this.counter1);
+      console.log("nums2:", this.videoNum);
+      console.log("counter2:", this.counter2);
+      console.log("nums3:", this.fileNum);
+      console.log("counter3:", this.counter3);
       if (
         this.counter1 === this.imgNum &&
         this.counter2 === this.videoNum &&
@@ -168,16 +188,26 @@ export default {
         console.log("finish:", this.imgUrl);
         const res = await publishLearning(
           this.$store.state.userId,
-          this.publishRewardText,
+          this.publishLearnText,
           this.imgUrl,
           this.videoUrl,
-          this.fileUrl
+          this.fileUrl,
+          this.videoName,
+          this.fileName
         );
         console.log(res);
-        this.publishRewardText = "";
-        this.$refs.upload.clearFiles();
+        this.publishLearnText = "";
+        this.$refs.upload1.clearFiles();
+        this.$refs.upload2.clearFiles();
+        this.$refs.upload3.clearFiles();
         this.imgNum = 0;
+        this.videoNum = 0;
+        this.fileNum = 0;
+        this.videoName = "";
+        this.fileName = "";
         this.counter1 = 0;
+        this.counter2 = 0;
+        this.counter3 = 0;
       }
     },
     /**
@@ -185,11 +215,12 @@ export default {
      */
     async showSuccess2(response, file, fileList) {
       console.log("nums:", this.videoNum);
+      console.log("counter2:", this.counter2);
       console.log("success:", response);
       if (this.counter2 < this.videoNum) {
         this.videoUrl =
           this.videoUrl + "http://192.168.1.109:8080" + response.detail + ",";
-        console.log(this.videoUrl);
+        console.log("videoUrl:", this.videoUrl);
         this.counter2 = this.counter2 + 1;
       }
       if (
@@ -200,16 +231,26 @@ export default {
         console.log("finish:", this.videoUrl);
         const res = await publishLearning(
           this.$store.state.userId,
-          this.publishRewardText,
+          this.publishLearnText,
           this.imgUrl,
           this.videoUrl,
-          this.fileUrl
+          this.fileUrl,
+          this.videoName,
+          this.fileName
         );
         console.log(res);
-        this.publishRewardText = "";
+        this.publishLearnText = "";
+        this.$refs.upload1.clearFiles();
         this.$refs.upload2.clearFiles();
+        this.$refs.upload3.clearFiles();
+        this.imgNum = 0;
         this.videoNum = 0;
+        this.fileNum = 0;
+        this.videoName = "";
+        this.fileName = "";
+        this.counter1 = 0;
         this.counter2 = 0;
+        this.counter3 = 0;
       }
     },
     /**
@@ -217,13 +258,20 @@ export default {
      */
     async showSuccess3(response, file, fileList) {
       console.log("nums:", this.fileNum);
+      console.log("counter3:", this.counter3);
       console.log("success:", response);
       if (this.counter3 < this.fileNum) {
         this.fileUrl =
           this.fileUrl + "http://192.168.1.109:8080" + response.detail + ",";
-        console.log(this.fileUrl);
-        this.counter3 = this.counter1 + 1;
+        console.log("fileUrl", this.fileUrl);
+        this.counter3 = this.counter3 + 1;
       }
+      console.log("nums1:", this.imgNum);
+      console.log("counter1:", this.counter1);
+      console.log("nums2:", this.videoNum);
+      console.log("counter2:", this.counter2);
+      console.log("nums3:", this.fileNum);
+      console.log("counter3:", this.counter3);
       if (
         this.counter1 === this.imgNum &&
         this.counter2 === this.videoNum &&
@@ -232,15 +280,25 @@ export default {
         console.log("finish:", this.fileUrl);
         const res = await publishLearning(
           this.$store.state.userId,
-          this.publishRewardText,
+          this.publishLearnText,
           this.imgUrl,
           this.videoUrl,
-          this.fileUrl
+          this.fileUrl,
+          this.videoName,
+          this.fileName
         );
         console.log(res);
-        this.publishRewardText = "";
-        this.$refs.upload.clearFiles();
+        this.publishLearnText = "";
+        this.$refs.upload1.clearFiles();
+        this.$refs.upload2.clearFiles();
+        this.$refs.upload3.clearFiles();
+        this.imgNum = 0;
+        this.videoNum = 0;
         this.fileNum = 0;
+        this.videoName = "";
+        this.fileName = "";
+        this.counter1 = 0;
+        this.counter2 = 0;
         this.counter3 = 0;
       }
     },
@@ -256,7 +314,7 @@ export default {
     handleRemove3(file, fileList) {
       console.log(file, fileList);
     },
-    handlePictureCardPreview(file) {
+    handlePictureCardPreview1(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },

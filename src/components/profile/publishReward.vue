@@ -94,6 +94,8 @@ export default {
      * 上传成功钩子
      */
     async showSuccess(response, file, fileList) {
+      console.log("file:", file);
+      console.log("fileList:", fileList);
       console.log("nums:", this.imgNum);
       console.log("success:", response);
       if (this.counter < this.imgNum - 1) {
