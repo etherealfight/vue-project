@@ -12,7 +12,7 @@
         :contentText="item.studyinfo"
         :date="item.studytime"
         :clicks="item.studyhits"
-         @deleteContent="handleDelete(index)"
+        @deleteContent="handleDelete(index)"
       ></learning>
     </div>
   </div>
@@ -20,7 +20,12 @@
 
 <script>
 import learning from "./learning";
-import { searchStudy, searchLearning1, searchLearning2 } from "../../../api";
+import {
+  searchStudy,
+  searchLearning1,
+  searchLearning2,
+  searchLearningbyid,
+} from "../../../api";
 import BScroll from "better-scroll";
 export default {
   data() {
@@ -31,9 +36,7 @@ export default {
       totalNum: 1, //总共查询到满足条件的页面
       pageNum1: 1, //符合用户名的文章页数
       showLoading: false, //是否在加载中标识
-      learninglist: [
-        
-      ],
+      learninglist: [],
     };
   },
   components: {
@@ -43,8 +46,17 @@ export default {
    * 初始化首页
    */
   async created() {
-    const res = await searchStudy(this.pageNum);
-    console.log("studyList:",res);
+    let res = {};
+    if (
+      this.$route.path === "/mypersonalPage/learningList" ||
+      this.$route.path === "/personalPage/learningList"
+    ) {
+      res = await searchLearningbyid(this.id, this.pageNum);
+    } else {
+      res = await searchStudy(this.pageNum);
+    }
+
+    console.log("studyList:", res);
     this.learninglist = res.detail;
     this.totalNum = res.pageNumber;
     this.pageNum++;
@@ -53,6 +65,10 @@ export default {
     this.loadData();
   },
   props: {
+    id: {
+      type: String,
+      default: "",
+    },
     input: {
       type: String,
       default: "",
@@ -76,7 +92,15 @@ export default {
       try {
         console.log("startget");
         if (this.keyword == "") {
-          const res = await searchData(this.pageNum);
+          let res = {};
+          if (
+            this.$route.path === "/mypersonalPage/learningList" ||
+            this.$route.path === "/personalPage/learningList"
+          ) {
+            res = await searchLearningbyid(this.id, this.pageNum);
+          } else {
+            res = await searchStudy(this.pageNum);
+          }
           this.learninglist = [...this.learninglist, ...res.detail];
           console.log(res);
           console.log("chushihua");

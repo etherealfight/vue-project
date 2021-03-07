@@ -55,7 +55,7 @@
           ref="wrapper"
         >
           <div class="list">
-            <router-view class="router"></router-view>
+            <router-view class="router" :id="this.$store.state.userId"></router-view>
           </div>
         </v-touch>
       </div>

@@ -5,7 +5,7 @@
       <div class="personalMiddle">
         <div class="personalIntroduction">
           <div class="personalImg">
-            <img :src="userImage" class="personalImg" @click="test"/>
+            <img :src="userImage" class="personalImg"/>
           </div>
           <div class="personalText">
             <span style="font-size: 1.75rem">{{ username }}</span>
@@ -40,7 +40,7 @@
           ref="wrapper"
         >
           <div class="list">
-            <router-view class="router"></router-view>
+            <router-view class="router" :id="this.$route.query.id"></router-view>
           </div>
         </v-touch>
       </div>
@@ -99,9 +99,6 @@ export default {
     }
   },
   methods: {
-    test() {
-      console.log("test...", "route:", this.$route.path);
-    },
     personalChange() {
       this.$router.push("/profile");
     },

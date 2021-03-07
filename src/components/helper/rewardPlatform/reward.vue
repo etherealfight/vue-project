@@ -1,9 +1,9 @@
 <template>
   <div class="rewardBox">
-    <div class="rewardHeader" @click="toPersonal">
-      <img :src="userimg" class="userImg" @click="test" />
+    <div class="rewardHeader" @click.self="toPersonal">
+      <img :src="userimg" class="userImg" />
       <div class="userName">{{ username }}</div>
-      <i class="el-icon-close" v-if="isShow" @click="del"></i>
+      <i class="el-icon-close" v-if="isShow" @click.once="del"></i>
     </div>
     <div class="rewardMain" @click="toDetail">
       <div class="rewardText">{{ contentText }}</div>
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { deleteReward } from "../../../api";
 export default {
   computed: {
     isShow: function () {
@@ -83,9 +84,6 @@ export default {
     },
   },
   methods: {
-    test() {
-      console.log("test...", "route:", this.$route.path);
-    },
     toPersonal() {
       if (this.$store.state.userName === this.username) {
         this.$store.commit("changeId", { currenrId: this.userId });
@@ -96,6 +94,7 @@ export default {
         this.$store.commit("changeId", { currenrId: this.userId });
         this.$router.push({
           name: "personalPage",
+          query: { id: this.userId },
         });
       }
     },
@@ -105,16 +104,15 @@ export default {
         query: { rewardid: this.id, hits: this.clicks },
       });
     },
-    del() {
-      console.log(this.$route.path);
+    async del() {
+      console.log("path:", this.$route.path);
       if (this.$route.path === "/mypersonalPage/rewardList") {
         let conf = confirm("确定删除此悬赏?");
         if (conf === true) {
-          this.$emit("deleteContent", "");
+          this.$emit("deleteContent");
+          const res = await deleteReward(this.id);
+          console.log(res);
         }
-
-        //const res = await deleteContent(ths.id);
-        //console.log(res);
       }
     },
   },

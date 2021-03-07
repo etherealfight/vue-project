@@ -19,7 +19,12 @@
 
 <script>
 import reward from "./reward";
-import { searchData, searchReward1, searchReward2 } from "../../../api";
+import {
+  searchData,
+  searchReward1,
+  searchReward2,
+  searchRewardbyid,
+} from "../../../api";
 import BScroll from "better-scroll";
 export default {
   data() {
@@ -37,7 +42,15 @@ export default {
    * 初始化首页
    */
   async created() {
-    const res = await searchData(this.pageNum);
+    let res = {};
+    if (
+      this.$route.path === "/mypersonalPage/rewardList" ||
+      this.$route.path === "/personalPage/rewardList"
+    ) {
+      res = await searchRewardbyid(this.id, this.pageNum);
+    } else {
+      res = await searchData(this.pageNum);
+    }
     console.log("init:", res);
     this.rewardlist = res.detail;
     this.totalNum = res.pageNumber;
@@ -51,6 +64,10 @@ export default {
     reward: reward,
   },
   props: {
+    id: {
+      type: String,
+      default: "",
+    },
     input: {
       type: String,
       default: "",
@@ -65,9 +82,9 @@ export default {
      * 删除评论
      */
     handleDelete(index) {
-      console.log("shan...")
+      console.log("index:", index);
+      console.log("shan...");
       this.rewardlist.splice(index, 1);
-
     },
     /**
      * 根据查询条件获取文章信息
@@ -76,7 +93,15 @@ export default {
       try {
         console.log("startget");
         if (this.keyword == "") {
-          const res = await searchData(this.pageNum);
+          let res = {};
+          if (
+            this.$route.path === "/mypersonalPage/rewardList" ||
+            this.$route.path === "/personalPage/rewardList"
+          ) {
+            res = await searchRewardbyid(this.id, this.pageNum);
+          } else {
+            res = await searchData(this.pageNum);
+          }
           this.rewardlist = [...this.rewardlist, ...res.detail];
           console.log(res);
           console.log("chushihua");

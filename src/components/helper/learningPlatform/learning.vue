@@ -1,8 +1,9 @@
 <template>
   <div class="learnBox">
-    <div class="learnHeader" @click="toPersonal">
+    <div class="learnHeader" @click.self="toPersonal">
       <img :src="userimg" class="userImg" />
       <div class="userName">{{ username }}</div>
+      <i class="el-icon-close" v-if="isShow" @click.once="del"></i>
     </div>
     <div class="learnMain" @click="toDetail">
       <div class="learnText">{{ contentText }}</div>
@@ -22,7 +23,17 @@
 </template>
 
 <script>
+import { deleteLearning } from "../../../api";
 export default {
+  computed: {
+    isShow: function () {
+      if (this.$route.path === "/mypersonalPage/learningList") {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
   props: {
     //悬赏图片
     fileaddress: {
@@ -78,14 +89,20 @@ export default {
         this.$store.commit("changeId", { currenrId: this.userId });
         this.$router.push({
           name: "personalPage",
+          query: { id: this.userId },
         });
       }
     },
     async del() {
-      this.$emit("deleteContent", "");
-      console.log("zzd");
-      //const res = await deleteContent(ths.id);
-      //console.log(res);
+      console.log("path:", this.$route.path);
+      if (this.$route.path === "/mypersonalPage/learningList") {
+        let conf = confirm("确定删除?");
+        if (conf === true) {
+          this.$emit("deleteContent");
+          const res = await deleteLearning(this.id);
+          console.log(res);
+        }
+      }
     },
   },
 };
@@ -108,6 +125,11 @@ export default {
   justify-content: flex-start;
   align-items: center;
   padding-top: 2rem;
+}
+.learnHeader .el-icon-close {
+  position: absolute;
+  right: 3rem;
+  font-size: 2rem;
 }
 .learnBox .learnHeader .userImg {
   width: 6rem;

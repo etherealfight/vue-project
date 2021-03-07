@@ -105,6 +105,21 @@ export const searchReward2 = (production, currentPage) => {
     })
 }
 /**
+ * 根据用户名id指定悬赏
+ * @param {String} userid 
+ * @param {String} cuurrentPage 
+ */
+ export const searchRewardbyid = (userid, currentPage) => {
+    return instance({
+        url: '/info/findAllRewards',
+        method: 'GET',
+        params: {
+            userid,
+            currentPage
+        }
+    })
+}
+/**
  * 根据悬赏id进入悬赏详情页
  * @param {String} commentid 
  * @param {String} cuurrentPage 
@@ -133,6 +148,19 @@ export const publishReward = (userid, rewardinfo, images) => {
             userid,
             rewardinfo,
             images
+        }
+    })
+}
+/**
+ * 删除悬赏
+ * @param {String} commentid 
+ */
+ export const deleteReward = (commentid) => {
+    return instance({
+        url: '/info/deleteinfo',
+        method: 'GET',
+        params: {
+            commentid
         }
     })
 }
@@ -180,6 +208,21 @@ export const searchLearning2 = (production, currentPage) => {
     })
 }
 /**
+ * 根据用户id查询指定学习资源
+ * @param {String} userid 
+ * @param {String} cuurrentPage 
+ */
+ export const searchLearningbyid = (userid, currentPage) => {
+    return instance({
+        url: '/study/findAllStudy',
+        method: 'GET',
+        params: {
+            userid,
+            currentPage
+        }
+    })
+}
+/**
  * 根据学习id进入学习详情页
  * @param {String} studyplatid 
  * @param {String} hits 
@@ -214,6 +257,19 @@ export const publishLearning = (userid, studyinfo, images, videos, files, videon
             files,
             videoname,
             filename
+        }
+    })
+}
+/**
+ * 删除学习资源
+ * @param {String} studyplatid 
+ */
+ export const deleteLearning = (studyplatid) => {
+    return instance({
+        url: '/study/deletestudy',
+        method: 'GET',
+        params: {
+            studyplatid
         }
     })
 }
