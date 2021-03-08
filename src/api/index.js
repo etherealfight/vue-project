@@ -49,6 +49,25 @@ export const login2 = (usermail, password) => {
     })
 }
 /**
+ * 修改用户信息
+ * @param {String} 
+ * @param {String} 
+ */
+export const updateUserinfo = (userid, username, gender, signature, introduction, imgurl) => {
+    return instance({
+        url: '/user/updateuserinfo',
+        method: 'GET',
+        params: {
+            userid,
+            username,
+            gender,
+            signature,
+            introduction,
+            imgurl
+        }
+    })
+}
+/**
  * 检查邮箱激活状态
  * @param {String} userid 
  */
@@ -61,6 +80,7 @@ export const checkState = (userid) => {
         }
     })
 }
+
 /**
  * 悬赏页面初始化
  * @param {String} cuurrentPage 
@@ -109,7 +129,7 @@ export const searchReward2 = (production, currentPage) => {
  * @param {String} userid 
  * @param {String} cuurrentPage 
  */
- export const searchRewardbyid = (userid, currentPage) => {
+export const searchRewardbyid = (userid, currentPage) => {
     return instance({
         url: '/info/findAllRewards',
         method: 'GET',
@@ -155,7 +175,7 @@ export const publishReward = (userid, rewardinfo, images) => {
  * 删除悬赏
  * @param {String} commentid 
  */
- export const deleteReward = (commentid) => {
+export const deleteReward = (commentid) => {
     return instance({
         url: '/info/deleteinfo',
         method: 'GET',
@@ -212,7 +232,7 @@ export const searchLearning2 = (production, currentPage) => {
  * @param {String} userid 
  * @param {String} cuurrentPage 
  */
- export const searchLearningbyid = (userid, currentPage) => {
+export const searchLearningbyid = (userid, currentPage) => {
     return instance({
         url: '/study/findAllStudy',
         method: 'GET',
@@ -264,12 +284,61 @@ export const publishLearning = (userid, studyinfo, images, videos, files, videon
  * 删除学习资源
  * @param {String} studyplatid 
  */
- export const deleteLearning = (studyplatid) => {
+export const deleteLearning = (studyplatid) => {
     return instance({
         url: '/study/deletestudy',
         method: 'GET',
         params: {
             studyplatid
+        }
+    })
+}
+/**
+ * 根据id查询评论
+ * @param {String} studyplatid 
+ * @param {String} currentPage 
+ */
+export const findComment = (studyplatid, currentPage) => {
+    return instance({
+        url: "/study/findreplyinfo",
+        method: 'GET',
+        params: {
+            studyplatid,
+            currentPage
+        }
+    })
+}
+/**
+ * 发布评论
+ * @param {String} userid 
+ * @param {String} username 
+ * @param {String} replyinfo 
+ * @param {String} studyplatid 
+ * @param {String} headportrait 
+ */
+export const updatereply = (userid, username, replyinfo, studyplatid, headportrait) => {
+    return instance({
+        url: "/study/updatereply",
+        method: 'GET',
+        params: {
+            userid,
+            username,
+            replyinfo,
+            studyplatid,
+            headportrait
+        }
+    })
+}
+/**
+ * 根据删除评论
+ * @param {String} replyid 
+ */
+export const deleteComment = (replyid) => {
+    return instance({
+        url: "/study/deletereply",
+        method: 'GET',
+        params: {
+            replyid
         }
     })
 }

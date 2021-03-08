@@ -3,7 +3,7 @@
     <div class="rewardHeader" @click.self="toPersonal">
       <img :src="userimg" class="userImg" />
       <div class="userName">{{ username }}</div>
-      <i class="el-icon-close" v-if="isShow" @click.once="del"></i>
+      <i class="el-icon-close" v-if="isShow" @click.self="del"></i>
     </div>
     <div class="rewardMain" @click="toDetail">
       <div class="rewardText">{{ contentText }}</div>
@@ -52,7 +52,7 @@ export default {
     },
     //id
     id: {
-      type: String,
+      type: Number,
       default: 0,
     },
     userId: {

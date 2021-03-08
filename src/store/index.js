@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     userMail: '', //邮箱
-    userId: '37974253', //用户ID
+    userId: "37974253", //用户ID
     userName: 'quan', //用户名
     sex: 0, //用户性别
     loginState: false, //登录状态

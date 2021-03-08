@@ -3,6 +3,7 @@
     <div class="commentHeader">
       <img :src="userimg" />
       <span>{{ username }}</span>
+      <i class="el-icon-close" v-show="isShow" @click="del"></i>
     </div>
     <div class="commentMain">
       <span>{{ commentText }}</span>
@@ -11,8 +12,22 @@
 </template>
 
 <script>
+import { deleteComment } from "../../../api";
 export default {
+  computed: {
+    isShow: function () {
+      if (this.userid === this.$store.state.userId) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
   props: {
+    userid: {
+      type: String,
+      default: 1,
+    },
     id: {
       type: Number,
       default: 1,
@@ -29,6 +44,16 @@ export default {
     commentText: {
       type: String,
       default: "6666666666666",
+    },
+  },
+  methods: {
+    async del() {
+      let conf = confirm("确定删除?");
+      if (conf === true) {
+        this.$emit("deleteContent");
+        const res = await deleteComment(this.id);
+        console.log(res);
+      }
     },
   },
 };
@@ -48,20 +73,25 @@ export default {
   justify-content: flex-start;
   align-items: center;
 }
-.comment .commentHeader img{
-    height: 5rem;
-    width: 5rem;
-    border-radius: 50%;
+.commentHeader .el-icon-close {
+  position: absolute;
+  right: 3rem;
+  font-size: 2rem;
 }
-.comment .commentHeader span{
-    padding-left: 1rem;
+.comment .commentHeader img {
+  height: 5rem;
+  width: 5rem;
+  border-radius: 50%;
 }
-.comment .commentMain{
-    padding: 1rem 0 1rem 0;
+.comment .commentHeader span {
+  padding-left: 1rem;
 }
-.comment .commentMain span{
-    display: -webkit-box;
-    overflow: hidden;
-    word-break: break-all;
+.comment .commentMain {
+  padding: 1rem 0 1rem 0;
+}
+.comment .commentMain span {
+  display: -webkit-box;
+  overflow: hidden;
+  word-break: break-all;
 }
 </style>

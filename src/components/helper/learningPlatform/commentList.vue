@@ -1,12 +1,14 @@
 <template>
   <div class="commentList">
     <comment
-      v-for="item in comments"
-      :key="item.id"
-      :id="item.id"
+      v-for="(item, index) in comments"
+      :key="item.replyid"
+      :id="item.replyid"
+      :userid="item.userid"
       :username="item.username"
       :userimg="item.userimg"
-      :commentText="item.commentText"
+      :commentText="item.replyinfo"
+      @deleteContent="handleDelete(index)"
     ></comment>
   </div>
 </template>
@@ -21,32 +23,15 @@ export default {
   props: {
     comments: {
       type: Array,
-      default: [
-        {
-          id: 1,
-          username: "cccc",
-          userImg:
-            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-          commentText: "6666666666666",
-        },
-        {
-          id: 2,
-          username: "ccccc",
-          userImg:
-            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-          commentText:
-            "66666666666666666666666666666666666666666666666666666666666666666666666",
-        },
-        {
-          id: 3,
-          username: "cccccc",
-          userImg:
-            "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-          commentText: "233333333333333333",
-        },
-      ],
+      default: [],
     },
   },
+  methods: {
+    handleDelete(index) {
+      this.comments.splice(index, 1);
+    },
+  },
+  
 };
 </script>
 

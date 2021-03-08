@@ -6,11 +6,15 @@
     <div class="box">
       <div class="profileHeader">
         <v-touch v-on:touchstart="start">
-          <img :src="$store.state.userImage" id="profileImg" @click="toMypersonalPage"/>
+          <img
+            :src="$store.state.userImage"
+            id="profileImg"
+            @click="toMypersonalPage"
+          />
         </v-touch>
         <el-upload
           class="upload-demo"
-          action="http://121.196.154.219:8080/uploadfile"
+          action="http://121.196.1.109:8080/headimages"
           :show-file-list="false"
           :on-error="showError"
           :on-success="showSuccess"
@@ -92,6 +96,7 @@
 
 <script>
 import my_tabbar from "../home/my_tabbar";
+import { updateUserinfo } from "../../api";
 export default {
   data() {
     return {
@@ -103,8 +108,8 @@ export default {
   },
 
   methods: {
-    toMypersonalPage(){
-        this.$router.push({path:"/mypersonalpage"})
+    toMypersonalPage() {
+      this.$router.push({ path: "/mypersonalpage" });
     },
     start() {
       console.log("start");
@@ -120,15 +125,14 @@ export default {
     async showSuccess(response, file, fileList) {
       console.log(response);
       this.$store.commit("changeUserImage", { userImage: response.detail });
-      let that = this;
       console.log(this.$store.state.userImage);
-      const res = await update(
-        that.$store.state.userName,
-        that.$store.state.nickName,
-        that.$store.state.sex,
-        that.$store.state.sign,
-        that.$store.state.introduction,
-        that.$store.state.userImage
+      const res = await updateUserinfo(
+        this.$store.state.userId,
+        this.$store.state.userName,
+        this.$store.state.sex,
+        this.$store.state.sign,
+        this.$store.state.introduction,
+        this.$store.state.userImage
       );
       console.log(res);
       this.$message.info(response.msg);
@@ -137,30 +141,29 @@ export default {
      * 监听修改按钮，发送修改后的用户信息
      */
     async update() {
-      let that = this;
-      const res = await update(
-        that.$store.state.userName,
-        that.$store.state.nickName,
-        that.$store.state.sex,
-        that.$store.state.sign,
-        that.$store.state.introduction,
-        that.$store.state.userImage
+      const res = await updateUserinfo(
+        this.$store.state.userId,
+        this.$store.state.userName,
+        this.$store.state.sex,
+        this.$store.state.sign,
+        this.$store.state.introduction,
+        this.$store.state.userImage
       );
       this.$store.commit("changeStates", {
-        sex: that.$store.state.sex,
-        nickname: that.$store.state.nickName,
-        sign: that.$store.state.sign,
-        introduction: that.$store.state.introduction,
+        sex: this.$store.state.sex,
+        nickname: this.$store.state.nickName,
+        sign: this.$store.state.sign,
+        introduction: this.$store.state.introduction,
       });
       console.log(res);
       this.$message.info("修改成功");
     },
-    quit(){
+    quit() {
       this.$store.commit("changeLoginStates", {
         loginState: false,
       });
-      this.$router.push({path:"/login"})
-    }
+      this.$router.push({ path: "/login" });
+    },
   },
 };
 </script>

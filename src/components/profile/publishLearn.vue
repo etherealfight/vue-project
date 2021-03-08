@@ -228,6 +228,7 @@ export default {
         this.counter2 === this.videoNum &&
         this.counter3 === this.fileNum
       ) {
+        console.log("finish:", this.publishLearnText);
         console.log("finish:", this.videoUrl);
         const res = await publishLearning(
           this.$store.state.userId,
@@ -337,6 +338,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow:scroll;
 }
 .publishLearnMain {
   display: flex;

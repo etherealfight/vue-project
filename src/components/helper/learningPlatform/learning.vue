@@ -3,13 +3,17 @@
     <div class="learnHeader" @click.self="toPersonal">
       <img :src="userimg" class="userImg" />
       <div class="userName">{{ username }}</div>
-      <i class="el-icon-close" v-if="isShow" @click.once="del"></i>
+      <i class="el-icon-close" v-if="isShow" @click.self="del"></i>
     </div>
     <div class="learnMain" @click="toDetail">
       <div class="learnText">{{ contentText }}</div>
       <div class="learnImgBox">
         <ul>
-          <li v-for="(img, index) in fileaddress" :key="index">
+          <li
+            v-for="(img, index) in fileaddress"
+            :key="index"
+            v-show="index < 3"
+          >
             <img :src="fileaddress[index]" />
           </li>
         </ul>
@@ -52,7 +56,7 @@ export default {
     },
     //id
     id: {
-      type: String,
+      type: Number,
       default: 0,
     },
     //作者

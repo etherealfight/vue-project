@@ -2,8 +2,9 @@
   <div class="bswrapper">
     <div class="content">
       <div class="learnDetail">
-        <div class="learnDetailt"><span> 学习平台</span></div>
-        <i class="el-icon-back" @click="back"></i>
+        <div class="learnDetailt">
+          <i class="el-icon-back" @click="back"></i><span> 学习平台</span>
+        </div>
         <div class="learnDetailTitle" @click="toPersonalPage">
           <img :src="userimg" class="learnDetailUserImg" />
           <div class="nameBox">
@@ -63,7 +64,7 @@
                 <span>评论</span>
               </div>
               <div class="commentMain">
-                <commentList></commentList>
+                <commentList :comments="comments"></commentList>
               </div>
               <div class="newComment">
                 <textarea
@@ -71,8 +72,15 @@
                   cols="30"
                   rows="1"
                   placeholder="说些啥吧"
+                  v-model="commentText"
                 ></textarea>
-                <el-button>发表</el-button>
+                <el-button
+                  type="info"
+                  round
+                  class="inputButton"
+                  @click="sendComment"
+                  >发表</el-button
+                >
               </div>
             </div>
           </v-touch>
@@ -88,7 +96,7 @@ import { swiper, swiperSlide } from "vue-awesome-swiper";
 import "video.js/dist/video-js.css";
 import commentList from "./commentList";
 import BScroll from "better-scroll";
-import { toStudyDetail } from "../../../api";
+import { toStudyDetail, findComment, updatereply } from "../../../api";
 
 export default {
   async created() {
@@ -102,13 +110,18 @@ export default {
     this.fileaddress = res.images;
     this.username = res.username;
     this.userimg = res.headportrait;
-    this.id = res.commentid;
+    this.id = res.studyplatid;
     this.userid = res.userid;
     this.clicks = res.rewardhits;
     this.videoList = res.videos;
     this.fileList = res.files;
     this.videoName = res.videoname;
     this.fileName = res.filename;
+    const res2 = await findComment(this.id, this.pageNum);
+    console.log(res2);
+    this.comments = res2.detail;
+    this.totalNum = res2.pageNumber;
+    this.pageNum = 2;
   },
   components: {
     swiper,
@@ -117,13 +130,6 @@ export default {
   },
   mounted() {
     this.loadData();
-    let mainHight = document.querySelector(".learnDetailMain").offsetHeight;
-    let swiperHight = document.querySelector(".swiper-container").offsetHeight;
-    let waperHight = mainHight - swiperHight - 20;
-    let wrapper = document.getElementsByClassName("wrapper");
-    wrapper[0].style.height = waperHight + "px";
-
-    let bodyHeight = document.documentElement.scrollHeight;
   },
   data() {
     return {
@@ -139,47 +145,26 @@ export default {
           disableOnInteraction: true,
         }, // 可选选项，自动滑动
       },
-      videoList: [],
-      fileList: [],
-      videoName: [],
-      fileName: [],
-      // playerOptions: {
-      //   height: 400,
-      //   playbackRates: [0.7, 1.0, 1.5, 2.0], // 播放速度
-      //   autoplay: false, // 如果true,浏览器准备好时开始回放。
-      //   muted: false, // 默认情况下将会消除任何音频。
-      //   loop: false, // 导致视频一结束就重新开始。
-      //   preload: "auto", // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
-      //   language: "zh-CN",
-      //   aspectRatio: "16:9", // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
-      //   fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
-      //   sources: [
-      //     {
-      //       type: "video/mp4",
-      //       src: require("@/assets/test.mp4"),
-      //     },
-      //   ],
-      //   // width: document.documentElement.clientWidth, //播放器宽度
-      //   notSupportedMessage: "此视频暂无法播放，请稍后再试", // 允许覆盖Video.js无法播放媒体源时显示的默认信息。
-      //   controlBar: {
-      //     timeDivider: true,
-      //     durationDisplay: true,
-      //     remainingTimeDisplay: false,
-      //     fullscreenToggle: true, // 全屏按钮
-      //   },
-      // },
-      title: "test",
-      fileaddress: [
-      ],
-      contentText:
-        "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-      date: "2021-01-25",
-      id: 0,
-      username: "aaa",
-      userid: 0,
+      videoList: [], //视频资源地址
+      fileList: [], //文件资源地址
+      videoName: [], //视频名
+      fileName: [], //文件名
+      title: "test", //学习资源标题
+      fileaddress: [], //学习资源预览图
+      contentText: "cccccccccccccccccccccccccccccccccc", //发表正文内容
+      date: "2021-01-25", //发表时间
+      id: 0, //学习资源id
+      username: "aaa", //用户昵称
+      userid: 0, //用户id
       userimg:
-        "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-      clicks: 0,
+        "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg", //用户头像
+      clicks: 0, //点击量
+      comments: [],
+      commentText: "", //发表评论内容
+      initState: true, //判断是否为评论初始页面
+      pageNum: 1, //当前展示到的页面
+      totalNum: 1, //总共查询到满足条件的页面
+      showLoading: false, //是否在加载中标识
     };
   },
 
@@ -203,6 +188,27 @@ export default {
     swiperright() {
       this.$router.back(-1);
     },
+    /**
+     * 根据查询条件获取文章信息
+     */
+    async getData() {
+      try {
+        console.log("startget");
+        let res = {};
+        res = await findComment(this.id, this.pageNum);
+        this.comments = [...this.comments, ...res.detail];
+        console.log(res);
+        console.log("chushihua");
+
+        this.pageNum++;
+        console.log(this.pageNum);
+      } catch (error) {
+        //this.$message.warning(error.message);
+      }
+    },
+    /**
+     * 下拉加载数据
+     */
     loadData() {
       this.$nextTick(() => {
         const wrapper = document.querySelector(".bswrapper");
@@ -215,12 +221,24 @@ export default {
           },
         });
         console.log(this.scroll);
-        this.scroll.on("pullingUp", () => {
-          console.log("jz");
+        this.scroll.on("pullingUp", async () => {
+          if (this.pageNum > this.totalNum) {
+            this.$message.info("到底啦别拉了");
+            this.showLoading = false;
+            return;
+          } else {
+            this.showLoading = true;
+            console.log("获取中");
+            await this.getData();
+            console.log("获取完");
+          }
           this.scroll.finishPullUp();
         });
       });
     },
+    /**
+     * 跳转到视频播放详情页
+     */
     toVideoPage(id) {
       this.$router.push({
         name: "videoPlayerPage",
@@ -236,6 +254,32 @@ export default {
     download() {
       console.log("下载");
     },
+    /**
+     * 发表评论
+     */
+    async sendComment() {
+      const res = await updatereply(
+        this.$store.state.userId,
+        this.$store.state.userName,
+        this.commentText,
+        this.id,
+        this.$store.state.userImage
+      );
+      console.log(res);
+      this.commentText = "";
+      this.pageNum = 1;
+      const res2 = await findComment(this.id, this.pageNum);
+      console.log(res2);
+      this.comments = res2.detail;
+      this.totalNum = res2.pageNumber;
+      this.pageNum++;
+    },
+  },
+  updated() {
+    //重新计算高度
+    this.scroll.refresh();
+    //当数据加载完毕以后通知better-scroll
+    this.scroll.finishPullUp();
   },
 };
 </script>
@@ -268,7 +312,6 @@ export default {
   position: absolute;
   font-size: 3rem;
   left: 5%;
-  top: 2%;
 }
 .learnDetail {
   display: flex;
@@ -277,10 +320,10 @@ export default {
 .learnDetailt {
   font-size: 2rem;
   position: absolute;
+  height: 5rem;
   width: 100vw;
   border-bottom: 1px solid rgb(244, 244, 244);
-  top: 2%;
-  padding-bottom: 1rem;
+  padding: 1rem 0;
   box-sizing: border-box;
 }
 .learnDetailt span {
@@ -291,8 +334,8 @@ export default {
 .learnDetail .learnDetailTitle {
   display: flex;
   padding: 6rem 0 1.5rem 1.5rem;
-  box-sizing: border-box;
   border-bottom: 1px solid rgb(244, 244, 244);
+  box-sizing: border-box;
 }
 .learnDetail .learnDetailTitle .learnDetailUserImg {
   width: 6rem;
@@ -326,6 +369,7 @@ export default {
   padding: 2rem;
   display: -webkit-box;
   word-break: break-all;
+  box-sizing: border-box;
 }
 .videoList,
 .fileList {
@@ -336,11 +380,13 @@ export default {
 .fileList ol {
   padding: 1rem 2rem;
   margin-left: 1.5rem;
+  box-sizing: border-box;
 }
 .videoList ol li,
 .fileList ol li {
   margin-left: -0.5rem;
   padding: 0.5rem 1.5rem;
+  box-sizing: border-box;
 }
 .itembox {
   width: 100%;
@@ -357,10 +403,21 @@ export default {
   border-bottom: 1px solid rgb(244, 244, 244);
 }
 .newComment #newComment {
+  width: 60vw;
+  height: 4rem;
   padding: 1rem;
+  font-size: 1.5rem;
   outline: none;
   background: rgb(244, 244, 244);
   border-radius: 2rem;
+  box-sizing: border-box;
+}
+.newComment >>> .el-button {
+  height: 4rem;
+  border-radius: 3rem;
+}
+.newComment >>> .el-button span {
+  font-size: 1.5rem;
 }
 .commentBox {
   display: flex;

@@ -11,7 +11,7 @@
         :contentText="item.rewardinfo"
         :date="item.rewardtime"
         :clicks="item.rewardhits"
-        @deleteContent="handleDelete(index)"
+        @deleteContent.self="handleDelete(index)"
       ></reward>
     </div>
   </div>
