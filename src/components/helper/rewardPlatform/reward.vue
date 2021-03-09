@@ -3,13 +3,13 @@
     <div class="rewardHeader" @click.self="toPersonal">
       <img :src="userimg" class="userImg" />
       <div class="userName">{{ username }}</div>
-      <i class="el-icon-close" v-if="isShow" @click.self="del"></i>
+      <i class="el-icon-close" v-show="isShow" @click.once="del"></i>
     </div>
     <div class="rewardMain" @click="toDetail">
       <div class="rewardText">{{ contentText }}</div>
       <div class="rewardImgBox">
         <ul>
-          <li v-for="(img, index) in fileaddress" :key="index">
+          <li v-for="(img, index) in fileaddress" :key="index" v-show="index < 3">
             <img :src="fileaddress[index]" />
           </li>
         </ul>
@@ -105,15 +105,23 @@ export default {
       });
     },
     async del() {
-      console.log("path:", this.$route.path);
-      if (this.$route.path === "/mypersonalPage/rewardList") {
-        let conf = confirm("确定删除此悬赏?");
-        if (conf === true) {
-          this.$emit("deleteContent");
-          const res = await deleteReward(this.id);
-          console.log(res);
-        }
-      }
+      this.$confirm("是否删除此悬赏?", "提示", {
+        customClass: "confirmdelete",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(async () => {
+          if (this.$route.path === "/mypersonalPage/rewardList") {
+            this.$emit("deleteContent");
+            const res = await deleteReward(this.id);
+            console.log(res);
+          }
+          this.$message.success("删除成功!");
+        })
+        .catch(() => {
+          this.$message.info("已取消删除");
+        });
     },
   },
 };
@@ -131,6 +139,9 @@ export default {
   box-sizing: border-box;
   background: white;
 }
+.confirmdelete {
+  width: 70vw !important;
+}
 .rewardHeader {
   display: flex;
   justify-content: flex-start;
@@ -138,7 +149,7 @@ export default {
   padding-top: 2rem;
 }
 .rewardHeader .el-icon-close {
-  position: absolute;
+  position: fixed;
   right: 3rem;
   font-size: 2rem;
 }

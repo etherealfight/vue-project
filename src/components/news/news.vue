@@ -3,7 +3,9 @@
     <div class="newsText">{{ title }}</div>
     <div class="newsImg">
       <ul>
-        <li v-for="(img, index) in fileaddress" :key="index"> <img :src="fileaddress[index]" /></li>
+        <li v-for="(img, index) in fileaddress" :key="index" v-show="index < 3">
+          <img :src="fileaddress[index]" />
+        </li>
       </ul>
     </div>
     <div class="newsIntroduction">
@@ -48,10 +50,10 @@ export default {
     },
   },
   methods: {
-    toDetail(){
-      this.$router.push({path:"/newsdetail"})
-    }
-  }
+    toDetail() {
+      this.$router.push({ path: "/newsdetail", query: { id: this.id } });
+    },
+  },
 };
 </script>
 
@@ -74,22 +76,22 @@ export default {
   word-wrap: break-word;
   text-overflow: ellipsis;
   box-sizing: border-box;
-} 
+}
 .newsBox .newsImg {
   padding: 1rem 0 1rem 0;
 }
-.newsImg ul{
-    list-style: none;
-    display: flex;
-    flex-direction: row;
+.newsImg ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
 }
-.newsImg ul li{
-    padding-right: 1rem;
+.newsImg ul li {
+  padding-right: 1rem;
 }
-.newsImg ul li img{
-    width: 28vw;
-    height: 13vh;
-    border-radius: 0.5rem;
+.newsImg ul li img {
+  width: 28vw;
+  height: 13vh;
+  border-radius: 0.5rem;
 }
 .newsIntroduction {
   display: flex;

@@ -21,8 +21,7 @@
           action="http://192.168.1.109:8080/rewardimages"
           :auto-upload="false"
           :limit="9"
-          list-type="picture-card"
-          :file-list="fileList"
+          list-type="picture-card"       
           :before-upload="showList"
           :on-error="showError"
           :on-success="showSuccess"
@@ -50,7 +49,6 @@ export default {
       publishRewardText: "",
       dialogImageUrl: "",
       dialogVisible: false,
-      fileList: "aa",
       imgUrl: "",
       counter: 0,
       imgNum: 0,

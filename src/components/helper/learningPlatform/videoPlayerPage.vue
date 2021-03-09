@@ -13,12 +13,12 @@
       <span class="title">{{ $route.query.title }}</span>
       <ol>
         <li
-          v-for="item in videoList"
+          v-for="(item, index) in videoList"
           :key="item.id"
-          @click="toVideoPage(item.id)"
+          @click="toVideoPage(index)"
         >
           <div class="itembox">
-            <span>{{ item.videoName }}</span>
+            <span>{{ videoName[index] }}</span>
             <i class="el-icon-download" @click="download"></i>
           </div>
         </li>
@@ -33,10 +33,11 @@ export default {
   mounted() {
     console.log(this.videoList);
     let myPlayer = this.$refs.videoPlayer.player;
-    myPlayer.src(this.videoList[this.$route.query.id - 1].address);
+    myPlayer.src(this.videoList[this.$route.query.index]);
   },
   data() {
     return {
+      videoName: this.$route.query.videoName,
       videoList: JSON.parse(this.$route.query.videoList),
       playerOptions: {
         height: 400,
@@ -69,9 +70,9 @@ export default {
     back() {
       this.$router.back(-1);
     },
-    toVideoPage(id) {
+    toVideoPage(index) {
       let myPlayer = this.$refs.videoPlayer.player;
-      myPlayer.src(this.videoList[id - 1].address);
+      myPlayer.src(this.videoList[index]);
     },
     download() {},
   },

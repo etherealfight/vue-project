@@ -27,13 +27,22 @@
 <script>
 import "swiper/dist/css/swiper.css";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
-
+import { toNewsDetail } from "../../api";
 export default {
   components: {
     swiper,
     swiperSlide,
   },
-
+  async created() {
+    const res = await toNewsDetail(this.$route.query.id);
+    console.log(res);
+    this.id = res.newsid;
+    this.title = res.newstitle;
+    this.author = res.author;
+    this.context = res.newsinfo;
+    this.imgUrls = res.newsimages;
+    this.date = res.newstime;
+  },
   mounted() {
     let mainHeight = document.querySelector(".newsDetailMain").offsetHeight;
     let swiperHeight = document.querySelector(".swiper-container").offsetHeight;
@@ -55,13 +64,11 @@ export default {
           disableOnInteraction: true,
         }, // 可选选项，自动滑动
       },
+      id: 0,
       title: "这是一个大新闻",
       author: "cccc",
       date: "2021-01-16",
       imgUrls: [
-        "https://picsum.photos/460/360?random=1",
-        "https://picsum.photos/460/360?random=2",
-        "https://picsum.photos/460/360?random=3",
       ],
       context:
         "ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",

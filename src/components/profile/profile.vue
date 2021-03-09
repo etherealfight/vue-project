@@ -14,7 +14,7 @@
         </v-touch>
         <el-upload
           class="upload-demo"
-          action="http://121.196.1.109:8080/headimages"
+          action="http://192.168.1.109:8080/headimages"
           :show-file-list="false"
           :on-error="showError"
           :on-success="showSuccess"
@@ -59,7 +59,7 @@
             type="text"
             placeholder="请输入昵称"
             class="profileInputbox"
-            v-model="$store.state.nickName"
+            v-model="$store.state.userName"
             style="padding-left: 5px"
           />
         </div>
@@ -100,6 +100,7 @@ import { updateUserinfo } from "../../api";
 export default {
   data() {
     return {
+
       userImg: this.$store.state.userImage,
     };
   },
@@ -114,11 +115,6 @@ export default {
     start() {
       console.log("start");
     },
-    // async previewFiles(event) {
-    //   console.log(event.target.files[0]);
-    //   const res = await uploadImg(event.target.files[0]);
-    //   console.log(res);
-    // },
     showError(err, file, fileList) {
       console.log(err);
     },
@@ -151,9 +147,10 @@ export default {
       );
       this.$store.commit("changeStates", {
         sex: this.$store.state.sex,
-        nickname: this.$store.state.nickName,
+        username: this.$store.state.userName,
         sign: this.$store.state.sign,
         introduction: this.$store.state.introduction,
+        userImage:this.userImg
       });
       console.log(res);
       this.$message.info("修改成功");

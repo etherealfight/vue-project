@@ -6,13 +6,13 @@
     <news
       class="listItem"
       v-for="item in newsData"
-      :key="item.id"
-      :fileaddress="item.fileaddress"
-      :id="item.id"
-      :username="item.username"
-      :title="item.title"
-      :contentText="item.contentText"
-      :date="item.date"
+      :key="item.newsid"
+      :fileaddress="item.newsimages"
+      :id="item.newsid"
+      :username="item.author"
+      :title="item.newstitle"
+      :contentText="item.newsinfo"
+      :date="item.newstime"
     ></news>
   </div>
 </template>

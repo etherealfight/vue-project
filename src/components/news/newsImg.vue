@@ -1,6 +1,6 @@
 <template>
   <div class="newsImg">
-    <img :src="imgUrl+num" />
+    <img :src="imgUrl" />
     <span>{{ text }}</span>
   </div>
 </template>
@@ -8,14 +8,13 @@
 <script >
 export default {
   props: {
-    num: {},
     text: {
       type: String,
       default: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     },
     imgUrl: {
       type: String,
-      default: `https://picsum.photos/460/360?random=`,
+      default: `https://picsum.photos/460/360?random=1`,
     },
   },
 };
@@ -47,5 +46,8 @@ span {
   overflow: hidden;
   text-overflow: ellipsis;
   width: 20rem;
+  margin: 0 auto;
+  float: left;
+  text-align: center;
 }
 </style>

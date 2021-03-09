@@ -35,11 +35,15 @@
                 <li
                   v-for="(item, index) in videoList"
                   :key="index"
-                  @click="toVideoPage(item.id)"
+                  @click="toVideoPage(item.id, index)"
                 >
                   <div class="itembox">
                     <span>{{ videoName[index] }}</span>
-                    <i class="el-icon-download" @click="download"></i>
+                    <a
+                      :href="videoList[index] + end + videoPath"
+                      download="test.mp4"
+                      ><i class="el-icon-download"></i
+                    ></a>
                   </div>
                 </li>
               </ol>
@@ -53,8 +57,10 @@
                   @click="dowmloadFile"
                 >
                   <div class="itembox">
-                    <span> {{ fileName[index] }}</span>
-                    <i class="el-icon-download" @click="download"></i>
+                    <span>{{ fileName[index] }}</span>
+                    <a :href="fileList[index]"
+                      ><i class="el-icon-download"></i
+                    ></a>
                   </div>
                 </li>
               </ol>
@@ -66,26 +72,22 @@
               <div class="commentMain">
                 <commentList :comments="comments"></commentList>
               </div>
-              <div class="newComment">
-                <textarea
-                  id="newComment"
-                  cols="30"
-                  rows="1"
-                  placeholder="说些啥吧"
-                  v-model="commentText"
-                ></textarea>
-                <el-button
-                  type="info"
-                  round
-                  class="inputButton"
-                  @click="sendComment"
-                  >发表</el-button
-                >
-              </div>
             </div>
           </v-touch>
         </div>
       </div>
+    </div>
+    <div class="newComment">
+      <textarea
+        id="newComment"
+        cols="30"
+        rows="1"
+        placeholder="说些啥吧"
+        v-model="commentText"
+      ></textarea>
+      <el-button type="info" round class="inputButton" @click="sendComment"
+        >发表</el-button
+      >
     </div>
   </div>
 </template>
@@ -117,6 +119,7 @@ export default {
     this.fileList = res.files;
     this.videoName = res.videoname;
     this.fileName = res.filename;
+    this.videoPath = res.videopath;
     const res2 = await findComment(this.id, this.pageNum);
     console.log(res2);
     this.comments = res2.detail;
@@ -149,6 +152,8 @@ export default {
       fileList: [], //文件资源地址
       videoName: [], //视频名
       fileName: [], //文件名
+      videoPath: "", //视频地址
+      end: "? filename=",
       title: "test", //学习资源标题
       fileaddress: [], //学习资源预览图
       contentText: "cccccccccccccccccccccccccccccccccc", //发表正文内容
@@ -239,12 +244,14 @@ export default {
     /**
      * 跳转到视频播放详情页
      */
-    toVideoPage(id) {
+    toVideoPage(id, index) {
       this.$router.push({
         name: "videoPlayerPage",
         query: {
           id: id,
+          index: index,
           title: this.title,
+          videoName: this.videoName,
           videoList: JSON.stringify(this.videoList),
         },
       });
@@ -253,6 +260,24 @@ export default {
     dowmloadFile() {},
     download() {
       console.log("下载");
+    },
+    /**
+     * 下载
+     */
+    downloadVideo(videourl, viedeopath) {
+      let link = videourl;
+      let fileName = '"' + viedeopath + '"';
+      var x = new XMLHttpRequest();
+      x.open("GET", link, true);
+      x.responseType = "blob";
+      x.onload = (e) => {
+        var url = window.URL.createObjectURL(x.response);
+        var a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        a.click();
+      };
+      x.send();
     },
     /**
      * 发表评论
@@ -394,17 +419,22 @@ export default {
   justify-content: space-between;
 }
 .newComment {
+  position: fixed;
+  bottom: 0rem;
+  width: 100vw;
+  z-index: 15;
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
-  padding: 2rem;
+  padding: 0.5rem 2rem;
   box-sizing: border-box;
+  background: white;
   border-top: 1px solid rgb(244, 244, 244);
   border-bottom: 1px solid rgb(244, 244, 244);
 }
 .newComment #newComment {
   width: 60vw;
-  height: 4rem;
+  height: rem;
   padding: 1rem;
   font-size: 1.5rem;
   outline: none;
@@ -422,6 +452,8 @@ export default {
 .commentBox {
   display: flex;
   flex-direction: column;
+  padding-bottom: 3rem;
+  box-sizing: border-box;
 }
 .commentBox .commentTitle {
   padding: 1rem 2rem 1rem 2rem;

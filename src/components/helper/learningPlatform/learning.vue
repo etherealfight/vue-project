@@ -3,7 +3,7 @@
     <div class="learnHeader" @click.self="toPersonal">
       <img :src="userimg" class="userImg" />
       <div class="userName">{{ username }}</div>
-      <i class="el-icon-close" v-if="isShow" @click.self="del"></i>
+      <i class="el-icon-close" v-if="isShow" @click.once="del"></i>
     </div>
     <div class="learnMain" @click="toDetail">
       <div class="learnText">{{ contentText }}</div>

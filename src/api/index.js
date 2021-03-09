@@ -80,7 +80,32 @@ export const checkState = (userid) => {
         }
     })
 }
-
+/**
+ * 新闻页面初始化
+ * @param {String} currentPage 
+ */
+ export const searchNews = (currentPage) => {
+    return instance({
+        url: '/news/findnewsinfo',
+        method: 'GET',
+        params: {
+            currentPage,
+        }
+    })
+}
+/**
+ * 根据新闻id进入新闻详情页
+ * @param {String} newsid 
+ */
+ export const toNewsDetail = (newsid) => {
+    return instance({
+        url: '/news/findnewsbyid',
+        method: 'GET',
+        params: {
+            newsid
+        }
+    })
+}
 /**
  * 悬赏页面初始化
  * @param {String} cuurrentPage 
