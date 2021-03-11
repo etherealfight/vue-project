@@ -6,20 +6,22 @@
     </div>
     <div class="newsDetailMiddle">
       <div class="newsdetailAuthor">{{ author }}</div>
-      <div class="newsdetailDate">{{ date }}</div>
+      <div class="newsdetailDate">{{ currentData }}</div>
     </div>
     <div class="newsDetailMain">
-      <swiper :options="swiperOption" class="czp">
-        <swiper-slide v-for="imgurl in imgUrls" :key="imgurl"
-          ><img :src="imgurl"
-        /></swiper-slide>
-        <div class="swiper-pagination" slot="pagination"></div>
-      </swiper>
-      <v-touch @swiperight="swiperright" class="wrapper" ref="wrapper">
-        <div class="newsContext">
-          {{ context }}
-        </div>
-      </v-touch>
+      <div class="content">
+        <swiper :options="swiperOption" class="czp">
+          <swiper-slide v-for="imgurl in imgUrls" :key="imgurl"
+            ><img :src="imgurl"
+          /></swiper-slide>
+          <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
+        <v-touch @swiperight="swiperright" class="wrapper" ref="wrapper">
+          <div class="newsContext">
+            {{ context }}
+          </div>
+        </v-touch>
+      </div>
     </div>
   </div>
 </template>
@@ -28,6 +30,8 @@
 import "swiper/dist/css/swiper.css";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import { toNewsDetail } from "../../api";
+import BScroll from "better-scroll";
+import dayjs from "dayjs";
 export default {
   components: {
     swiper,
@@ -44,9 +48,13 @@ export default {
     this.date = res.newstime;
   },
   mounted() {
-    let mainHeight = document.querySelector(".newsDetailMain").offsetHeight;
-    let swiperHeight = document.querySelector(".swiper-container").offsetHeight;
-    let wrapperHeight = mainHeight - swiperHeight;
+    this.myscroll();
+    let mainHeight = document.getElementsByClassName(".newsDetailMiddle")
+      .offsetHeight;
+    let contentHeight = document.getElementsByClassName("newsContext")
+      .offsetHeight;
+    console.log(contentHeight);
+    let wrapperHeight = contentHeight + mainHeight;
     let wrapper = document.getElementsByClassName("wrapper");
     wrapper[0].style.height = wrapperHeight + "px";
   },
@@ -58,6 +66,9 @@ export default {
           el: ".swiper-pagination",
           clickable: true,
         },
+        zoom: {
+          containerClass: "swiper-slide",
+        },
         autoplay: {
           delay: 1500,
           stopOnLastSlide: false,
@@ -68,11 +79,15 @@ export default {
       title: "这是一个大新闻",
       author: "cccc",
       date: "2021-01-16",
-      imgUrls: [
-      ],
+      imgUrls: [],
       context:
         "ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     };
+  },
+  computed: {
+    currentData() {
+      return dayjs(this.date).format("YYYY年MM月DD日 HH:mm:ss");
+    },
   },
   methods: {
     back() {
@@ -81,6 +96,26 @@ export default {
     swiperright() {
       this.$router.back(-1);
     },
+    /**
+     * 滑动
+     */
+    myscroll() {
+      this.$nextTick(() => {
+        const wrapper = document.querySelector(".newsDetailMain");
+        this.scroll = new BScroll(wrapper, {
+          pullUpLoad: true,
+          click: true,
+          tap: true,
+        });
+        console.log(this.scroll);
+      });
+    },
+  },
+  updated() {
+    //重新计算高度
+    this.scroll.refresh();
+    //当数据加载完毕以后通知better-scroll
+    this.scroll.finishPullUp();
   },
 };
 </script>
@@ -97,11 +132,21 @@ html {
   position: absolute;
   font-size: 3rem;
   left: 5%;
-  top: 3%;
+  top: 2%;
+  z-index: 20;
+}
+.newsdetailheader{
+  padding-top:4rem ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100vw;
+  background: white;
+  z-index: 15;
 }
 .newsdetail {
   height: 100vh;
-  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -125,6 +170,8 @@ html {
   border-bottom: lightgrey 1px solid;
   font-size: 1.5rem;
   box-sizing: border-box;
+  background: white;
+  z-index: 15;
 }
 .newsDetailMain {
   height: 100%;
@@ -136,7 +183,7 @@ html {
 }
 .newsContext {
   width: 100vw;
-  padding: 2rem;
+  padding: 2rem 2rem 14rem 2rem;
   box-sizing: border-box;
   word-wrap: break-word;
 }

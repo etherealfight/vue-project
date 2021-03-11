@@ -53,7 +53,7 @@ export const login2 = (usermail, password) => {
  * @param {String} 
  * @param {String} 
  */
-export const updateUserinfo = (userid, username, gender, signature, introduction, imgurl) => {
+export const updateUserinfo = (userid, username, gender, signature, introduction, headportrait) => {
     return instance({
         url: '/user/updateuserinfo',
         method: 'GET',
@@ -63,7 +63,7 @@ export const updateUserinfo = (userid, username, gender, signature, introduction
             gender,
             signature,
             introduction,
-            imgurl
+            headportrait
         }
     })
 }

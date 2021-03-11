@@ -159,6 +159,9 @@ export default {
         });
       });
     },
+    /**
+     * 发布按钮显示
+     */
     publish() {
       if (this.$route.path === "/mypersonalPage/rewardList") {
         this.isMaskReward = true;
@@ -166,17 +169,29 @@ export default {
         this.isMaskLearn = true;
       }
     },
+    /**
+     * 发布悬赏成功隐藏
+     */
     childok1() {
       this.$message.info("ok");
       this.isMaskReward = false;
     },
+    /**
+     * 点击返回隐藏
+     */
     childback1() {
       this.isMaskReward = false;
     },
+    /**
+     * 发布学习资源成功隐藏
+     */
     childok2() {
       this.$message.info("ok");
       this.isMaskLearn = false;
     },
+    /**
+     * 点击返回隐藏
+     */
     childback2() {
       this.isMaskLearn = false;
     },

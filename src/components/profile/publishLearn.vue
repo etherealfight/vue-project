@@ -263,7 +263,7 @@ export default {
       console.log("success:", response);
       if (this.counter3 < this.fileNum) {
         this.fileUrl =
-          this.fileUrl + "http://121.196.154.219:8083/files" + response.detail + ",";
+          this.fileUrl + "http://121.196.154.219:8083/files/" + response.detail + ",";
         console.log("fileUrl", this.fileUrl);
         this.counter3 = this.counter3 + 1;
       }

@@ -9,14 +9,18 @@
       <div class="rewardText">{{ contentText }}</div>
       <div class="rewardImgBox">
         <ul>
-          <li v-for="(img, index) in fileaddress" :key="index" v-show="index < 3">
+          <li
+            v-for="(img, index) in fileaddress"
+            :key="index"
+            v-show="index < 3"
+          >
             <img :src="fileaddress[index]" />
           </li>
         </ul>
       </div>
     </div>
     <div class="rewardFooter" @click="toDetail">
-      <div class="rewardDate">{{ date }}</div>
+      <div class="rewardDate">{{ currentData }}</div>
       <div class="rewardClicks">点击量：{{ clicks }}</div>
     </div>
   </div>
@@ -24,6 +28,7 @@
 
 <script>
 import { deleteReward } from "../../../api";
+import dayjs from "dayjs";
 export default {
   computed: {
     isShow: function () {
@@ -32,6 +37,9 @@ export default {
       } else {
         return false;
       }
+    },
+    currentData() {
+      return dayjs(this.date).format("YYYY年MM月DD日 HH:mm:ss");
     },
   },
   props: {
@@ -169,7 +177,7 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  height: 2.9rem;
+  height: 3rem;
   overflow: hidden;
   word-wrap: break-word;
   text-overflow: ellipsis;

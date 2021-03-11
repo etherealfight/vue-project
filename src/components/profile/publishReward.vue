@@ -101,7 +101,7 @@ export default {
         console.log(this.imgUrl);
         this.counter = this.counter + 1;
       } else {
-        this.imgUrl = this.imgUrl + "http://121.196.154.219:8083/images" + response.detail;
+        this.imgUrl = this.imgUrl + "http://121.196.154.219:8083/images/" + response.detail;
         console.log("finish:", this.imgUrl);
         const res = await publishReward(
           this.$store.state.userId,

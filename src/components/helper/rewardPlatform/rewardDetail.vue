@@ -6,7 +6,7 @@
       <img :src="userimg" class="rewardDetailUserImg" />
       <div class="nameBox">
         <div class="rewardDetailName">{{ username }}</div>
-        <div class="rewardDetailDate">{{ date }}</div>
+        <div class="rewardDetailDate">{{ currentData }}</div>
       </div>
     </div>
     <div class="rewardDetailMain">
@@ -36,6 +36,7 @@
 import "swiper/dist/css/swiper.css";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import { toRewardDetail } from "../../../api";
+import dayjs from "dayjs";
 
 export default {
   components: {
@@ -47,12 +48,17 @@ export default {
    */
   async created() {
     console.log("id:", this.$route.query.rewardid);
-    console.log("hits",this.$route.query.hits)
-    const res = await toRewardDetail(this.$route.query.rewardid,this.$route.query.hits);
+    console.log("hits", this.$route.query.hits);
+    const res = await toRewardDetail(
+      this.$route.query.rewardid,
+      this.$route.query.hits
+    );
     console.log("init:", res);
     this.fileaddress = res.images;
     this.username = res.username;
     this.userimg = res.headportrait;
+    this.contentText = res.rewardinfo;
+    this.date = res.rewardtime;
     this.id = res.commentid;
     this.userid = res.userid;
     this.clicks = res.rewardhits;
@@ -82,10 +88,8 @@ export default {
           disableOnInteraction: true,
         }, // 可选选项，自动滑动
       },
-      fileaddress: [
-      ],
-      contentText:
-        "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      fileaddress: [],
+      contentText: "",
       date: "2021-01-25",
       id: 0,
       username: "aaa",
@@ -95,7 +99,11 @@ export default {
       clicks: 0,
     };
   },
-
+  computed: {
+    currentData() {
+      return dayjs(this.date).format("YYYY年MM月DD日 HH:mm:ss");
+    },
+  },
   methods: {
     toPersonalPage() {
       if (this.$store.state.userName === this.username) {
@@ -193,6 +201,7 @@ html {
 }
 .rewardDetailContext {
   padding: 2rem;
+  padding-bottom: 8rem;
   display: -webkit-box;
   word-break: break-all;
 }

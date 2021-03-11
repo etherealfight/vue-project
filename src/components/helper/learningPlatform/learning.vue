@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="learnFooter" @click="toDetail">
-      <div class="learnDate">{{ date }}</div>
+      <div class="learnDate">{{ currentData }}</div>
       <div class="learnClicks">评论：{{ clicks }}</div>
     </div>
   </div>
@@ -28,6 +28,7 @@
 
 <script>
 import { deleteLearning } from "../../../api";
+import dayjs from "dayjs";
 export default {
   computed: {
     isShow: function () {
@@ -36,6 +37,9 @@ export default {
       } else {
         return false;
       }
+    },
+    currentData() {
+      return dayjs(this.date).format("YYYY年MM月DD日 HH:mm:ss");
     },
   },
   props: {
@@ -98,15 +102,23 @@ export default {
       }
     },
     async del() {
-      console.log("path:", this.$route.path);
-      if (this.$route.path === "/mypersonalPage/learningList") {
-        let conf = confirm("确定删除?");
-        if (conf === true) {
-          this.$emit("deleteContent");
-          const res = await deleteLearning(this.id);
-          console.log(res);
-        }
-      }
+      this.$confirm("是否删除此资源?", "提示", {
+        customClass: "confirmdelete",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(async () => {
+          if (this.$route.path === "/mypersonalPage/learningList") {
+            this.$emit("deleteContent");
+            const res = await deleteLearning(this.id);
+            console.log(res);
+          }
+          this.$message.success("删除成功!");
+        })
+        .catch(() => {
+          this.$message.info("已取消删除");
+        });
     },
   },
 };
@@ -151,7 +163,7 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  height: 2.9rem;
+  height: 3rem;
   margin-bottom: 1rem;
   overflow: hidden;
   word-wrap: break-word;

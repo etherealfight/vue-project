@@ -10,12 +10,13 @@
     </div>
     <div class="newsIntroduction">
       <div class="newsAuthor">{{ username }}</div>
-      <div class="newsDare">{{ date }}</div>
+      <div class="newsDare">{{ currentData }}</div>
     </div>
   </div>
 </template>
 
 <script>
+import dayjs from "dayjs";
 export default {
   props: {
     //新闻标题
@@ -52,6 +53,11 @@ export default {
   methods: {
     toDetail() {
       this.$router.push({ path: "/newsdetail", query: { id: this.id } });
+    },
+  },
+  computed: {
+    currentData() {
+      return dayjs(this.date).format("YYYY年MM月DD日 HH:mm:ss");
     },
   },
 };

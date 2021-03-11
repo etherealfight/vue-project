@@ -9,7 +9,7 @@
           <img :src="userimg" class="learnDetailUserImg" />
           <div class="nameBox">
             <div class="learnDetailName">{{ username }}</div>
-            <div class="learnDetailDate">{{ date }}</div>
+            <div class="learnDetailDate">{{ currentData }}</div>
           </div>
         </div>
         <div class="learnDetailMain">
@@ -95,6 +95,7 @@ import "video.js/dist/video-js.css";
 import commentList from "./commentList";
 import BScroll from "better-scroll";
 import { toStudyDetail, findComment, updatereply } from "../../../api";
+import dayjs from "dayjs";
 
 export default {
   async created() {
@@ -110,12 +111,14 @@ export default {
     this.userimg = res.headportrait;
     this.id = res.studyplatid;
     this.userid = res.userid;
-    this.clicks = res.rewardhits;
+    this.clicks = res.studyhits;
     this.videoList = res.videos;
     this.fileList = res.files;
     this.videoName = res.videoname;
     this.fileName = res.filename;
     this.videoPath = res.videopath;
+    this.contentText = res.studyinfo;
+    this.date = res.studytime;
     const res2 = await findComment(this.id, this.pageNum);
     console.log(res2);
     this.comments = res2.detail;
@@ -168,7 +171,11 @@ export default {
       showLoading: false, //是否在加载中标识
     };
   },
-
+computed: {
+  currentData() {
+      return dayjs(this.date).format("YYYY年MM月DD日 HH:mm:ss");
+    },
+},
   methods: {
     toPersonalPage() {
       if (this.$store.state.userName === this.username) {
