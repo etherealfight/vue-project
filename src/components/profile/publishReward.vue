@@ -18,7 +18,7 @@
         <el-upload
           class="uploaditem"
           ref="upload"
-          action="http://192.168.1.109:8080/rewardimages"
+          action="http://121.196.154.219:8083/rewardimages"
           :auto-upload="false"
           :limit="9"
           list-type="picture-card"       
@@ -97,11 +97,11 @@ export default {
       console.log("nums:", this.imgNum);
       console.log("success:", response);
       if (this.counter < this.imgNum - 1) {
-        this.imgUrl = this.imgUrl + "http://192.168.1.109:8080" + response.detail + ",";
+        this.imgUrl = this.imgUrl + "http://121.196.154.219:8083/images/" + response.detail + ",";
         console.log(this.imgUrl);
         this.counter = this.counter + 1;
       } else {
-        this.imgUrl = this.imgUrl + "http://192.168.1.109:8080" + response.detail;
+        this.imgUrl = this.imgUrl + "http://121.196.154.219:8083/images" + response.detail;
         console.log("finish:", this.imgUrl);
         const res = await publishReward(
           this.$store.state.userId,

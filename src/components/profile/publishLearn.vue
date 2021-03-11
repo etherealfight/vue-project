@@ -18,7 +18,7 @@
         <el-upload
           class="uploaditem"
           ref="upload1"
-          action="http://192.168.1.109:8080/rewardimages"
+          action="http://121.196.154.219:8083/rewardimages"
           :auto-upload="false"
           :limit="9"
           :file-list="photoList"
@@ -37,7 +37,7 @@
         <el-upload
           class="upload-demo"
           ref="upload2"
-          action="http://192.168.1.109:8080/rewardvideos"
+          action="http://121.196.154.219:8083/rewardvideos"
           :on-remove="handleRemove2"
           :file-list="videoList"
           :auto-upload="false"
@@ -52,7 +52,7 @@
         <el-upload
           class="upload-demo"
           ref="upload3"
-          action="http://192.168.1.109:8080/rewardfiles"
+          action="http://121.196.154.219:8083/rewardfiles"
           :on-remove="handleRemove3"
           :file-list="fileList"
           :auto-upload="false"
@@ -170,7 +170,7 @@ export default {
       console.log("success:", response);
       if (this.counter1 < this.imgNum) {
         this.imgUrl =
-          this.imgUrl + "http://192.168.1.109:8080" + response.detail + ",";
+          this.imgUrl + "http://121.196.154.219:8083/images/" + response.detail + ",";
         console.log("imgurl:", this.imgUrl);
         this.counter1 = this.counter1 + 1;
       }
@@ -219,7 +219,7 @@ export default {
       console.log("success:", response);
       if (this.counter2 < this.videoNum) {
         this.videoUrl =
-          this.videoUrl + "http://192.168.1.109:8080" + response.detail + ",";
+          this.videoUrl + "http://121.196.154.219:8083/videos/" + response.detail + ",";
         console.log("videoUrl:", this.videoUrl);
         this.counter2 = this.counter2 + 1;
       }
@@ -263,7 +263,7 @@ export default {
       console.log("success:", response);
       if (this.counter3 < this.fileNum) {
         this.fileUrl =
-          this.fileUrl + "http://192.168.1.109:8080" + response.detail + ",";
+          this.fileUrl + "http://121.196.154.219:8083/files" + response.detail + ",";
         console.log("fileUrl", this.fileUrl);
         this.counter3 = this.counter3 + 1;
       }

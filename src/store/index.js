@@ -43,7 +43,7 @@ export default new Vuex.Store({
      * 修改用户头像
      */
     changeUserImage(state, payload) {
-      state.userImage = "http://192.168.1.109:8080/" + payload.userImage;
+      state.userImage = "http://121.196.154.219:8083/heads/" + payload.userImage;
     },
   },
   actions: {},

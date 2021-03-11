@@ -46,6 +46,7 @@ export default {
       console.log(res);
       if (res.success) {
         this.$message.info("登录成功");
+        sessionStorage.setItem("loginState", true); 
         this.$store.commit("initialState", {
           userName: res.detail.username,
           userId: res.detail.userid,

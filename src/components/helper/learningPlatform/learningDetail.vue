@@ -39,11 +39,7 @@
                 >
                   <div class="itembox">
                     <span>{{ videoName[index] }}</span>
-                    <a
-                      :href="videoList[index] + end + videoPath"
-                      download="test.mp4"
-                      ><i class="el-icon-download"></i
-                    ></a>
+                    
                   </div>
                 </li>
               </ol>

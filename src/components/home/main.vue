@@ -43,15 +43,12 @@ export default {
       showLoading: false, //是否在加载中标识
       newsData: [], //新闻数据
       swiperOption: {
-        loop: true,
         pagination: {
           el: ".swiper-pagination",
           clickable: true,
         },
         autoplay: {
           delay: 3000,
-          stopOnLastSlide: false,
-          disableOnInteraction: true,
         }, // 可选选项，自动滑动
       },
     };

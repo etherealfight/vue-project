@@ -14,7 +14,7 @@
         </v-touch>
         <el-upload
           class="upload-demo"
-          action="http://192.168.1.109:8080/headimages"
+          action="http://121.196.154.219:8083/headimages"
           :show-file-list="false"
           :on-error="showError"
           :on-success="showSuccess"
@@ -100,7 +100,6 @@ import { updateUserinfo } from "../../api";
 export default {
   data() {
     return {
-
       userImg: this.$store.state.userImage,
     };
   },
@@ -150,12 +149,13 @@ export default {
         username: this.$store.state.userName,
         sign: this.$store.state.sign,
         introduction: this.$store.state.introduction,
-        userImage:this.userImg
+        userImage: this.userImg,
       });
       console.log(res);
       this.$message.info("修改成功");
     },
     quit() {
+      sessionStorage.setItem("loginState", false);
       this.$store.commit("changeLoginStates", {
         loginState: false,
       });

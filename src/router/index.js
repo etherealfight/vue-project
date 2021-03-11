@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import {delCookie,getCookie} from '../utils/util'
+import store from "../store/index"
 import login from '../components/login/login'
 import regist from '../components/login/regist'
 import main from '../components/home/main'
@@ -137,22 +137,14 @@ VueRouter.prototype.push = function push(to) {
   return VueRouterPush.call(this, to).catch(err => err)
 }
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.requireAuth) {
-    fetch('m/is/login').then(res => {
-      if (res.errCode == 200) {
-        next();
-      } else {
-        if (getCookie('session')) {
-          delCookie('session');
-        }
-        if (getCookie('u_uuid')) {
-          delCookie('u_uuid');
-        }
-        next({
-          path: '/'
-        });
-      }
+router.beforeEach(async(to, from, next) => {
+  if (sessionStorage.getItem("loginState") != null) {
+    console.log("state", sessionStorage.getItem("loginState"));
+  }
+  console.log("state", store.state.loginState);
+  if (to.name !== 'regist' && to.name !== 'login' && !sessionStorage.getItem("loginState")) {
+    next({
+      name: "login"
     });
   } else {
     next();
