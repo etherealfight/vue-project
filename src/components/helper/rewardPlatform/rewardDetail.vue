@@ -12,7 +12,7 @@
     <div class="rewardDetailMain">
       <swiper :options="swiperOption" class="czp">
         <swiper-slide v-for="imgurl in fileaddress" :key="imgurl"
-          ><img :src="imgurl"
+          ><img :src="imgurl" preview preview-text="悬赏"
         /></swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
       </swiper>
@@ -93,7 +93,7 @@ export default {
       date: "2021-01-25",
       id: 0,
       username: "aaa",
-      userid: 0,
+      userid: "",
       userimg:
         "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
       clicks: 0,
@@ -106,13 +106,11 @@ export default {
   },
   methods: {
     toPersonalPage() {
-      if (this.$store.state.userName === this.username) {
-        this.$store.commit("changeId", { currenrId: this.userId });
+      if (this.$store.state.userId === this.userid) {
         this.$router.push({
           name: "mypersonalPage",
         });
       } else {
-        this.$store.commit("changeId", { currenrId: this.userId });
         this.$router.push({
           name: "personalPage",
         });
@@ -178,7 +176,7 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   padding-left: 2rem;
   box-sizing: border-box;
 }
@@ -195,15 +193,21 @@ html {
   border-radius: 0.5rem;
   box-sizing: border-box;
 }
+.swiper-slide {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
 .swiper-slide img {
-  width: 30rem;
-  height: 15rem;
+  max-height: 100%;
+  max-width: 100%;
 }
 .rewardDetailContext {
   padding: 2rem;
   padding-bottom: 8rem;
   display: -webkit-box;
   word-break: break-all;
+  font-size: 1.5rem;
 }
 .rewardDetailFooter {
   width: 100vw;

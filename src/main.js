@@ -11,12 +11,15 @@ import 'video.js/dist/video-js.css'
 import ElementUI, {
   Message
 } from 'element-ui'
+import preview from 'vue-photo-preview'
+import 'vue-photo-preview/dist/skin.css'
 
 Vue.use(VueVideoPlayer)
 Vue.use(VueAwesomeSwiper)
 Vue.use(VueTouch, { name: 'v-touch' })
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.use(preview)
 
 new Vue({
   router,

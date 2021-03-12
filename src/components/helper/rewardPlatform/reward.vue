@@ -1,8 +1,8 @@
 <template>
   <div class="rewardBox">
-    <div class="rewardHeader" @click.self="toPersonal">
-      <img :src="userimg" class="userImg" />
-      <div class="userName">{{ username }}</div>
+    <div class="rewardHeader" >
+      <img :src="userimg" class="userImg" @click.self="toPersonal"/>
+      <div class="userName" @click.self="toPersonal">{{ username }}</div>
       <i class="el-icon-close" v-show="isShow" @click.once="del"></i>
     </div>
     <div class="rewardMain" @click="toDetail">
@@ -63,8 +63,9 @@ export default {
       type: Number,
       default: 0,
     },
+    //用户id
     userId: {
-      type: Number,
+      type: String,
       default: 0,
     },
     //作者
@@ -93,16 +94,18 @@ export default {
   },
   methods: {
     toPersonal() {
-      if (this.$store.state.userName === this.username) {
-        this.$store.commit("changeId", { currenrId: this.userId });
+      if (this.$store.state.userId === this.userId) {
         this.$router.push({
           name: "mypersonalPage",
         });
       } else {
-        this.$store.commit("changeId", { currenrId: this.userId });
+        sessionStorage.setItem("tempUserId", this.userId);
+        sessionStorage.setItem("tempUserName", this.username);
+        sessionStorage.setItem("tempUserImg", this.userimg);
+        sessionStorage.setItem("tempUserSign", this.sign);
+        sessionStorage.setItem("tempUserIntroduction", this.introduction);
         this.$router.push({
           name: "personalPage",
-          query: { id: this.userId },
         });
       }
     },
@@ -168,7 +171,8 @@ export default {
   margin-right: 2rem;
 }
 .rewardBox .rewardHeader .userName {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
+  padding-right: 3rem;
 }
 .rewardBox .rewardMain {
   padding-top: 1.5rem;
@@ -177,12 +181,13 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  height: 3rem;
+  height: 4rem;
   overflow: hidden;
   word-wrap: break-word;
   text-overflow: ellipsis;
   margin-bottom: 1rem;
   box-sizing: border-box;
+  font-size: 1.5rem;
 }
 .rewardBox .rewardMain .rewardImgBox ul {
   display: flex;
@@ -202,5 +207,6 @@ export default {
   justify-content: space-around;
   align-items: center;
   padding: 1.5rem;
+  font-size: 1.5rem;
 }
 </style>

@@ -9,9 +9,12 @@
         <input type="text" required v-model="username" /><label>账号</label>
       </div>
       <div class="login_box">
-        <input type="password" required="required" v-model="password" /><label
-          >密码</label
-        >
+        <input
+          type="password"
+          required="required"
+          v-model="password"
+          @keyup.enter="login"
+        /><label>密码</label>
       </div>
       <div class="loginFooter">
         <button class="loginButton" @click="login">登录</button>
@@ -43,14 +46,20 @@ export default {
       } else {
         res = await login1(this.username, this.password);
       }
-      console.log(res);
       if (res.success) {
         this.$message.info("登录成功");
-        sessionStorage.setItem("loginState", true); 
+        sessionStorage.setItem("loginState", true);
+        sessionStorage.setItem("userName", res.detail.username);
+        sessionStorage.setItem("userId", res.detail.userid);
+        sessionStorage.setItem("userMail", res.detail.usermail);
+        sessionStorage.setItem("sex", res.detail.gender);
+        sessionStorage.setItem("sign", res.detail.signature);
+        sessionStorage.setItem("introduction", res.detail.introductory);
+        sessionStorage.setItem("userImage", res.detail.headportrait);
         this.$store.commit("initialState", {
           userName: res.detail.username,
           userId: res.detail.userid,
-          userMail:res.detail.usermail,
+          userMail: res.detail.usermail,
           sex: res.detail.gender,
           sign: res.detail.signature,
           introduction: res.detail.introductory,
@@ -84,7 +93,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 20rem;
+  width: 25rem;
   padding: 2rem;
   background-color: rgba(53, 52, 52, 0.2);
   box-shadow: 0 0.75rem 1.25rem rgba(0, 0, 0, 0.4);
@@ -96,6 +105,7 @@ h2 {
 .login_box {
   position: relative;
   width: 100%;
+  font-size: 1.5rem;
 }
 .login_box input {
   outline: none;
@@ -104,7 +114,7 @@ h2 {
   padding: 0.5rem 0;
   margin-bottom: 1.5rem;
   color: #fff;
-  font-size: 0.75rem;
+  font-size: 1.5rem;
   border-bottom: 0.05rem solid #fff;
   background-color: transparent;
 }
@@ -116,20 +126,22 @@ h2 {
   color: #fff;
   pointer-events: none;
   transition: all 0.5s;
+  font-size: 1.5rem;
 }
 .login_box input:focus + label,
 .login_box input:valid + label {
-  top: -1.5rem;
+  top: -1.75rem;
   color: lightgray;
-  font-size: 0.5rem;
+  font-size: 1.25rem;
 }
 .loginFooter {
   display: flex;
+  font-size: 1.5rem;
 }
 .loginButton,
 .loginButton:hover,
 .loginButton:active {
-  font-size: 0.75rem;
+  font-size: 1.5rem;
   outline: none;
   padding: 0.5rem;
   border: 1px solid transparent;

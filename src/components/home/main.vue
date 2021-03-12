@@ -7,6 +7,7 @@
           <swiper :options="swiperOption" class="czp">
             <swiper-slide v-for="(item, index) in newsData" :key="item.id"
               ><newsimg
+                :id="item.newsid"
                 :text="item.newstitle"
                 :imgUrl="item.newsimages[0]"
                 v-if="index < 5"

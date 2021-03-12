@@ -18,7 +18,17 @@
 }
 @media only screen and (min-width: 320px) {
   html {
-    font-size: 62.5% !important;
+    font-size: 65% !important;
+  }
+}
+@media only screen and (min-width: 400px) {
+  html {
+    font-size: 80% !important;
+  }
+}
+@media only screen and (min-width: 500px) {
+  html {
+    font-size: 95% !important;
   }
 }
 @media only screen and (min-width: 640px) {

@@ -282,6 +282,7 @@ export default {
 }
 .router {
   padding: 0 0 2rem 0;
+  background: rgb(240, 240, 240);
 }
 .rerwardwrapper >>> .rewardList ,
 .learningwrapper >>> .learningList{

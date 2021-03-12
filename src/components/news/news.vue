@@ -76,8 +76,8 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  height: 3.4rem;
-  font-size: 1.25rem;
+  height: 5rem;
+  font-size: 1.75rem;
   overflow: hidden;
   word-wrap: break-word;
   text-overflow: ellipsis;
@@ -103,5 +103,6 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  font-size: 1.25rem;
 }
 </style>

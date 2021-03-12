@@ -26,7 +26,7 @@ export default new Vuex.Store({
       state.userId = payload.userId;
       state.loginState = true;
     },
-    changeState(state, payload) {
+    changeStates(state, payload) {
       state.userName = payload.username;
       state.sex = payload.sex;
       state.sign = payload.sign;

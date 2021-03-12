@@ -119,6 +119,9 @@ export default {
   background: transparent !important;
   color: #409eff;
 }
+.tabItem{
+  font-size: 1.15rem !important;
+}
 .el-menu-item:focus,
 .el-menu-item:hover {
   background: transparent !important;

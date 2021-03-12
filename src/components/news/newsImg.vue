@@ -1,5 +1,5 @@
 <template>
-  <div class="newsImg">
+  <div class="newsImg" @click="toDetail">
     <img :src="imgUrl" />
     <span>{{ text }}</span>
   </div>
@@ -8,6 +8,10 @@
 <script >
 export default {
   props: {
+    id: {
+      type: Number,
+      default: 0,
+    },
     text: {
       type: String,
       default: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -15,6 +19,11 @@ export default {
     imgUrl: {
       type: String,
       default: `https://picsum.photos/460/360?random=1`,
+    },
+  },
+  methods: {
+    toDetail() {
+      this.$router.push({ path: "/newsdetail", query: { id: this.id } });
     },
   },
 };

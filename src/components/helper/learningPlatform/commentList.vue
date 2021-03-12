@@ -4,9 +4,12 @@
       v-for="(item, index) in comments"
       :key="item.replyid"
       :id="item.replyid"
-      :userid="item.userid"
+      :userId="item.userid"
       :username="item.username"
-      :userimg="item.userimg"
+      :userimg="item.headportrait"
+      :sign="item.signature"
+      :introduction="item.introduction"
+      :date="item.replytime"
       :commentText="item.replyinfo"
       @deleteContent="handleDelete(index)"
     ></comment>
@@ -31,7 +34,6 @@ export default {
       this.comments.splice(index, 1);
     },
   },
-  
 };
 </script>
 

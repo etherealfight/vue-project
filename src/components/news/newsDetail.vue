@@ -12,7 +12,7 @@
       <div class="content">
         <swiper :options="swiperOption" class="czp">
           <swiper-slide v-for="imgurl in imgUrls" :key="imgurl"
-            ><img :src="imgurl"
+            ><img :src="imgurl" preview preview-text="新闻"
           /></swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
@@ -46,6 +46,7 @@ export default {
     this.context = res.newsinfo;
     this.imgUrls = res.newsimages;
     this.date = res.newstime;
+    this.$previewRefresh();
   },
   mounted() {
     this.myscroll();
@@ -135,8 +136,8 @@ html {
   top: 2%;
   z-index: 20;
 }
-.newsdetailheader{
-  padding-top:4rem ;
+.newsdetailheader {
+  padding-top: 4rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -158,9 +159,14 @@ html {
   border-radius: 0.5rem;
   box-sizing: border-box;
 }
+.swiper-slide {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
 .swiper-slide img {
-  width: 30rem;
-  height: 15rem;
+  max-height: 100%;
+  max-width: 100%;
 }
 .newsDetailMiddle {
   padding: 2rem 0 2rem 0;
@@ -168,7 +174,7 @@ html {
   display: flex;
   justify-content: space-around;
   border-bottom: lightgrey 1px solid;
-  font-size: 1.5rem;
+  font-size: 1.65rem;
   box-sizing: border-box;
   background: white;
   z-index: 15;
@@ -186,5 +192,6 @@ html {
   padding: 2rem 2rem 14rem 2rem;
   box-sizing: border-box;
   word-wrap: break-word;
+  font-size: 1.5rem;
 }
 </style>

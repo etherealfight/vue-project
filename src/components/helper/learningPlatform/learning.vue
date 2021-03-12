@@ -1,8 +1,8 @@
 <template>
   <div class="learnBox">
-    <div class="learnHeader" @click.self="toPersonal">
-      <img :src="userimg" class="userImg" />
-      <div class="userName">{{ username }}</div>
+    <div class="learnHeader">
+      <img :src="userimg" class="userImg" @click.self="toPersonal" />
+      <div class="userName" @click.self="toPersonal">{{ username }}</div>
       <i class="el-icon-close" v-if="isShow" @click.once="del"></i>
     </div>
     <div class="learnMain" @click="toDetail">
@@ -63,6 +63,11 @@ export default {
       type: Number,
       default: 0,
     },
+    //用户id
+    userId: {
+      type: String,
+      default: 0,
+    },
     //作者
     username: {
       type: String,
@@ -70,6 +75,16 @@ export default {
     },
     //作者头像
     userimg: {
+      type: String,
+      default: "",
+    },
+    //用户签名
+    sign: {
+      type: String,
+      default: "",
+    },
+    //用户简介
+    introduction: {
       type: String,
       default: "",
     },
@@ -88,16 +103,18 @@ export default {
       });
     },
     toPersonal() {
-      if (this.$store.state.userName === this.username) {
-        this.$store.commit("changeId", { currenrId: this.userId });
+      if (this.$store.state.userId === this.userId) {
         this.$router.push({
           name: "mypersonalPage",
         });
       } else {
-        this.$store.commit("changeId", { currenrId: this.userId });
+        sessionStorage.setItem("tempUserId", this.userId);
+        sessionStorage.setItem("tempUserName", this.username);
+        sessionStorage.setItem("tempUserImg", this.userimg);
+        sessionStorage.setItem("tempUserSign", this.sign);
+        sessionStorage.setItem("tempUserIntroduction", this.introduction);
         this.$router.push({
           name: "personalPage",
-          query: { id: this.userId },
         });
       }
     },
@@ -154,7 +171,8 @@ export default {
   margin-right: 2rem;
 }
 .learnBox .learnHeader .userName {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
+  padding-right: 3rem;
 }
 .learnBox .learnMain {
   padding-top: 1.5rem;
@@ -163,11 +181,12 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  height: 3rem;
+  height: 4rem;
   margin-bottom: 1rem;
   overflow: hidden;
   word-wrap: break-word;
   text-overflow: ellipsis;
+  font-size: 1.5rem;
 }
 .learnBox .learnMain .learnImgBox ul {
   display: flex;
@@ -187,5 +206,6 @@ export default {
   justify-content: space-around;
   align-items: center;
   padding: 1.5rem;
+  font-size: 1.5rem;
 }
 </style>

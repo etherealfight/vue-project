@@ -137,9 +137,19 @@ VueRouter.prototype.push = function push(to) {
   return VueRouterPush.call(this, to).catch(err => err)
 }
 
-router.beforeEach(async(to, from, next) => {
-  if (sessionStorage.getItem("loginState") != null) {
-    console.log("state", sessionStorage.getItem("loginState"));
+router.beforeEach(async (to, from, next) => {
+  if (sessionStorage.getItem("loginState") != null && !store.state.loginState) {
+    store.state.loginState = sessionStorage.getItem("loginState");
+    store.state.userName = sessionStorage.getItem("userName");
+    store.state.userId = sessionStorage.getItem("userId");
+    store.state.userMail = sessionStorage.getItem("userMail");
+    store.state.sex = sessionStorage.getItem("sex");
+    store.state.sign = sessionStorage.getItem("sign");
+    store.state.introduction = sessionStorage.getItem("introduction");
+    store.state.userImage = sessionStorage.getItem("userImage");
+
+    console.log(sessionStorage.getItem("userName"), store.state.userName);
+    console.log("state", store.state.loginState);
   }
   console.log("state", store.state.loginState);
   if (to.name !== 'regist' && to.name !== 'login' && !sessionStorage.getItem("loginState")) {

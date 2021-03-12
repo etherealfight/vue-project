@@ -136,6 +136,12 @@ export default {
      * 监听修改按钮，发送修改后的用户信息
      */
     async update() {
+      sessionStorage.setItem("loginState", true);
+      sessionStorage.setItem("userName", this.$store.state.userName);
+      sessionStorage.setItem("sex", this.$store.state.sex);
+      sessionStorage.setItem("sign", this.$store.state.sign);
+      sessionStorage.setItem("introduction", this.$store.state.introduction);
+      sessionStorage.setItem("userImage", this.$store.state.userImage);
       const res = await updateUserinfo(
         this.$store.state.userId,
         this.$store.state.userName,

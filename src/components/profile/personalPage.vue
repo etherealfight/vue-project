@@ -5,19 +5,14 @@
       <div class="personalMiddle">
         <div class="personalIntroduction">
           <div class="personalImg">
-            <img :src="userImage" class="personalImg"/>
+            <img :src="userImage" class="personalImg" />
           </div>
           <div class="personalText">
             <span style="font-size: 1.75rem">{{ username }}</span>
             <span class="personalWords">个性签名：{{ sign }}</span>
             <span class="personalWords">个人简介：{{ introduction }}</span>
           </div>
-          <el-button
-            v-show="showChange"
-            class="personalChange"
-            @click="personalChange"
-            >修改个人资料</el-button
-          >
+
         </div>
         <div class="personalContents">
           <el-button
@@ -40,7 +35,7 @@
           ref="wrapper"
         >
           <div class="list">
-            <router-view class="router" :id="this.$route.query.id"></router-view>
+            <router-view class="router" :id="userid"></router-view>
           </div>
         </v-touch>
       </div>
@@ -66,10 +61,11 @@ export default {
       pageNum: 1, //当前展示到的页面
       totalNum: 1, //总共查询到满足条件的页面
       showLoading: false, //是否在加载中标识
-      username: "cccc",
-      userImage: this.$store.state.userImage,
-      sign: "666666666666666",
-      introduction: "23333333333333333333333333333333333333333333",
+      userid: sessionStorage.getItem("tempUserId"),
+      username: sessionStorage.getItem("tempUserName"),
+      userImage: sessionStorage.getItem("tempUserImg"),
+      sign: sessionStorage.getItem("tempUserSign"),
+      introduction: sessionStorage.getItem("tempUserIntroduction"),
       activeIndex: "1",
     };
   },
@@ -86,16 +82,16 @@ export default {
     let wrapper = document.getElementsByClassName("personalwrapper");
     wrapper[0].style.height = personalwrapper + "px";
     if (this.$route.path === "/personalPage/learningList") {
-      this.activeIndex="2";
+      this.activeIndex = "2";
     } else {
-      this.activeIndex="1";
+      this.activeIndex = "1";
     }
   },
-  updated () {
+  updated() {
     if (this.$route.path === "/personalPage/learningList") {
-      this.activeIndex="2";
+      this.activeIndex = "2";
     } else {
-      this.activeIndex="1";
+      this.activeIndex = "1";
     }
   },
   methods: {
@@ -195,7 +191,7 @@ export default {
 }
 
 .personalWords {
-  padding-top: 0.25rem;
+  padding: 0.25rem;
   word-break: break-all;
 }
 .personalChange {
@@ -215,9 +211,10 @@ export default {
 }
 .router {
   padding: 0 0 2rem 0;
+  background: rgb(240, 240, 240);
 }
-.rerwardwrapper >>> .rewardList ,
-.learningwrapper >>> .learningList{
+.rerwardwrapper >>> .rewardList,
+.learningwrapper >>> .learningList {
   padding: 0;
   padding-bottom: 30vh;
   box-sizing: border-box;

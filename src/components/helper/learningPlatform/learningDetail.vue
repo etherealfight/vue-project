@@ -14,8 +14,8 @@
         </div>
         <div class="learnDetailMain">
           <swiper :options="swiperOption" class="czp">
-            <swiper-slide v-for="imgurl in fileaddress" :key="imgurl"
-              ><img :src="imgurl"
+            <swiper-slide v-for="imgurl in fileaddress" :key="imgurl">
+              <img :src="imgurl" preview preview-text="学习资源"
             /></swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
           </swiper>
@@ -39,7 +39,6 @@
                 >
                   <div class="itembox">
                     <span>{{ videoName[index] }}</span>
-                    
                   </div>
                 </li>
               </ol>
@@ -159,7 +158,7 @@ export default {
       date: "2021-01-25", //发表时间
       id: 0, //学习资源id
       username: "aaa", //用户昵称
-      userid: 0, //用户id
+      userid: "", //用户id
       userimg:
         "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg", //用户头像
       clicks: 0, //点击量
@@ -171,20 +170,18 @@ export default {
       showLoading: false, //是否在加载中标识
     };
   },
-computed: {
-  currentData() {
+  computed: {
+    currentData() {
       return dayjs(this.date).format("YYYY年MM月DD日 HH:mm:ss");
     },
-},
+  },
   methods: {
     toPersonalPage() {
-      if (this.$store.state.userName === this.username) {
-        this.$store.commit("changeId", { currenrId: this.userId });
+      if (this.$store.state.userId === this.userid) {
         this.$router.push({
           name: "mypersonalPage",
         });
       } else {
-        this.$store.commit("changeId", { currenrId: this.userId });
         this.$router.push({
           name: "personalPage",
         });
@@ -374,7 +371,7 @@ computed: {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   padding-left: 2rem;
   box-sizing: border-box;
 }
@@ -389,15 +386,21 @@ computed: {
   border-radius: 0.5rem;
   box-sizing: border-box;
 }
+.swiper-slide {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
 .swiper-slide img {
-  width: 30rem;
-  height: 15rem;
+  max-height: 100%;
+  max-width: 100%;
 }
 .learnDetailContext {
   padding: 2rem;
   display: -webkit-box;
   word-break: break-all;
   box-sizing: border-box;
+  font-size: 1.5rem;
 }
 .videoList,
 .fileList {
@@ -415,6 +418,10 @@ computed: {
   margin-left: -0.5rem;
   padding: 0.5rem 1.5rem;
   box-sizing: border-box;
+  font-size: 1.5rem;
+}
+.el-icon-download{
+  color: black;
 }
 .itembox {
   width: 100%;
