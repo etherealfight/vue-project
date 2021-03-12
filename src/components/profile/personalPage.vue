@@ -184,6 +184,8 @@ export default {
   box-sizing: border-box;
 }
 .personalText {
+  height: 100%;
+  overflow: scroll;
   display: flex;
   flex-direction: column;
   font-size: 1.5rem;

@@ -55,7 +55,10 @@
           ref="wrapper"
         >
           <div class="list">
-            <router-view class="router" :id="this.$store.state.userId"></router-view>
+            <router-view
+              class="router"
+              :id="this.$store.state.userId"
+            ></router-view>
           </div>
         </v-touch>
       </div>
@@ -263,6 +266,8 @@ export default {
   box-sizing: border-box;
 }
 .mypersonalText {
+  height: 100%;
+  overflow: scroll;
   display: flex;
   flex-direction: column;
   font-size: 1.5rem;
@@ -284,8 +289,8 @@ export default {
   padding: 0 0 2rem 0;
   background: rgb(240, 240, 240);
 }
-.rerwardwrapper >>> .rewardList ,
-.learningwrapper >>> .learningList{
+.rerwardwrapper >>> .rewardList,
+.learningwrapper >>> .learningList {
   padding: 0;
   padding-bottom: 30vh;
   box-sizing: border-box;

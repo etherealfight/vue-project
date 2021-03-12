@@ -46,6 +46,7 @@ export default {
       } else {
         res = await login1(this.username, this.password);
       }
+      console.log(res)
       if (res.success) {
         this.$message.info("登录成功");
         sessionStorage.setItem("loginState", true);
@@ -54,15 +55,15 @@ export default {
         sessionStorage.setItem("userMail", res.detail.usermail);
         sessionStorage.setItem("sex", res.detail.gender);
         sessionStorage.setItem("sign", res.detail.signature);
-        sessionStorage.setItem("introduction", res.detail.introductory);
+        sessionStorage.setItem("introduction", res.detail.introduction);
         sessionStorage.setItem("userImage", res.detail.headportrait);
         this.$store.commit("initialState", {
-          userName: res.detail.username,
+          username: res.detail.username,
           userId: res.detail.userid,
           userMail: res.detail.usermail,
           sex: res.detail.gender,
           sign: res.detail.signature,
-          introduction: res.detail.introductory,
+          introduction: res.detail.introduction,
           userImage: res.detail.headportrait,
         });
         this.$router.push({ path: "./main" });
