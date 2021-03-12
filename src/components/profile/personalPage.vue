@@ -8,11 +8,10 @@
             <img :src="userImage" class="personalImg" />
           </div>
           <div class="personalText">
-            <span style="font-size: 1.75rem">{{ username }}</span>
+            <span style="font-size: 1.75rem">{{ username }}{{ gender }}</span>
             <span class="personalWords">个性签名：{{ sign }}</span>
             <span class="personalWords">个人简介：{{ introduction }}</span>
           </div>
-
         </div>
         <div class="personalContents">
           <el-button
@@ -66,6 +65,7 @@ export default {
       userImage: sessionStorage.getItem("tempUserImg"),
       sign: sessionStorage.getItem("tempUserSign"),
       introduction: sessionStorage.getItem("tempUserIntroduction"),
+      sex: sessionStorage.getItem("gender"),
       activeIndex: "1",
     };
   },
@@ -143,6 +143,15 @@ export default {
       //console.log(this.username);
       //console.log(this.$store.state.userName);
       return this.username === this.$store.state.userName;
+    },
+    gender() {
+      if (this.sex ==="1") {
+        return " ♂";
+      } else if (this.sex === "2") {
+        return " ♀";
+      } else {
+        return "";
+      }
     },
   },
 };

@@ -8,6 +8,7 @@
         :userId="item.userid"
         :username="item.username"
         :sign="item.signature"
+        :gender="item.gender"
         :introduction="item.introduction"
         :userimg="item.headportrait"
         :fileaddress="item.images"

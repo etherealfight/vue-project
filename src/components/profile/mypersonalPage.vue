@@ -29,7 +29,7 @@
             <img :src="userImage" class="mypersonalImg" />
           </div>
           <div class="mypersonalText">
-            <span style="font-size: 1.75rem">{{ username }}</span>
+            <span style="font-size: 1.75rem">{{ username + gender }}</span>
             <span class="mypersonalWords">个性签名：{{ sign }}</span>
             <span class="mypersonalWords">个人简介：{{ introduction }}</span>
           </div>
@@ -94,6 +94,7 @@ export default {
       userImage: this.$store.state.userImage,
       sign: this.$store.state.sign,
       introduction: this.$store.state.introduction,
+      sex: this.$store.state.sex,
       activeIndex: "1",
     };
   },
@@ -178,6 +179,7 @@ export default {
     childok1() {
       this.$message.info("ok");
       this.isMaskReward = false;
+      this.$router.push({ path: "/mypersonalPage/rewardList" });
     },
     /**
      * 点击返回隐藏
@@ -191,6 +193,7 @@ export default {
     childok2() {
       this.$message.info("ok");
       this.isMaskLearn = false;
+      this.$router.push({ path: "/mypersonalPage/learningList" });
     },
     /**
      * 点击返回隐藏
@@ -207,6 +210,15 @@ export default {
     },
     isShow() {
       return !(this.isMaskReward || this.isMaskLearn);
+    },
+    gender() {
+      if (this.sex === "1") {
+        return " ♂";
+      } else if (this.sex === "2") {
+        return " ♀";
+      } else {
+        return "";
+      }
     },
   },
   updated() {

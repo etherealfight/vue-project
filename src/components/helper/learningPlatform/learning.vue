@@ -3,7 +3,7 @@
     <div class="learnHeader">
       <img :src="userimg" class="userImg" @click.self="toPersonal" />
       <div class="userName" @click.self="toPersonal">{{ username }}</div>
-      <i class="el-icon-close" v-if="isShow" @click.once="del"></i>
+      <i class="el-icon-close" v-if="isShow" @click="flag && del()"></i>
     </div>
     <div class="learnMain" @click="toDetail">
       <div class="learnText">{{ contentText }}</div>
@@ -30,6 +30,11 @@
 import { deleteLearning } from "../../../api";
 import dayjs from "dayjs";
 export default {
+  data() {
+    return {
+      flag: true,
+    };
+  },
   computed: {
     isShow: function () {
       if (this.$route.path === "/mypersonalPage/learningList") {
@@ -73,6 +78,11 @@ export default {
       type: String,
       default: "",
     },
+    //用户性别
+    gender: {
+      type: Number,
+      default: "",
+    },
     //作者头像
     userimg: {
       type: String,
@@ -109,6 +119,7 @@ export default {
         });
       } else {
         sessionStorage.setItem("tempUserId", this.userId);
+        sessionStorage.setItem("gender", this.gender);
         sessionStorage.setItem("tempUserName", this.username);
         sessionStorage.setItem("tempUserImg", this.userimg);
         sessionStorage.setItem("tempUserSign", this.sign);
@@ -119,6 +130,7 @@ export default {
       }
     },
     async del() {
+      this.flag = false;
       this.$confirm("是否删除此资源?", "提示", {
         customClass: "confirmdelete",
         confirmButtonText: "确定",
@@ -132,9 +144,11 @@ export default {
             console.log(res);
           }
           this.$message.success("删除成功!");
+          this.flag = true;
         })
         .catch(() => {
           this.$message.info("已取消删除");
+          this.flag = true;
         });
     },
   },

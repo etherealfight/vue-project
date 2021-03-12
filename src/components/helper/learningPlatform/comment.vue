@@ -44,6 +44,11 @@ export default {
       type: String,
       default: "ccc",
     },
+    //用户性别
+    gender: {
+      type: Number,
+      default: 1,
+    },
     //用户头像
     userimg: {
       type: String,
@@ -102,6 +107,7 @@ export default {
         });
       } else {
         sessionStorage.setItem("tempUserId", this.userId);
+        sessionStorage.setItem("gender", this.gender);
         sessionStorage.setItem("tempUserName", this.username);
         sessionStorage.setItem("tempUserImg", this.userimg);
         sessionStorage.setItem("tempUserSign", this.sign);

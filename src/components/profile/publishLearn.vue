@@ -115,9 +115,9 @@ export default {
         this.$refs.upload1.submit();
         this.$refs.upload2.submit();
         this.$refs.upload3.submit();
+        this.$router.push({ path: "/mypersonalPage/rewardList" });
         // this.$message.info(res.msg);
         // console.log(res)
-        if (this.updatestate) this.$emit("child-ok");
       }
     },
     /**
@@ -170,7 +170,10 @@ export default {
       console.log("success:", response);
       if (this.counter1 < this.imgNum) {
         this.imgUrl =
-          this.imgUrl + "http://121.196.154.219:8083/images/" + response.detail + ",";
+          this.imgUrl +
+          "http://121.196.154.219:8083/images/" +
+          response.detail +
+          ",";
         console.log("imgurl:", this.imgUrl);
         this.counter1 = this.counter1 + 1;
       }
@@ -196,6 +199,7 @@ export default {
           this.fileName
         );
         console.log(res);
+        if (this.updatestate) this.$emit("child-ok");
         this.publishLearnText = "";
         this.$refs.upload1.clearFiles();
         this.$refs.upload2.clearFiles();
@@ -219,7 +223,10 @@ export default {
       console.log("success:", response);
       if (this.counter2 < this.videoNum) {
         this.videoUrl =
-          this.videoUrl + "http://121.196.154.219:8083/videos/" + response.detail + ",";
+          this.videoUrl +
+          "http://121.196.154.219:8083/videos/" +
+          response.detail +
+          ",";
         console.log("videoUrl:", this.videoUrl);
         this.counter2 = this.counter2 + 1;
       }
@@ -239,6 +246,7 @@ export default {
           this.videoName,
           this.fileName
         );
+        if (this.updatestate) this.$emit("child-ok");
         console.log(res);
         this.publishLearnText = "";
         this.$refs.upload1.clearFiles();
@@ -263,7 +271,10 @@ export default {
       console.log("success:", response);
       if (this.counter3 < this.fileNum) {
         this.fileUrl =
-          this.fileUrl + "http://121.196.154.219:8083/files/" + response.detail + ",";
+          this.fileUrl +
+          "http://121.196.154.219:8083/files/" +
+          response.detail +
+          ",";
         console.log("fileUrl", this.fileUrl);
         this.counter3 = this.counter3 + 1;
       }
@@ -288,6 +299,7 @@ export default {
           this.videoName,
           this.fileName
         );
+        if (this.updatestate) this.$emit("child-ok");
         console.log(res);
         this.publishLearnText = "";
         this.$refs.upload1.clearFiles();
@@ -338,7 +350,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow:scroll;
+  overflow: scroll;
 }
 .publishLearnMain {
   display: flex;

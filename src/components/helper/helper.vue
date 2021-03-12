@@ -7,8 +7,11 @@
           prefix-icon="el-icon-search"
           v-model="input"
           @keyup.enter.native="search"
-        ></el-input></div
-    ></transition>
+        >
+        </el-input>
+        <span @click="search">搜索</span>
+      </div></transition
+    >
     <helperbar :class="show" :activeIndex="activeIndex"></helperbar>
     <div class="content">
       <router-view
@@ -41,9 +44,9 @@ export default {
   mounted() {
     // this.loadData();
     console.log(this.$route.path);
-    window.addEventListener("touchstart", this.handletouchs,true);
-    window.addEventListener("touchmove", this.handletouchm,true);
-    window.addEventListener("touchend", this.handletouche,true);
+    window.addEventListener("touchstart", this.handletouchs, true);
+    window.addEventListener("touchmove", this.handletouchm, true);
+    window.addEventListener("touchend", this.handletouche, true);
     if (this.$route.path === "/helper/learningList") {
       this.activeIndex = "2";
     } else {
@@ -84,7 +87,7 @@ export default {
       return (Math.atan2(angy, angx) * 180) / Math.PI;
     },
     handletouchs(e) {
-      console.log(e)
+      console.log(e);
       this.startx = e.touches[0].pageX;
       this.starty = e.touches[0].pageY;
       console.log("sy:", this.starty);
@@ -136,9 +139,9 @@ export default {
   },
   destroyed() {
     console.log("leave");
-    window.removeEventListener("touchstart", this.handletouchs,true);
-    window.removeEventListener("touchmove", this.handletouchm,true);
-    window.removeEventListener("touchend", this.handletouche,true);
+    window.removeEventListener("touchstart", this.handletouchs, true);
+    window.removeEventListener("touchmove", this.handletouchm, true);
+    window.removeEventListener("touchend", this.handletouche, true);
   },
 };
 </script>
@@ -176,8 +179,13 @@ export default {
 .helperbox .searchbox .el-input {
   width: 80vw;
 }
+.searchbox span {
+  color: gray;
+  font-size: 1.25rem;
+  padding-left: 1rem;
+  z-index: 15;
+}
 .helperbox .searchbox .el-input >>> .el-input__inner {
-  margin-top: 1.5rem;
   background: rgb(235, 235, 235);
   border-radius: 5rem;
   border: none;
@@ -185,7 +193,6 @@ export default {
 .helperbox .searchbox .el-input >>> .el-input__inner::-webkit-input-placeholder,
 .helperbox .searchbox .el-input >>> .el-input__prefix {
   color: gray;
-  margin-top: 1rem;
 }
 .helperbox .helperbar {
   position: fixed;

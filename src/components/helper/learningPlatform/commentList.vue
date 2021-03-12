@@ -6,6 +6,7 @@
       :id="item.replyid"
       :userId="item.userid"
       :username="item.username"
+      :gender="item.gender"
       :userimg="item.headportrait"
       :sign="item.signature"
       :introduction="item.introduction"

@@ -21,7 +21,7 @@
           action="http://121.196.154.219:8083/rewardimages"
           :auto-upload="false"
           :limit="9"
-          list-type="picture-card"       
+          list-type="picture-card"
           :before-upload="showList"
           :on-error="showError"
           :on-success="showSuccess"
@@ -69,8 +69,8 @@ export default {
       else if (this.publishRewardText == "")
         this.$message.warning("发布内容不可为空");
       else {
-        this.$emit("child-ok");
         this.$refs.upload.submit();
+        this.$router.push({ path: "/mypersonalPage/learningList" });
         // this.$message.info(res.msg);
         // console.log(res)
       }
@@ -97,17 +97,23 @@ export default {
       console.log("nums:", this.imgNum);
       console.log("success:", response);
       if (this.counter < this.imgNum - 1) {
-        this.imgUrl = this.imgUrl + "http://121.196.154.219:8083/images/" + response.detail + ",";
+        this.imgUrl =
+          this.imgUrl +
+          "http://121.196.154.219:8083/images/" +
+          response.detail +
+          ",";
         console.log(this.imgUrl);
         this.counter = this.counter + 1;
       } else {
-        this.imgUrl = this.imgUrl + "http://121.196.154.219:8083/images/" + response.detail;
+        this.imgUrl =
+          this.imgUrl + "http://121.196.154.219:8083/images/" + response.detail;
         console.log("finish:", this.imgUrl);
         const res = await publishReward(
           this.$store.state.userId,
           this.publishRewardText,
           this.imgUrl
         );
+        this.$emit("child-ok");
         console.log(res);
         this.publishRewardText = "";
         this.$refs.upload.clearFiles();
