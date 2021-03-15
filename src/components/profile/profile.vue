@@ -5,13 +5,11 @@
   <div class="profileMain">
     <div class="box">
       <div class="profileHeader">
-        <v-touch v-on:touchstart="start">
-          <img
-            :src="$store.state.userImage"
-            id="profileImg"
-            @click="toMypersonalPage"
-          />
-        </v-touch>
+        <img
+          :src="$store.state.userImage"
+          id="profileImg"
+          @click="toMypersonalPage"
+        />
         <el-upload
           class="upload-demo"
           action="http://121.196.154.219:8083/headimages"
@@ -98,25 +96,30 @@
 import my_tabbar from "../home/my_tabbar";
 import { updateUserinfo } from "../../api";
 export default {
-  data() {
-    return {
-      userImg: this.$store.state.userImage,
-    };
-  },
   components: {
     "my-tabbar": my_tabbar,
   },
-
+  data() {
+    return {
+      userImg: this.$store.state.userImage, //用户头像
+    };
+  },
   methods: {
+    /**
+     * 点击头像跳转到个人主页
+     */
     toMypersonalPage() {
       this.$router.push({ path: "/mypersonalpage" });
     },
-    start() {
-      console.log("start");
-    },
+    /**
+     * 发送图片失败钩子
+     */
     showError(err, file, fileList) {
       console.log(err);
     },
+    /**
+     * 发送图片成功构造
+     */
     async showSuccess(response, file, fileList) {
       console.log(response);
       this.$store.commit("changeUserImage", { userImage: response.detail });
@@ -160,6 +163,9 @@ export default {
       console.log(res);
       this.$message.info("修改成功");
     },
+    /**
+     * 注销登录状态返回登录界面
+     */
     quit() {
       sessionStorage.setItem("loginState", false);
       this.$store.commit("changeLoginStates", {

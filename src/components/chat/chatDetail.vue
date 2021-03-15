@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:聊天详情页面组件
+-->
 <template>
   <div class="chatDetailBox">
     <div class="header">
@@ -46,13 +49,16 @@ import BScroll from "better-scroll";
 export default {
   data() {
     return {
-      username: this.$store.state.userName,
-      objectname: "quan",
-      userImg: this.$store.state.userImage,
-      objectImg: this.$store.state.userImage,
-      input: "",
-      message: { id: 0, person: "user", context: "", time: "" },
-      dialog: [
+      username: this.$store.state.userName,  //本人用户名
+      objectname: "quan",    //聊天对象用户名
+      userImg: this.$store.state.userImage,  //本人头像
+      objectImg: this.$store.state.userImage,  //聊天对象头像
+      input: "",  //输入框内容
+      message: { id: 0, person: "user", context: "", time: "" },  //聊天信息
+      /**
+       * 聊天信息列表
+       */
+      dialog: [     
         { id: 1, person: "user", context: "hhhhhhhh", time: "2021-2-16 10:11" },
         {
           id: 2,
@@ -122,14 +128,32 @@ export default {
           person: "object",
           context: "66666666",
           time: "2021-2-16 11:20",
-        }
+        },
       ],
     };
   },
+  mounted() {
+    this.loadData();
+    //滚动条置底
+    let height = document.querySelector(".main").scrollHeight;
+    console.log(height);
+    window.scrollTo(0, height);
+  },
+  updated() {
+    let height = document.querySelector(".main").scrollHeight;
+    console.log(height);
+    window.scrollTo(0, height);
+  },
   methods: {
+    /**
+     * 返回按钮点击事件，返回聊天列表
+     */
     back() {
       this.$router.back(-1);
     },
+    /**
+     * 下拉加载聊天信息
+     */
     loadData() {
       this.$nextTick(() => {
         const wrapper = document.querySelector(".chatwrapper");
@@ -148,6 +172,9 @@ export default {
         });
       });
     },
+    /**
+     * 发送按钮点击事件
+     */
     send() {
       let myDate = new Date();
       this.message.time = myDate.toLocaleString();
@@ -160,18 +187,6 @@ export default {
       this.input = "";
     },
   },
-  mounted() {
-    this.loadData();
-    //滚动条置底
-    let height = document.querySelector(".main").scrollHeight;
-    console.log(height);
-    window.scrollTo(0, height);
-  },
-  updated () {
-    let height = document.querySelector(".main").scrollHeight;
-    console.log(height);
-    window.scrollTo(0, height);
-  }
 };
 </script>
 

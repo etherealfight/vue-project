@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:聊天页组件，用于展示所有聊天信息
+-->
 <template>
   <div class="chatbox">
     <div class="title"><span>消息</span></div>
@@ -21,6 +24,9 @@ export default {
     this.loadData();
   },
   methods: {
+    /**
+     * 下拉加载数据
+     */
     loadData() {
       this.$nextTick(() => {
         const wrapper = document.querySelector(".chatwrapper");
@@ -34,7 +40,7 @@ export default {
         });
         console.log(this.scroll);
         this.scroll.on("pullingUp", () => {
-          console.log("jz");
+          console.log("加载~");
           this.scroll.finishPullUp();
         });
       });

@@ -16,7 +16,9 @@ import 'vue-photo-preview/dist/skin.css'
 
 Vue.use(VueVideoPlayer)
 Vue.use(VueAwesomeSwiper)
-Vue.use(VueTouch, { name: 'v-touch' })
+Vue.use(VueTouch, {
+  name: 'v-touch'
+})
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(preview)
@@ -29,7 +31,9 @@ new Vue({
 
 
 const showMessage = Symbol('showMessage')
-
+/**
+ * 重写消息提示组件
+ */
 let messageInstance = null;
 class DonMessage {
   success(options, single = true) {
@@ -46,9 +50,9 @@ class DonMessage {
     }
     [showMessage](type, options, single) {
       if (messageInstance && single) {
-        messageInstance.close() 
+        messageInstance.close()
       }
-      messageInstance = Message[type](options) 
+      messageInstance = Message[type](options)
     }
 }
 Vue.use(ElementUI)

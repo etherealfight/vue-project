@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:新闻轮播图组件
+-->
 <template>
   <div class="newsImg" @click="toDetail">
     <img :src="imgUrl" />
@@ -8,20 +11,27 @@
 <script >
 export default {
   props: {
+    //新闻id
     id: {
       type: Number,
       default: 0,
     },
+
+    //新闻标题
     text: {
       type: String,
       default: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     },
+    //新闻图片
     imgUrl: {
       type: String,
       default: `https://picsum.photos/460/360?random=1`,
     },
   },
   methods: {
+    /**
+     * 跳转到相应新闻详情页
+     */
     toDetail() {
       this.$router.push({ path: "/newsdetail", query: { id: this.id } });
     },

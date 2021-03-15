@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:小帮手导航栏组件
+-->
 <template>
   <div class="helperbar">
     <el-menu
@@ -18,15 +21,22 @@
 <script>
 export default {
   props: {
+    //处于选中状态的选项
     activeIndex: {
       type: String,
       default: "1",
     },
   },
   methods: {
+    /**
+     * 跳转到悬赏列表子组件
+     */
     move1() {
       this.$router.push({ path: "/helper/rewardList" });
     },
+    /**
+     * 跳转到学习资源列表子组件
+     */
     move2() {
       this.$router.push({ path: "/helper/learningList" });
     },

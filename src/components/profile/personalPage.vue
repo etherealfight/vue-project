@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:用户主页组件，用于展示对应用户发布的悬赏以及学习资源信息
+-->
 <template>
   <div id="personalMain">
     <div class="personaltop">
@@ -34,7 +37,7 @@
           ref="wrapper"
         >
           <div class="list">
-            <router-view class="router" :id="userid"></router-view>
+            <router-view class="router" :userid="userid"></router-view>
           </div>
         </v-touch>
       </div>
@@ -60,17 +63,30 @@ export default {
       pageNum: 1, //当前展示到的页面
       totalNum: 1, //总共查询到满足条件的页面
       showLoading: false, //是否在加载中标识
-      userid: sessionStorage.getItem("tempUserId"),
-      username: sessionStorage.getItem("tempUserName"),
-      userImage: sessionStorage.getItem("tempUserImg"),
-      sign: sessionStorage.getItem("tempUserSign"),
-      introduction: sessionStorage.getItem("tempUserIntroduction"),
-      sex: sessionStorage.getItem("gender"),
-      activeIndex: "1",
+      userid: sessionStorage.getItem("tempUserId"), //从浏览器本地存储获取用户id
+      username: sessionStorage.getItem("tempUserName"), //用户名
+      userImage: sessionStorage.getItem("tempUserImg"), //用户头像
+      sign: sessionStorage.getItem("tempUserSign"), //用户签名
+      introduction: sessionStorage.getItem("tempUserIntroduction"), //用户简介
+      sex: sessionStorage.getItem("gender"), //用户性别
+      activeIndex: "1", //导航栏选中索引
     };
+  },
+  computed: {
+    //展示相应性别
+    gender() {
+      if (this.sex === "1") {
+        return " ♂";
+      } else if (this.sex === "2") {
+        return " ♀";
+      } else {
+        return "";
+      }
+    },
   },
   mounted() {
     this.loadData();
+    //计算右滑返回区域高度
     let personalMiddle = document.querySelector(".personalMiddle").offsetHeight;
     let personalpageBarHeight = document.querySelector(".personalpageBar")
       .offsetHeight;
@@ -81,6 +97,7 @@ export default {
       personalwrapper + personaltop - personalMiddle - personalpageBarHeight;
     let wrapper = document.getElementsByClassName("personalwrapper");
     wrapper[0].style.height = personalwrapper + "px";
+    //根据当前路由判断navbar哪一栏处于选中状态
     if (this.$route.path === "/personalPage/learningList") {
       this.activeIndex = "2";
     } else {
@@ -93,14 +110,21 @@ export default {
     } else {
       this.activeIndex = "1";
     }
+    //重新计算高度
+    this.scroll.refresh();
+    //当数据加载完毕以后通知better-scroll
+    this.scroll.finishPullUp();
   },
   methods: {
-    personalChange() {
-      this.$router.push("/profile");
-    },
+    /**
+     * 点击返回按钮返回小帮手页面
+     */
     back() {
       this.$router.push("/helper");
     },
+    /**
+     * 监听右滑切换子组件
+     */
     swiperright() {
       console.log("r");
       if (this.activeIndex === "2") {
@@ -109,6 +133,9 @@ export default {
         console.log("r2");
       }
     },
+    /**
+     * 监听左滑切换子组件
+     */
     swiperleft() {
       console.log("l");
       console.log(this.activeIndex);
@@ -118,6 +145,9 @@ export default {
         console.log("l2");
       }
     },
+    /**
+     * 下拉加载数据
+     */
     loadData() {
       this.$nextTick(() => {
         const wrapper = document.querySelector(".personalwrapper");
@@ -136,22 +166,6 @@ export default {
           this.scroll.finishPullUp();
         });
       });
-    },
-  },
-  computed: {
-    showChange() {
-      //console.log(this.username);
-      //console.log(this.$store.state.userName);
-      return this.username === this.$store.state.userName;
-    },
-    gender() {
-      if (this.sex ==="1") {
-        return " ♂";
-      } else if (this.sex === "2") {
-        return " ♀";
-      } else {
-        return "";
-      }
     },
   },
 };

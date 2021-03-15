@@ -33,23 +33,6 @@
 import { deleteLearning } from "../../../api";
 import dayjs from "dayjs";
 export default {
-  data() {
-    return {
-      flag: true,
-    };
-  },
-  computed: {
-    isShow: function () {
-      if (this.$route.path === "/mypersonalPage/learningList") {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    currentData() {
-      return dayjs(this.date).format("YYYY年MM月DD日 HH:mm:ss");
-    },
-  },
   props: {
     //悬赏图片
     fileaddress: {
@@ -107,7 +90,33 @@ export default {
       default: 0,
     },
   },
+  data() {
+    return {
+      flag: true,  //执行删除标识
+    };
+  },
+  computed: {
+    /**
+     * 根据路由判断是否为本用户主页以决定是否显示删除按钮
+     */
+    isShow: function () {
+      if (this.$route.path === "/mypersonalPage/learningList") {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    /**
+     * 转换日期格式
+     */
+    currentData() {
+      return dayjs(this.date).format("YYYY年MM月DD日 HH:mm:ss");
+    },
+  },
   methods: {
+    /**
+     * 根据学习资源id跳转到相应学习资源详情页
+     */
     toDetail() {
       console.log("studyid:", this.id);
       this.$router.push({
@@ -115,6 +124,9 @@ export default {
         query: { learningid: this.id, hits: this.clicks },
       });
     },
+    /**
+     * 根据用户id跳转到相应用户主页
+     */
     toPersonal() {
       if (this.$store.state.userId === this.userId) {
         this.$router.push({
@@ -132,6 +144,9 @@ export default {
         });
       }
     },
+    /**
+     * 删除该学习资源
+     */
     async del() {
       this.flag = false;
       this.$confirm("是否删除此资源?", "提示", {

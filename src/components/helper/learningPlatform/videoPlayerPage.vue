@@ -22,7 +22,6 @@
         >
           <div class="itembox">
             <span>{{ videoName[index] }}</span>
-            <i class="el-icon-download" @click="download"></i>
           </div>
         </li>
       </ol>
@@ -33,11 +32,6 @@
 <script>
 import "video.js/dist/video-js.css";
 export default {
-  mounted() {
-    console.log(this.videoList);
-    let myPlayer = this.$refs.videoPlayer.player;
-    myPlayer.src(this.videoList[this.$route.query.index]);
-  },
   data() {
     return {
       videoName: this.$route.query.videoName,
@@ -68,6 +62,11 @@ export default {
         },
       },
     };
+  },
+  mounted() {
+    console.log(this.videoList);
+    let myPlayer = this.$refs.videoPlayer.player;
+    myPlayer.src(this.videoList[this.$route.query.index]);
   },
   methods: {
     back() {

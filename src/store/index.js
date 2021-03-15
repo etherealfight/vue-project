@@ -16,6 +16,9 @@ export default new Vuex.Store({
     currentId: '', //当前页面用户id
   },
   mutations: {
+    /**
+     * 初始化数据
+     */
     initialState(state, payload) {
       state.userMail = payload.usermail
       state.userName = payload.username;
@@ -26,6 +29,9 @@ export default new Vuex.Store({
       state.userId = payload.userId;
       state.loginState = true;
     },
+    /**
+     * 更新数据
+     */
     changeStates(state, payload) {
       state.userName = payload.username;
       state.sex = payload.sex;
@@ -33,9 +39,15 @@ export default new Vuex.Store({
       state.introduction = payload.introduction;
       state.userImage = payload.userImage;
     },
+    /**
+     * 更改当前页用户id
+     */
     changeId(state, payload) {
       state.currentId = payload.currentId;
     },
+    /**
+     * 更改登录状态
+     */
     changeLoginStates(state, payload) {
       state.loginState = payload.loginState;
     },

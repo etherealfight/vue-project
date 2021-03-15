@@ -33,7 +33,28 @@ import {
   searchLearningbyid,
 } from "../../../api";
 import BScroll from "better-scroll";
+
 export default {
+  components: {
+    learning: learning,
+  },
+  props: {
+    //用户id
+    userid: {
+      type: String,
+      default: "",
+    },
+    //搜索关键词
+    input: {
+      type: String,
+      default: "",
+    },
+    //搜索目标
+    searchTarget: {
+      type: String,
+      default: "",
+    },
+  },
   data() {
     return {
       keyword: "", //搜索关键词
@@ -45,8 +66,19 @@ export default {
       learninglist: [],
     };
   },
-  components: {
-    learning: learning,
+  watch: {
+    //监听当前路由是否为搜索目标
+    searchTarget() {
+      if (this.searchTarget === "learningList") {
+        this.keyword = this.input;
+        this.learninglist = [];
+        this.pageNum = 1;
+        this.pageNum = 1;
+        this.initState = true;
+        this.getData();
+        this.$emit("clearSearch");
+      }
+    },
   },
   /**
    * 初始化首页
@@ -57,7 +89,7 @@ export default {
       this.$route.path === "/mypersonalPage/learningList" ||
       this.$route.path === "/personalPage/learningList"
     ) {
-      res = await searchLearningbyid(this.id, this.pageNum);
+      res = await searchLearningbyid(this.userid, this.pageNum);
     } else {
       res = await searchStudy(this.pageNum);
     }
@@ -70,19 +102,11 @@ export default {
   mounted() {
     this.loadData();
   },
-  props: {
-    id: {
-      type: String,
-      default: "",
-    },
-    input: {
-      type: String,
-      default: "",
-    },
-    searchTarget: {
-      type: String,
-      default: "",
-    },
+  updated() {
+    //重新计算高度
+    this.scroll.refresh();
+    //当数据加载完毕以后通知better-scroll
+    this.scroll.finishPullUp();
   },
   methods: {
     /**
@@ -103,7 +127,7 @@ export default {
             this.$route.path === "/mypersonalPage/learningList" ||
             this.$route.path === "/personalPage/learningList"
           ) {
-            res = await searchLearningbyid(this.id, this.pageNum);
+            res = await searchLearningbyid(this.userid, this.pageNum);
           } else {
             res = await searchStudy(this.pageNum);
           }
@@ -198,25 +222,6 @@ export default {
         });
       });
     },
-  },
-  watch: {
-    searchTarget() {
-      if (this.searchTarget === "learningList") {
-        this.keyword = this.input;
-        this.learninglist = [];
-        this.pageNum = 1;
-        this.pageNum = 1;
-        this.initState = true;
-        this.getData();
-        this.$emit("clearSearch");
-      }
-    },
-  },
-  updated() {
-    //重新计算高度
-    this.scroll.refresh();
-    //当数据加载完毕以后通知better-scroll
-    this.scroll.finishPullUp();
   },
 };
 </script>

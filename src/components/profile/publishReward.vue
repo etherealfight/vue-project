@@ -25,14 +25,10 @@
           :before-upload="showList"
           :on-error="showError"
           :on-success="showSuccess"
-          :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
         >
           <i class="el-icon-plus"></i>
         </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="dialogImageUrl" alt="" />
-        </el-dialog>
       </div>
       <el-button round id="publishRewardButton" @click="publishRewards"
         >发布</el-button
@@ -44,22 +40,21 @@
 <script>
 import { publishReward } from "../../api";
 export default {
-  data() {
-    return {
-      publishRewardText: "",
-      dialogImageUrl: "",
-      dialogVisible: false,
-      imgUrl: "",
-      counter: 0,
-      imgNum: 0,
-    };
-  },
   props: {
     //   接受父组件传的值
     propsItem: {
       type: Object,
     },
   },
+  data() {
+    return {
+      publishRewardText: "", //发布悬赏文字内容
+      imgUrl: "", //上传图片地址字段
+      counter: 0, //上传图片数量
+      imgNum: 0, //当前上传成功图片数量
+    };
+  },
+
   methods: {
     /**
      * 发布文章
@@ -128,20 +123,12 @@ export default {
       console.log(file, fileList);
     },
     /**
-     * 预览图片
-     */
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    },
-    /**
      * 返回上一页面
      */
     back() {
       this.$emit("child-back");
     },
   },
-  components: {},
 };
 </script>
 

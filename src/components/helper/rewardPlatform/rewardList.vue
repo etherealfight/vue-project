@@ -33,10 +33,31 @@ import {
   searchRewardbyid,
 } from "../../../api";
 import BScroll from "better-scroll";
+
 export default {
+  components: {
+    reward: reward,
+  },
+  props: {
+    //用户id
+    userid: {
+      type: String,
+      default: "",
+    },
+    //搜索关键词
+    input: {
+      type: String,
+      default: "",
+    },
+    //搜索目标
+    searchTarget: {
+      type: String,
+      default: "",
+    },
+  },
   data() {
     return {
-      keyword: "",
+      keyword: "", //搜索关键词
       initState: true, //判断是否为初始页面
       pageNum: 1, //当前展示到的页面
       totalNum: 1, //总共查询到满足条件的页面
@@ -44,6 +65,20 @@ export default {
       showLoading: false, //是否在加载中标识
       rewardlist: [],
     };
+  },
+  watch: {
+    //监听当前路由是否为搜索目标
+    searchTarget() {
+      if (this.searchTarget === "rewardList") {
+        this.keyword = this.input;
+        this.rewardlist = [];
+        this.pageNum = 1;
+        this.pageNum = 1;
+        this.initState = true;
+        this.getData();
+        this.$emit("clearSearch");
+      }
+    },
   },
   /**
    * 初始化首页
@@ -54,7 +89,7 @@ export default {
       this.$route.path === "/mypersonalPage/rewardList" ||
       this.$route.path === "/personalPage/rewardList"
     ) {
-      res = await searchRewardbyid(this.id, this.pageNum);
+      res = await searchRewardbyid(this.userid, this.pageNum);
     } else {
       res = await searchData(this.pageNum);
     }
@@ -67,22 +102,11 @@ export default {
   mounted() {
     this.loadData();
   },
-  components: {
-    reward: reward,
-  },
-  props: {
-    id: {
-      type: String,
-      default: "",
-    },
-    input: {
-      type: String,
-      default: "",
-    },
-    searchTarget: {
-      type: String,
-      default: "",
-    },
+  updated() {
+    //重新计算高度
+    this.scroll.refresh();
+    //当数据加载完毕以后通知better-scroll
+    this.scroll.finishPullUp();
   },
   methods: {
     /**
@@ -105,7 +129,7 @@ export default {
             this.$route.path === "/mypersonalPage/rewardList" ||
             this.$route.path === "/personalPage/rewardList"
           ) {
-            res = await searchRewardbyid(this.id, this.pageNum);
+            res = await searchRewardbyid(this.userid, this.pageNum);
           } else {
             res = await searchData(this.pageNum);
           }
@@ -200,25 +224,6 @@ export default {
         });
       });
     },
-  },
-  watch: {
-    searchTarget() {
-      if (this.searchTarget === "rewardList") {
-        this.keyword = this.input;
-        this.rewardlist = [];
-        this.pageNum = 1;
-        this.pageNum = 1;
-        this.initState = true;
-        this.getData();
-        this.$emit("clearSearch");
-      }
-    },
-  },
-  updated() {
-    //重新计算高度
-    this.scroll.refresh();
-    //当数据加载完毕以后通知better-scroll
-    this.scroll.finishPullUp();
   },
 };
 </script>

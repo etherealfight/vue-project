@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:首页组件，用于展示新闻信息
+-->
 <template>
   <div class="bswrapper">
     <div class="content">
@@ -26,7 +29,6 @@
 </template>
 
 <script>
-import my_navbar from "./my_navbar";
 import my_tabbar from "./my_tabbar";
 import newsImg from "../news/newsImg";
 import newsList from "../news/newsList";
@@ -36,6 +38,13 @@ import BScroll from "better-scroll";
 import { searchNews } from "../../api";
 
 export default {
+  components: {
+    "my-tabbar": my_tabbar,
+    newsimg: newsImg,
+    newslist: newsList,
+    swiper,
+    swiperSlide,
+  },
   data() {
     return {
       initState: true, //判断是否为初始页面
@@ -54,14 +63,9 @@ export default {
       },
     };
   },
-  components: {
-    "my-navbar": my_navbar,
-    "my-tabbar": my_tabbar,
-    newsimg: newsImg,
-    newslist: newsList,
-    swiper,
-    swiperSlide,
-  },
+  /**
+   * 初始化新闻信息
+   */
   async created() {
     console.log(this.pageNum);
     const res = await searchNews(1);
@@ -73,15 +77,13 @@ export default {
   mounted() {
     this.loadData();
   },
+  updated() {
+    //重新计算高度
+    this.scroll.refresh();
+    //当数据加载完毕以后通知better-scroll
+    this.scroll.finishPullUp();
+  },
   methods: {
-    swiperright() {
-      console.log("r");
-      prev();
-    },
-    swiperleft() {
-      console.log("l");
-      next();
-    },
     /**
      * 根据查询条件获取文章信息
      */
@@ -100,6 +102,9 @@ export default {
         //this.$message.warning(error.message);
       }
     },
+    /**
+     * 下拉加载数据
+     */
     loadData() {
       this.$nextTick(() => {
         const wrapper = document.querySelector(".bswrapper");
@@ -127,12 +132,6 @@ export default {
         });
       });
     },
-  },
-  updated() {
-    //重新计算高度
-    this.scroll.refresh();
-    //当数据加载完毕以后通知better-scroll
-    this.scroll.finishPullUp();
   },
 };
 </script>

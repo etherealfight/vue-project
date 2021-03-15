@@ -33,23 +33,6 @@
 import { deleteReward } from "../../../api";
 import dayjs from "dayjs";
 export default {
-  data() {
-    return {
-      flag: true,
-    };
-  },
-  computed: {
-    isShow: function () {
-      if (this.$route.path === "/mypersonalPage/rewardList") {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    currentData() {
-      return dayjs(this.date).format("YYYY年MM月DD日 HH:mm:ss");
-    },
-  },
   props: {
     //悬赏图片
     fileaddress: {
@@ -66,7 +49,7 @@ export default {
       type: String,
       default: "",
     },
-    //id
+    //悬赏id
     id: {
       type: Number,
       default: 0,
@@ -107,7 +90,34 @@ export default {
       default: 0,
     },
   },
+  data() {
+    return {
+      flag: true, //执行删除标识
+    };
+  },
+  computed: {
+    /**
+     * 根据路由判断是否为本用户主页以决定是否显示删除按钮
+     */
+    isShow: function () {
+      if (this.$route.path === "/mypersonalPage/rewardList") {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    /**
+     * 转换日期格式
+     */
+    currentData() {
+      return dayjs(this.date).format("YYYY年MM月DD日 HH:mm:ss");
+    },
+  },
+
   methods: {
+    /**
+     * 根据用户id跳转到相应用户主页
+     */
     toPersonal() {
       if (this.$store.state.userId === this.userId) {
         this.$router.push({
@@ -125,12 +135,18 @@ export default {
         });
       }
     },
+    /**
+     * 根据悬赏资源id跳转到相应悬赏资源详情页
+     */
     toDetail() {
       this.$router.push({
         path: "/rewardDetail",
         query: { rewardid: this.id, hits: this.clicks },
       });
     },
+    /**
+     * 删除该悬赏资源
+     */
     async del() {
       this.flag = false;
       this.$confirm("是否删除此悬赏?", "提示", {

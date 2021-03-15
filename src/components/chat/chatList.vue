@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:聊天对话列表组件
+-->
 <template>
   <div class="chatListBox">
     <chatComponent

@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:底部导航栏组件，用于页面的跳转
+-->
 <template>
   <div class="tab_page">
     <el-menu
@@ -27,15 +30,15 @@
 
 <script>
 export default {
-  data() {
-    return {
-    };
-  },
   props: {
+    //处于选中状态的选项
     activeIndex: {
       type: String,
     },
   },
+  /**
+   * 根据是否选中切换导航栏图片路径更改图片样式
+   */
   computed: {
     homeUrl: function () {
       if (this.activeIndex === "1") {
@@ -44,7 +47,7 @@ export default {
         return require("../../assets/zhuye-un.png");
       }
     },
-     helperUrl: function () {
+    helperUrl: function () {
       if (this.activeIndex === "2") {
         return require("../../assets/zhushou.png");
       } else {
@@ -67,19 +70,27 @@ export default {
     },
   },
   methods: {
-   
-    login() {
-      this.$router.push({ path: "/login" });
-    },
+    /**
+     * 跳转到首页
+     */
     move1() {
       this.$router.push({ path: "/main" });
     },
+    /**
+     * 跳转到小帮手页面
+     */
     move2() {
       this.$router.push({ path: "/helper" });
     },
+    /**
+     * 跳转到聊天页面
+     */
     move3() {
       this.$router.push({ path: "/chat" });
     },
+    /**
+     * 跳转到个人信息
+     */
     move4() {
       this.$router.push({ path: "/profile" });
     },
@@ -119,7 +130,7 @@ export default {
   background: transparent !important;
   color: #409eff;
 }
-.tabItem{
+.tabItem {
   font-size: 1.15rem !important;
 }
 .el-menu-item:focus,

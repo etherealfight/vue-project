@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:新闻详情页，用于展示新闻详情内容
+-->
 <template>
   <div class="newsdetail">
     <i class="el-icon-back" @click="back"></i>
@@ -37,31 +40,10 @@ export default {
     swiper,
     swiperSlide,
   },
-  async created() {
-    const res = await toNewsDetail(this.$route.query.id);
-    console.log(res);
-    this.id = res.newsid;
-    this.title = res.newstitle;
-    this.author = res.author;
-    this.context = res.newsinfo;
-    this.imgUrls = res.newsimages;
-    this.date = res.newstime;
-    this.$previewRefresh();
-  },
-  mounted() {
-    this.myscroll();
-    let mainHeight = document.getElementsByClassName(".newsDetailMiddle")
-      .offsetHeight;
-    let contentHeight = document.getElementsByClassName("newsContext")
-      .offsetHeight;
-    console.log(contentHeight);
-    let wrapperHeight = contentHeight + mainHeight;
-    let wrapper = document.getElementsByClassName("wrapper");
-    wrapper[0].style.height = wrapperHeight + "px";
-  },
   data() {
     return {
       swiperOption: {
+        //轮播图属性设置
         loop: true,
         pagination: {
           el: ".swiper-pagination",
@@ -76,24 +58,64 @@ export default {
           disableOnInteraction: true,
         }, // 可选选项，自动滑动
       },
-      id: 0,
-      title: "这是一个大新闻",
-      author: "cccc",
-      date: "2021-01-16",
-      imgUrls: [],
+      id: 0, //新闻id
+      title: "这是一个大新闻", //新闻标题
+      author: "cccc", //新闻作者
+      date: "2021-01-16", //新闻日期
+      imgUrls: [], //新闻图片列表
+      //新闻内容
       context:
         "ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     };
   },
   computed: {
+    //日期格式转换
     currentData() {
       return dayjs(this.date).format("YYYY年MM月DD日 HH:mm:ss");
     },
   },
+  /**
+   * 初始化新闻详情
+   */
+  async created() {
+    const res = await toNewsDetail(this.$route.query.id);
+    console.log(res);
+    this.id = res.newsid;
+    this.title = res.newstitle;
+    this.author = res.author;
+    this.context = res.newsinfo;
+    this.imgUrls = res.newsimages;
+    this.date = res.newstime;
+    this.$previewRefresh();
+  },
+  mounted() {
+    //计算右滑返回区域高度
+    this.myscroll();
+    let mainHeight = document.getElementsByClassName(".newsDetailMiddle")
+      .offsetHeight;
+    let contentHeight = document.getElementsByClassName("newsContext")
+      .offsetHeight;
+    console.log(contentHeight);
+    let wrapperHeight = contentHeight + mainHeight;
+    let wrapper = document.getElementsByClassName("wrapper");
+    wrapper[0].style.height = wrapperHeight + "px";
+  },
+  updated() {
+    //重新计算高度
+    this.scroll.refresh();
+    //当数据加载完毕以后通知better-scroll
+    this.scroll.finishPullUp();
+  },
   methods: {
+    /**
+     * 点击返回按钮事件，返回路由上一页
+     */
     back() {
       this.$router.back(-1);
     },
+    /**
+     * 右滑返回路由上一页
+     */
     swiperright() {
       this.$router.back(-1);
     },
@@ -111,12 +133,6 @@ export default {
         console.log(this.scroll);
       });
     },
-  },
-  updated() {
-    //重新计算高度
-    this.scroll.refresh();
-    //当数据加载完毕以后通知better-scroll
-    this.scroll.finishPullUp();
   },
 };
 </script>

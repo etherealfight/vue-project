@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:用户主页导航栏组件
+-->
 <template>
   <div class="personalpageBar">
     <el-menu

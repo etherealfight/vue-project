@@ -96,48 +96,18 @@ import { swiper, swiperSlide } from "vue-awesome-swiper";
 import "video.js/dist/video-js.css";
 import commentList from "./commentList";
 import BScroll from "better-scroll";
-import { toStudyDetail, findComment, updatereply } from "../../../api";
 import dayjs from "dayjs";
+import { toStudyDetail, findComment, updatereply } from "../../../api";
 
 export default {
-  async created() {
-    console.log("id:", this.$route.query.learningid);
-    console.log("hits", this.$route.query.hits);
-    const res = await toStudyDetail(
-      this.$route.query.learningid,
-      this.$route.query.hits
-    );
-    console.log("init:", res);
-    this.fileaddress = res.images;
-    this.username = res.username;
-    this.userimg = res.headportrait;
-    this.id = res.studyplatid;
-    this.userid = res.userid;
-    this.clicks = res.studyhits;
-    this.videoList = res.videos;
-    this.fileList = res.files;
-    this.videoName = res.videoname;
-    this.fileName = res.filename;
-    this.videoPath = res.videopath;
-    this.contentText = res.studyinfo;
-    this.date = res.studytime;
-    const res2 = await findComment(this.id, this.pageNum);
-    console.log(res2);
-    this.comments = res2.detail;
-    this.totalNum = res2.pageNumber;
-    this.pageNum = 2;
-  },
   components: {
     swiper,
     swiperSlide,
     commentList,
   },
-  mounted() {
-    this.loadData();
-  },
   data() {
     return {
-      swiperOption: {
+      swiperOption: {  //轮播图设置
         loop: true,
         pagination: {
           el: ".swiper-pagination",
@@ -174,11 +144,50 @@ export default {
     };
   },
   computed: {
+    /**
+     * 转换日期格式
+     */
     currentData() {
       return dayjs(this.date).format("YYYY年MM月DD日 HH:mm:ss");
     },
   },
+  async created() {
+    console.log("id:", this.$route.query.learningid);
+    console.log("hits", this.$route.query.hits);
+    //初始化学习资源详情页面数据
+    const res = await toStudyDetail(
+      this.$route.query.learningid,
+      this.$route.query.hits
+    );
+    console.log("init:", res);
+    this.fileaddress = res.images;
+    this.username = res.username;
+    this.userimg = res.headportrait;
+    this.id = res.studyplatid;
+    this.userid = res.userid;
+    this.clicks = res.studyhits;
+    this.videoList = res.videos;
+    this.fileList = res.files;
+    this.videoName = res.videoname;
+    this.fileName = res.filename;
+    this.videoPath = res.videopath;
+    this.contentText = res.studyinfo;
+    this.date = res.studytime;
+    const res2 = await findComment(this.id, this.pageNum);
+    console.log(res2);
+    this.comments = res2.detail;
+    this.totalNum = res2.pageNumber;
+    this.pageNum = 2;
+  },
+
+  mounted() {
+    this.loadData();
+  },
+
   methods: {
+    /**
+     * 根据用户id跳转到用户个人主页
+     */
     toPersonalPage() {
       if (this.$store.state.userId === this.userid) {
         this.$router.push({
@@ -190,9 +199,15 @@ export default {
         });
       }
     },
+    /**
+     * 监听返回按钮，返回上一页
+     */
     back() {
       this.$router.back(-1);
     },
+    /**
+     * 监听右滑动作返回上一页
+     */
     swiperright() {
       this.$router.back(-1);
     },
@@ -263,24 +278,6 @@ export default {
     dowmloadFile() {},
     download() {
       console.log("下载");
-    },
-    /**
-     * 下载
-     */
-    downloadVideo(videourl, viedeopath) {
-      let link = videourl;
-      let fileName = '"' + viedeopath + '"';
-      var x = new XMLHttpRequest();
-      x.open("GET", link, true);
-      x.responseType = "blob";
-      x.onload = (e) => {
-        var url = window.URL.createObjectURL(x.response);
-        var a = document.createElement("a");
-        a.href = url;
-        a.download = fileName;
-        a.click();
-      };
-      x.send();
     },
     /**
      * 发表评论
@@ -423,7 +420,7 @@ export default {
   box-sizing: border-box;
   font-size: 1.5rem;
 }
-.el-icon-download{
+.el-icon-download {
   color: black;
 }
 .itembox {

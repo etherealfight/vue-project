@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:用户个人主页组件，展示本用户发表的悬赏以及学习资源信息
+-->
 <template>
   <div id="mypersonalMain">
     <publishReward
@@ -57,7 +60,7 @@
           <div class="list">
             <router-view
               class="router"
-              :id="this.$store.state.userId"
+              :userid="this.$store.state.userId"
             ></router-view>
           </div>
         </v-touch>
@@ -98,8 +101,25 @@ export default {
       activeIndex: "1",
     };
   },
+  computed: {
+    //根据路由判断展示对应发布按钮
+    isShow() {
+      return !(this.isMaskReward || this.isMaskLearn);
+    },
+    //展示相应性别
+    gender() {
+      if (this.sex === "1") {
+        return " ♂";
+      } else if (this.sex === "2") {
+        return " ♀";
+      } else {
+        return "";
+      }
+    },
+  },
   mounted() {
     this.loadData();
+    //计算右滑返回区域高度
     let mypersonalMiddle = document.querySelector(".mypersonalMiddle")
       .offsetHeight;
     let mypersonalpageBarHeight = document.querySelector(".mypersonalpageBar")
@@ -114,19 +134,33 @@ export default {
       mypersonalpageBarHeight;
     let wrapper = document.getElementsByClassName("mypersonalwrapper");
     wrapper[0].style.height = mypersonalwrapper + "px";
+    //根据当前路由判断navbar哪一栏处于选中状态
     if (this.$route.path === "/mypersonalPage/learningList") {
       this.activeIndex = "2";
     } else {
       this.activeIndex = "1";
     }
   },
+  updated() {
+    if (this.$route.path === "/mypersonalPage/learningList") {
+      this.activeIndex = "2";
+    } else {
+      this.activeIndex = "1";
+    }
+    //重新计算高度
+    this.scroll.refresh();
+    //当数据加载完毕以后通知better-scroll
+  },
   methods: {
-    mypersonalChange() {
-      this.$router.push("/profile");
-    },
+    /**
+     * 点击返回按钮返回小帮手页面
+     */
     back() {
       this.$router.push("/helper");
     },
+    /**
+     * 监听右滑切换子组件
+     */
     swiperright() {
       console.log("r");
       if (this.activeIndex === "2") {
@@ -135,6 +169,9 @@ export default {
         console.log("r2");
       }
     },
+    /**
+     * 监听左滑切换子组件
+     */
     swiperleft() {
       console.log("l");
       console.log(this.activeIndex);
@@ -144,6 +181,9 @@ export default {
         console.log("l2");
       }
     },
+    /**
+     * 下拉加载数据
+     */
     loadData() {
       this.$nextTick(() => {
         const wrapper = document.querySelector(".mypersonalwrapper");
@@ -201,31 +241,6 @@ export default {
     childback2() {
       this.isMaskLearn = false;
     },
-  },
-  computed: {
-    showChange() {
-      //console.log(this.username);
-      //console.log(this.$store.state.userName);
-      return this.username === this.$store.state.userName;
-    },
-    isShow() {
-      return !(this.isMaskReward || this.isMaskLearn);
-    },
-    gender() {
-      if (this.sex === "1") {
-        return " ♂";
-      } else if (this.sex === "2") {
-        return " ♀";
-      } else {
-        return "";
-      }
-    },
-  },
-  updated() {
-    //重新计算高度
-    this.scroll.refresh();
-    //当数据加载完毕以后通知better-scroll
-    this.scroll.finishPullUp();
   },
 };
 </script>

@@ -46,6 +46,41 @@ export default {
     swiper,
     swiperSlide,
   },
+  data() {
+    return {
+      swiperOption: {
+        //轮播图设置
+        loop: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        autoplay: {
+          delay: 1500,
+          stopOnLastSlide: false,
+          disableOnInteraction: true,
+        }, // 可选选项，自动滑动
+      },
+      fileaddress: [], //悬赏图片地址
+      contentText: "", //悬赏内容
+      date: "2021-01-25", //悬赏发表时间
+      id: 0, //悬赏id
+      username: "aaa", //悬赏发表者用户名
+      userid: "", //悬赏发表者id
+      //用户头像
+      userimg:
+        "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
+      clicks: 0, //点击量
+    };
+  },
+  computed: {
+    /**
+     * 日期格式转换
+     */
+    currentData() {
+      return dayjs(this.date).format("YYYY年MM月DD日 HH:mm:ss");
+    },
+  },
   /**
    * 初始化悬赏页
    */
@@ -67,6 +102,7 @@ export default {
     this.clicks = res.rewardhits;
   },
   mounted() {
+    //计算右滑返回区域高度
     let mainHight = document.querySelector(".rewardDetailMain").offsetHeight;
     let swiperHight = document.querySelector(".swiper-container").offsetHeight;
     let footerHight = document.querySelector(".rewardDetailFooter")
@@ -77,37 +113,10 @@ export default {
     console.log(waperHight);
     wrapper[0].style.height = waperHight + "px";
   },
-  data() {
-    return {
-      swiperOption: {
-        loop: true,
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-        },
-        autoplay: {
-          delay: 1500,
-          stopOnLastSlide: false,
-          disableOnInteraction: true,
-        }, // 可选选项，自动滑动
-      },
-      fileaddress: [],
-      contentText: "",
-      date: "2021-01-25",
-      id: 0,
-      username: "aaa",
-      userid: "",
-      userimg:
-        "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg",
-      clicks: 0,
-    };
-  },
-  computed: {
-    currentData() {
-      return dayjs(this.date).format("YYYY年MM月DD日 HH:mm:ss");
-    },
-  },
   methods: {
+    /**
+     * 根据用户id跳转到用户个人主页
+     */
     toPersonalPage() {
       if (this.$store.state.userId === this.userid) {
         this.$router.push({
@@ -119,9 +128,15 @@ export default {
         });
       }
     },
+    /**
+     * 监听返回按钮，返回上一页
+     */
     back() {
       this.$router.back(-1);
     },
+    /**
+     * 监听右滑动作返回上一页
+     */
     swiperright() {
       console.log("back");
       this.$router.back(-1);

@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:聊天列表单个聊天预览组件
+-->
 <template>
   <div class="chatBox" @click="toDetail">
     <div class="left"><img :src="userimg" alt="" /></div>
@@ -27,7 +30,7 @@ export default {
       type: String,
       default: "",
     },
-    //id
+    //聊天id
     id: {
       type: Number,
       default: 0,
@@ -49,6 +52,9 @@ export default {
     },
   },
   methods: {
+    /**
+     * 点击跳转到聊天详情
+     */
     toDetail() {
       this.$router.push({
         path: "/chatDetail",
@@ -80,7 +86,7 @@ export default {
   box-sizing: border-box;
 }
 .chatBox .center .name {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
 }
 .chatBox .center .context {
   display: -webkit-box;
@@ -90,11 +96,13 @@ export default {
   word-break: break-all;
   text-overflow: ellipsis;
   padding-top: 1rem;
+  font-size: 1.5rem;
 }
 .chatBox .right {
   width: 20%;
   padding: 2rem 2rem 2rem 0;
   box-sizing: border-box;
+  font-size: 1.25rem
 }
 .chatBox .right i {
   color: red;

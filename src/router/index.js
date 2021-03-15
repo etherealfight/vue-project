@@ -4,7 +4,6 @@ import store from "../store/index"
 import login from '../components/login/login'
 import regist from '../components/login/regist'
 import main from '../components/home/main'
-import my_navbar from '../components/home/my_navbar'
 import profile from '../components/profile/profile'
 import newsdetail from '../components/news/newsDetail'
 import helper from '../components/helper/helper'
@@ -21,68 +20,78 @@ import mypersonalPage from '../components/profile/mypersonalPage'
 
 Vue.use(VueRouter)
 
-const routes = [{
+const routes = [
+  //根路由，重定向到首页
+  {
     path: '/',
     redirect: '/main'
   },
+  //首页
   {
     path: '/main',
     component: main
   },
-  {
-    path: '/my_navbar',
-    component: my_navbar
-  },
+  //登录页
   {
     path: '/login',
     name: 'login',
     component: login
   },
+  //注册页
   {
     path: '/regist',
     name: 'regist',
     component: regist
   },
+  //个人信息页
   {
     path: '/profile',
     name: 'profile',
     component: profile
   },
+  //新闻详情页
   {
     path: '/newsdetail',
     name: 'newsdetail',
     component: newsdetail
   },
+  //小帮手页
   {
     path: '/helper',
     component: helper,
     redirect: '/helper/rewardList',
-    children: [{
+    children: [
+      //小帮手悬赏子路由页
+      {
         path: 'rewardList',
         component: rewardList
       },
-
+      //小帮手学习资源子路由页
       {
         path: 'learningList',
         component: learningList
       }
     ]
   },
+  //悬赏详情页
   {
     path: '/rewardDetail',
     name: 'rewardDetail',
     component: rewardDetail
   },
+  //学习资源详情页
   {
     path: '/learningDetail',
     name: 'learningDetail',
     component: learningDetail
   },
+  //学习资源视频播放页
   {
     path: '/videoPlayerPage',
     name: 'videoPlayerPage',
     component: videoPlayerPage
   },
+  //用户主页
   {
     path: '/personalPage',
     name: 'personalPage',
@@ -99,6 +108,7 @@ const routes = [{
       }
     ]
   },
+  //用户个人主页
   {
     path: '/mypersonalPage',
     name: 'mypersonalPage',
@@ -114,11 +124,13 @@ const routes = [{
       }
     ]
   },
+  //聊天列表页
   {
     path: '/chat',
     name: 'chat',
     component: chat
   },
+  //聊天详情页
   {
     path: '/chatDetail',
     name: 'chatDetail',

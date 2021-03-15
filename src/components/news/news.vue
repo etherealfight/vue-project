@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:首页新闻组件，用于展示新闻列表
+-->
 <template>
   <div class="newsBox" @click="toDetail">
     <div class="newsText">{{ title }}</div>
@@ -50,14 +53,18 @@ export default {
       default: "",
     },
   },
-  methods: {
-    toDetail() {
-      this.$router.push({ path: "/newsdetail", query: { id: this.id } });
-    },
-  },
   computed: {
+    //转换日期格式
     currentData() {
       return dayjs(this.date).format("YYYY年MM月DD日 HH:mm:ss");
+    },
+  },
+  methods: {
+    /**
+     * 跳转到新闻详情页
+     */
+    toDetail() {
+      this.$router.push({ path: "/newsdetail", query: { id: this.id } });
     },
   },
 };

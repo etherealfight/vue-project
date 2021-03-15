@@ -24,16 +24,12 @@
           :file-list="photoList"
           list-type="picture-card"
           :before-upload="showList1"
-          :on-preview="handlePictureCardPreview1"
           :on-remove="handleRemove1"
           :on-error="showError1"
           :on-success="showSuccess1"
         >
           <i class="el-icon-plus"></i>
         </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="dialogImageUrl" alt="" />
-        </el-dialog>
         <el-upload
           class="upload-demo"
           ref="upload2"
@@ -75,33 +71,31 @@
 <script>
 import { publishLearning } from "../../api";
 export default {
-  data() {
-    return {
-      publishLearnText: "",
-      dialogImageUrl: "",
-      dialogVisible: false,
-      photoList: [],
-      videoList: [],
-      fileList: [],
-      imgUrl: "",
-      videoUrl: "",
-      fileUrl: "",
-      counter1: 0,
-      counter2: 0,
-      counter3: 0,
-      imgNum: 0,
-      videoNum: 0,
-      fileNum: 0,
-      videoName: "",
-      fileName: "",
-      updatestate: true,
-    };
-  },
   props: {
     //   接受父组件传的值
     propsItem: {
       type: Object,
     },
+  },
+  data() {
+    return {
+      publishLearnText: "", //发布文字内容
+      photoList: [], //上传图片列表
+      videoList: [], //上传视频列表
+      fileList: [], //上传文件列表
+      imgUrl: "", //图片地址字段
+      videoUrl: "", //视频地址字段
+      fileUrl: "", //文件地址字段
+      counter1: 0, //上传图片个数
+      counter2: 0, //上传视频个数
+      counter3: 0, //上传文件个数
+      imgNum: 0, //当前上传成功图片个数
+      videoNum: 0, //当前上传成功视频个数
+      fileNum: 0, //当前上传成功文件个数
+      videoName: "", //上传视频名称字段
+      fileName: "", //上传文件名称字段
+      updatestate: true, //上传是否成功标识
+    };
   },
   methods: {
     /**
@@ -315,24 +309,31 @@ export default {
         this.counter3 = 0;
       }
     },
+    /**
+     * 关闭发布组件
+     */
     back() {
       this.$emit("child-back");
     },
+    /**
+     * 移除图片成功钩子
+     */
     handleRemove1(file, fileList) {
       console.log(file, fileList);
     },
+    /**
+     * 移除视频成功钩子
+     */
     handleRemove2(file, fileList) {
       console.log(file, fileList);
     },
+    /**
+     * 移除文件成功钩子
+     */
     handleRemove3(file, fileList) {
       console.log(file, fileList);
     },
-    handlePictureCardPreview1(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    },
   },
-  components: {},
 };
 </script>
 

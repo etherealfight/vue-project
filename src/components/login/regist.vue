@@ -41,11 +41,24 @@ import { regist, checkState } from "../../api";
 export default {
   data() {
     return {
-      username: "",
-      usermail: "",
-      password: "",
-      mailCorrect: true,
+      username: "", //用户名
+      usermail: "", //用户邮箱
+      password: "", //用户密码
+      mailCorrect: true, //邮箱是否正确标识
     };
+  },
+  watch: {
+    /**
+     * 判断邮箱格式是否规范
+     */
+    usermail: function () {
+      let re = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
+      if (re.test(this.usermail)) {
+        this.mailCorrect = true;
+      } else {
+        this.mailCorrect = false;
+      }
+    },
   },
   methods: {
     /**
@@ -75,19 +88,6 @@ export default {
         }
       } else {
         this.$message.warning(res.msg);
-      }
-    },
-  },
-  watch: {
-    /**
-     * 判断邮箱格式是否规范
-     */
-    usermail: function () {
-      let re = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
-      if (re.test(this.usermail)) {
-        this.mailCorrect = true;
-      } else {
-        this.mailCorrect = false;
       }
     },
   },

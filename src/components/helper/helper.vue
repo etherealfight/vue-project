@@ -1,3 +1,6 @@
+<!--
+* @FileDescription:小帮手组件，用于展示悬赏列表与学习资源列表以及搜索相应的悬赏学习资源
+-->
 <template>
   <div class="helperbox">
     <transition name="fade">

@@ -19,18 +19,6 @@
 import { deleteComment } from "../../../api";
 import dayjs from "dayjs";
 export default {
-  computed: {
-    currentData() {
-      return dayjs(this.date).format("YYYY年MM月DD日 HH:mm:ss");
-    },
-    isShow() {
-      if (this.userId === this.$store.state.userId) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-  },
   props: {
     //用户id
     userId: {
@@ -79,6 +67,24 @@ export default {
       default: "",
     },
   },
+  computed: {
+    /**
+     * 转换日期格式
+     */
+    currentData() {
+      return dayjs(this.date).format("YYYY年MM月DD日 HH:mm:ss");
+    },
+    /**
+     * 根据用户id判断是否显示删除评论按钮
+     */
+    isShow() {
+      if (this.userId === this.$store.state.userId) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
   methods: {
     /**
      * 删除评论
@@ -109,6 +115,7 @@ export default {
           name: "mypersonalPage",
         });
       } else {
+        //将用户信息临时储存到本地
         sessionStorage.setItem("tempUserId", this.userId);
         sessionStorage.setItem("gender", this.gender);
         sessionStorage.setItem("tempUserName", this.username);

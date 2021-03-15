@@ -34,6 +34,9 @@ export default {
     },
   },
   methods: {
+    /**
+     * 监听子组件删除事件，将删除的评论从评论列表中移除
+     */
     handleDelete(index) {
       this.comments.splice(index, 1);
     },

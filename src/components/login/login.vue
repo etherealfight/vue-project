@@ -29,8 +29,8 @@ import { login1, login2 } from "../../api";
 export default {
   data() {
     return {
-      username: "",
-      password: "",
+      username: "", //用户名
+      password: "", //密码
     };
   },
   methods: {
@@ -46,7 +46,7 @@ export default {
       } else {
         res = await login1(this.username, this.password);
       }
-      console.log(res)
+      console.log(res);
       if (res.success) {
         this.$message.info("登录成功");
         sessionStorage.setItem("loginState", true);

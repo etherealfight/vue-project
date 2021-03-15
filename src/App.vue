@@ -1,7 +1,7 @@
 <template>
-    <div class="app">
-      <router-view></router-view>
-    </div>
+  <div class="app">
+    <router-view></router-view>
+  </div>
 </template>
 
 <style>
@@ -16,6 +16,7 @@
   text-align: center;
   color: #2c3e50;
 }
+/* 使用rem适配，根据媒体查询获取的屏幕宽度设置页面根元素字体大小 */
 @media only screen and (min-width: 320px) {
   html {
     font-size: 65% !important;
