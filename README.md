@@ -1,19 +1,37 @@
-# test
+# 便捷校园项目
 
-## Project setup
-```
-npm install
-```
+## 项目简介
+这一项目主要是面向学习群体，主要实现了查询指定学习资源或悬赏信息，学习资源（包括文件，视频）的发布和下载功能，同时提供评论功能，通过问题的发布和评论形成一个学习区。在同层次下有一个悬赏区，用于学习问题和生活问题的悬赏发布（因时间问题，暂时没有实现聊天功能）,在实现注册功能的时候我们使用了邮箱验证，注册成功之后便可通过用户账号或用户邮箱进行登录。
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### 需求分析
+注册登录 √
+新闻展示 √
+悬赏展示 √
+悬赏发布 √
+悬赏接取
+聊天功能
+学习资源查看下载 √
+学习资源发布 √
+学习区评论发布与查看 √
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### 设计参考
+百度贴吧+闲鱼
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 前端技术栈
+vue全家桶(vue vue-router vuex)
+
+axios swiper better-scroll
+
+### 项目预览
+
+预览地址：http://cccccjy.top/dist
+
+为保证体验，pc端请打开F12，使用手机模式进行预览：
+
+可以使用以下账号：
+
+用户名:37974253 密码:123456
+
+### 界面展示
+
+1.登陆注册：
