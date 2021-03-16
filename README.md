@@ -1,4 +1,3 @@
-![Snipaste_2021-03-15_23-46-39](https://user-images.githubusercontent.com/60640545/111252026-413b3300-864b-11eb-9583-7015e1eb304c.jpg)
 # 便捷校园项目
 
 ## 项目简介
@@ -36,6 +35,16 @@ axios swiper better-scroll
 ### 界面展示
 
 1.登陆注册：
+
 ![Snipaste_2021-03-15_23-45-18](https://user-images.githubusercontent.com/60640545/111252056-4dbf8b80-864b-11eb-8142-115cf762b6b6.jpg)
+
 ![Snipaste_2021-03-15_23-46-39](https://user-images.githubusercontent.com/60640545/111252065-531cd600-864b-11eb-924f-77287b805575.jpg)
+
 2.首页：
+
+![image](https://user-images.githubusercontent.com/60640545/111260951-a3506400-865c-11eb-8ef7-79799b6500b4.png)
+
+3.新闻详情：
+
+![image](https://user-images.githubusercontent.com/60640545/111261023-c67b1380-865c-11eb-9d9e-7ed5893fc041.png)
+
