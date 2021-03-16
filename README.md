@@ -98,9 +98,17 @@ axios swiper better-scroll
 
 聊天列表页面
 
-
+![image](https://user-images.githubusercontent.com/60640545/111275645-53c86300-8671-11eb-93fa-e484dfed96a5.png)
 
 聊天详情页面（通信功能尚未实现）
+
+![image](https://user-images.githubusercontent.com/60640545/111275690-62af1580-8671-11eb-904f-7a79b1f3b67f.png)
+
+个人资料页面，可修改用户名，头像等个人信息，点击头像可进入个人主页，点击退出登录可注销登录信息回到登录页面
+
+![Snipaste_2021-03-16_16-07-04](https://user-images.githubusercontent.com/60640545/111276061-e1a44e00-8671-11eb-9eca-bc9ace841bb2.jpg)
+
+
 
 
 
